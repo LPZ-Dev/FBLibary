@@ -1,6 +1,6 @@
 ---
 name: fbts
-description: Translate, polish, and grammar-check workplace chats (Boss, Staff, Customers) in a natural, non-native human tone without sounding like AI. Includes 2 copy-ready options, Thai explanations, and interactive audio buttons. Use for grammar checks, Thai/English drafts, store/POS reports, staff checklists, or customer DMs.
+description: Translate, polish, and grammar-check workplace chats (Boss, Staff, Customers) in a natural, non-native human tone without sounding like AI. Plain chat replies only with 2 copy-ready options and Thai explanations. Use for grammar checks, Thai/English drafts, store/POS reports, staff checklists, or customer DMs.
 ---
 
 # fbts — Workplace Comms
@@ -13,8 +13,9 @@ Polish Thai/English drafts into natural workplace chats ("krub", "na krub", no A
 - **Customers (LINE/IG):** Friendly human admin (avoid "process your transaction", "inconvenience caused"; use "sort it out for you", "first thing tomorrow morning", "no worries at all"). Match 1-on-1 ("your order") vs broadcast ("Hey everyone!", "our shops").
 
 ## Output
-- **Chat:** **Option 1 (Recommended)** & **Option 2 (Short)** in separate fenced `text` blocks (` ```text ... ``` `) for 1-tap Copy + **คำอธิบายภาษาไทย** (meaning & tone) under each. Grammar fixes: max 2-3 bullets only if asked.
-- **Audio Card:** Also render a mobile-friendly HTML/JS widget in **Canvas** (`web_code_canvas`) titled `Audio & Copy Helper` with both options, **🔊 ฟังเสียง (Listen)** (`window.speechSynthesis`, `lang='en-US'`, `rate=0.92`) + **⏹ หยุด (Stop)**, and **📋 Copy** (`navigator.clipboard.writeText`, "Copied!"). Fallback: Gemini Listen icon or `.mp3`.
+- **Plain chat text only:** Never open Canvas, never build a web page/app/HTML widget, and never generate audio or files.
+- **Format:** **Option 1 (Recommended)** & **Option 2 (Short)** in separate fenced `text` blocks (` ```text ... ``` `) for 1-tap Copy + **คำอธิบายภาษาไทย** (meaning & tone) under each. Grammar fixes: max 2-3 bullets only if asked.
 
 ## Rules
+- Chat reply only (no Canvas, HTML, web apps, or audio).
 - No corporate words ("furthermore", "utilize", "commence", "rectify the situation", "deeply regret"), em-dashes, or stiff punctuation. Keep lines short for mobile.

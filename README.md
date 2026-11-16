@@ -7,8 +7,8 @@
 ## ไฟล์ภายในโปรเจกต์
 - `index.html` — หน้าเว็บหลักสำหรับ Deploy บน Vercel
 - `ดาวน์โหลด_Skill_workplace-comms-translator-v2.html` — สำเนาหน้าเว็บชื่อไฟล์เดิม
-- `SKILL.md` — ไฟล์สกิลฉบับกระชับสำหรับ **Gemini** (`name: fbts`)
-- `SKILL-chatgpt.md` — ไฟล์สกิลฉบับกระชับสำหรับ **ChatGPT** (ใช้แบบวาง Prompt เริ่มแชททันที ไม่ต้องตั้งค่า + ตอบรับพร้อมตัวอย่างวิธีใช้ + รองรับ Read Aloud)
+- `SKILL.md` — ไฟล์สกิลฉบับกระชับสำหรับ **Gemini** (`name: fbts`, ตอบในแชทล้วน ไม่เปิด Canvas)
+- `SKILL-chatgpt.md` — ไฟล์สกิลฉบับกระชับสำหรับ **ChatGPT** (ใช้แบบวาง Prompt เริ่มแชททันที ไม่ต้องตั้งค่า + ตอบรับพร้อมตัวอย่างวิธีใช้ + ตอบในแชทล้วน)
 - `vercel.json` — ตั้งค่า Static Hosting และ HTTP Security Headers สำหรับ Vercel
 
 ## วิธี Deploy บน Vercel

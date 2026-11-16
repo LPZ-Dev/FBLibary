@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0d130e" />
   <title>Fat Buds Weed Shop • fbts — ติดตั้งสกิลแปลแชททำงาน (Gemini &amp; ChatGPT)</title>
-  <meta name="description" content="Fat Buds Weed Shop Workplace Comms Skill (fbts) สำหรับ Gemini และ ChatGPT บนมือถือ แปล-เกลาแชททำงาน บอส พนักงาน และลูกค้า พร้อมคำแปลไทยและเสียงอ่าน" />
+  <meta name="description" content="Fat Buds Weed Shop Workplace Comms Skill (fbts) สำหรับ Gemini และ ChatGPT บนมือถือ แปล-เกลาแชททำงาน บอส พนักงาน และลูกค้า พร้อมคำแปลไทย" />
   <meta property="og:title" content="Fat Buds Weed Shop • fbts Skill" />
-  <meta property="og:description" content="ติดตั้งสกิล fbts ฉบับ Fat Buds Bangkok ช่วยแปลและเกลาแชททำงาน (บอส / พนักงาน / ลูกค้า) พร้อมคำอธิบายไทยและเสียงอ่าน" />
+  <meta property="og:description" content="ติดตั้งสกิล fbts ฉบับ Fat Buds Bangkok ช่วยแปลและเกลาแชททำงาน (บอส / พนักงาน / ลูกค้า) พร้อมคำอธิบายไทย" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/fatbuds-logo.png" />
 
@@ -698,39 +698,6 @@
       line-height: 1.55;
     }
 
-    .audio-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .audio-tip {
-      background: var(--bg-muted);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 14px;
-      font-size: 13.5px;
-      color: var(--text-secondary);
-    }
-
-    .audio-tip h4 {
-      margin: 0 0 6px;
-      font-size: 14px;
-      color: var(--gemini-text);
-    }
-
-    .audio-tip.gold h4 {
-      color: var(--chatgpt-text);
-    }
-
-    .audio-tip p {
-      margin: 0;
-    }
-
-    .audio-tip strong {
-      color: var(--text-primary);
-    }
-
     /* ==================== FOOTER ==================== */
     .page-footer {
       text-align: center;
@@ -808,8 +775,7 @@
         height: 66px;
       }
 
-      .btn-row,
-      .audio-grid {
+      .btn-row {
         grid-template-columns: 1fr;
       }
 
@@ -844,7 +810,7 @@
       </div>
 
       <p class="hero-subtitle">
-        สกิลแปล-เช็คแกรมม่าแชททำงาน (บอส / พนักงาน / ลูกค้า) ให้ดูเป็นธรรมชาติ ไม่แข็งแบบ AI พร้อมคำแปลไทยและเสียงอ่าน
+        สกิลแปล-เช็คแกรมม่าแชททำงาน (บอส / พนักงาน / ลูกค้า) ให้ดูเป็นธรรมชาติ ไม่แข็งแบบ AI พร้อมคำแปลไทย ตอบในแชทล้วน
       </p>
 
       <div class="hero-shop-bar">
@@ -974,8 +940,7 @@
           <strong>ฉบับกระชับสำหรับบัญชีฟรี:</strong>
           <ul class="convert-list">
             <li>วางคำสั่งในแชทใหม่ใช้ได้ทันที <strong>ไม่ต้องตั้งค่าบัญชี</strong> (ปักหมุดแชทไว้ใช้ซ้ำได้)</li>
-            <li>ฟังเสียงอ่านฟรีด้วย <strong>Read Aloud (🔊)</strong> ในแอป ChatGPT</li>
-            <li>ครบทั้ง <strong>3 โหมด</strong> (บอส / พนักงาน / ลูกค้า), <strong>2 ตัวเลือกพร้อมปุ่ม Copy</strong> และคำแปลไทย</li>
+            <li>ครบทั้ง <strong>3 โหมด</strong> (บอส / พนักงาน / ลูกค้า), <strong>2 ตัวเลือกพร้อมปุ่ม Copy</strong> และคำแปลไทย (ตอบในแชทล้วน)</li>
           </ul>
         </div>
       </section>
@@ -1122,20 +1087,6 @@
           </div>
         </div>
       </div>
-
-      <hr class="divider" />
-
-      <!-- Audio Tips -->
-      <div class="audio-grid">
-        <div class="audio-tip">
-          <h4>🔊 ฟังเสียงบน Gemini</h4>
-          <p>ได้การ์ด <strong>Audio &amp; Copy Helper</strong> กดปุ่ม <strong>ฟังเสียง</strong> หรือกดไอคอนลำโพงของ Gemini ได้เลย</p>
-        </div>
-        <div class="audio-tip gold">
-          <h4>🔊 ฟังเสียงบน ChatGPT</h4>
-          <p>กดค้างคำตอบ &gt; <strong>Read Aloud</strong> (หรือกดลำโพง) / พิมพ์ <code class="inline-code">ขอไฟล์เสียง</code> ได้เลย</p>
-        </div>
-      </div>
     </section>
 
     <footer class="page-footer">
@@ -1155,7 +1106,7 @@
     // =========================================================================
     const GEMINI_SKILL_CONTENT = `---
 name: fbts
-description: Translate, polish, and grammar-check workplace chats (Boss, Staff, Customers) in a natural, non-native human tone without sounding like AI. Includes 2 copy-ready options, Thai explanations, and interactive audio buttons. Use for grammar checks, Thai/English drafts, store/POS reports, staff checklists, or customer DMs.
+description: Translate, polish, and grammar-check workplace chats (Boss, Staff, Customers) in a natural, non-native human tone without sounding like AI. Plain chat replies only with 2 copy-ready options and Thai explanations. Use for grammar checks, Thai/English drafts, store/POS reports, staff checklists, or customer DMs.
 ---
 
 # fbts — Workplace Comms
@@ -1168,10 +1119,11 @@ Polish Thai/English drafts into natural workplace chats ("krub", "na krub", no A
 - **Customers (LINE/IG):** Friendly human admin (avoid "process your transaction", "inconvenience caused"; use "sort it out for you", "first thing tomorrow morning", "no worries at all"). Match 1-on-1 ("your order") vs broadcast ("Hey everyone!", "our shops").
 
 ## Output
-- **Chat:** **Option 1 (Recommended)** & **Option 2 (Short)** in separate fenced \`text\` blocks (\` \`\`\`text ... \`\`\` \`) for 1-tap Copy + **คำอธิบายภาษาไทย** (meaning & tone) under each. Grammar fixes: max 2-3 bullets only if asked.
-- **Audio Card:** Also render a mobile-friendly HTML/JS widget in **Canvas** (\`web_code_canvas\`) titled \`Audio & Copy Helper\` with both options, **🔊 ฟังเสียง (Listen)** (\`window.speechSynthesis\`, \`lang='en-US'\`, \`rate=0.92\`) + **⏹ หยุด (Stop)**, and **📋 Copy** (\`navigator.clipboard.writeText\`, "Copied!"). Fallback: Gemini Listen icon or \`.mp3\`.
+- **Plain chat text only:** Never open Canvas, never build a web page/app/HTML widget, and never generate audio or files.
+- **Format:** **Option 1 (Recommended)** & **Option 2 (Short)** in separate fenced \`text\` blocks (\` \`\`\`text ... \`\`\` \`) for 1-tap Copy + **คำอธิบายภาษาไทย** (meaning & tone) under each. Grammar fixes: max 2-3 bullets only if asked.
 
 ## Rules
+- Chat reply only (no Canvas, HTML, web apps, or audio).
 - No corporate words ("furthermore", "utilize", "commence", "rectify the situation", "deeply regret"), em-dashes, or stiff punctuation. Keep lines short for mobile.`;
 
     // =========================================================================
@@ -1179,7 +1131,7 @@ Polish Thai/English drafts into natural workplace chats ("krub", "na krub", no A
     // =========================================================================
     const CHATGPT_SKILL_CONTENT = `---
 name: fbts
-description: Translate, polish, and grammar-check workplace chats (Boss, Staff, Customers) in ChatGPT using a natural, non-native human tone without sounding like AI. Includes 2 copy-ready options, Thai explanations, and Read Aloud / on-demand audio support.
+description: Translate, polish, and grammar-check workplace chats (Boss, Staff, Customers) in ChatGPT using a natural, non-native human tone without sounding like AI. Plain chat replies only with 2 copy-ready options and Thai explanations.
 ---
 
 # fbts — Workplace Comms
@@ -1192,7 +1144,6 @@ Polish Thai/English drafts into natural workplace chats ("krub", "na krub", no A
   - กลุ่มพนักงาน: \`กลุ่มพนักงาน: พรุ่งนี้เปิดร้าน 9 โมง เช็คสต็อกถ่ายรูปส่งก่อน 10 โมง\`
   - ตอบลูกค้า: \`ตอบลูกค้า: ขอเช็คสต็อกอีกสาขาก่อนนะคะ พรุ่งนี้เช้าทักแจ้งทันที\`
   - เช็คแกรมม่า: \`grammar check (boss): Boss krub today aircon not cold...\`
-  - ฟังเสียงอ่าน: พิมพ์ \`ขอไฟล์เสียง\` หรือ \`ขอปุ่มฟังเสียง\`
 - Show this setup reply only once; for translation requests, apply Modes & Output directly.
 
 ## Modes (infer if unstated)
@@ -1201,11 +1152,11 @@ Polish Thai/English drafts into natural workplace chats ("krub", "na krub", no A
 - **Customers (LINE/IG):** Friendly human admin (no "process your transaction", "inconvenience caused"; use "sort it out for you", "first thing tomorrow morning", "no worries at all"). Match 1-on-1 ("your order") vs broadcast ("Hey everyone!", "our shops").
 
 ## Output
+- **Plain chat text only:** Never open Canvas, never build a web page/app/HTML widget, and never generate audio or files.
 - **Option 1 (Recommended)** & **Option 2 (Short)** in separate \` \`\`\`text ... \`\`\` \` blocks for 1-tap Copy + **คำอธิบายภาษาไทย** (meaning & tone) under each. Grammar fixes: max 2-3 bullets if asked.
-- Keep normal replies clean. End with: \`🔊 ฟังเสียง: กดค้าง > Read Aloud หรือกดลำโพง (พิมพ์ "ขอไฟล์เสียง" / "ขอปุ่มฟังเสียง" ได้)\`
-- If user asks for audio/mp3/buttons: make \`.mp3\`/\`.wav\` or \`audio-helper.html\` via Python if available, else output a self-contained \`html\` block \`Audio & Copy Helper\` with Listen/Stop (\`speechSynthesis\`, \`en-US\`, \`rate=0.92\`) and Copy.
 
 ## Rules
+- Chat reply only (no Canvas, HTML, web apps, or audio).
 - No corporate words ("furthermore", "utilize", "commence", "rectify", "deeply regret") or em-dashes. Short mobile lines.`;
 
     // ตัวช่วยแยก Frontmatter กับ Body
