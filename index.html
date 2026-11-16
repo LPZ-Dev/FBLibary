@@ -394,51 +394,6 @@
       border-color: var(--success-border) !important;
     }
 
-    /* Manual Field Copy Grid (Gemini Mobile Fallback) */
-    .manual-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 12px;
-      padding: 14px;
-      border-radius: var(--radius-md);
-      background: var(--bg-muted);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .manual-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 8px 10px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-    }
-
-    .manual-item-info {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .manual-label {
-      font-size: 11.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
-    }
-
-    .manual-value {
-      font-size: 13px;
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      color: var(--text-primary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
     .btn-mini {
       appearance: none;
       flex-shrink: 0;
@@ -852,36 +807,6 @@
           </button>
         </div>
 
-        <!-- 3-field quick copy for Gemini "Create manually" -->
-        <div class="manual-grid" aria-label="คัดลอกแยกทีละช่องสำหรับสร้างสกิลด้วยตัวเองในมือถือ">
-          <div style="font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px;">
-            หรือกรอกแยกช่องในหน้า Skills → Create manually (กดคัดลอกไปแปะทีละช่อง):
-          </div>
-
-          <div class="manual-item">
-            <div class="manual-item-info">
-              <div class="manual-label">1. Name (ชื่อสกิล)</div>
-              <div class="manual-value" id="gemini-field-name">workplace-comms-translator-v2</div>
-            </div>
-            <button id="btn-copy-gemini-name" type="button" class="btn-mini">คัดลอก</button>
-          </div>
-
-          <div class="manual-item">
-            <div class="manual-item-info">
-              <div class="manual-label">2. Description (คำอธิบาย)</div>
-              <div class="manual-value" id="gemini-field-desc">Translate, polish, and check grammar for multi-branch store operations...</div>
-            </div>
-            <button id="btn-copy-gemini-desc" type="button" class="btn-mini">คัดลอก</button>
-          </div>
-
-          <div class="manual-item">
-            <div class="manual-item-info">
-              <div class="manual-label">3. Instructions (คำสั่งสกิล)</div>
-              <div class="manual-value"># Workplace Comms Translator (V2) ...</div>
-            </div>
-            <button id="btn-copy-gemini-inst" type="button" class="btn-mini">คัดลอก</button>
-          </div>
-        </div>
       </section>
 
       <hr class="divider" />
@@ -1613,7 +1538,6 @@ Translate and polish rough drafts, notes, or Thai text into natural, ready-to-se
     // 5. เริ่มต้นทำงานเมื่อโหลดหน้าเว็บ
     // =========================================================================
     document.addEventListener('DOMContentLoaded', () => {
-      const geminiParsed = parseSkillMarkdown(GEMINI_SKILL_CONTENT);
       const chatgptParsed = parseSkillMarkdown(CHATGPT_SKILL_CONTENT);
 
       // สร้าง ZIP ทั้ง 2 เวอร์ชัน (โครงสร้าง workplace-comms-translator-v2/SKILL.md เหมือนเดิม)
@@ -1629,11 +1553,9 @@ Translate and polish rough drafts, notes, or Thai text into natural, ready-to-se
       document.getElementById('chatgpt-zip-size').textContent =
         `${(chatgptZipBlob.size / 1024).toFixed(1)} KB (${chatgptZipBlob.size.toLocaleString()} bytes)`;
 
-      // ใส่ข้อมูล Preview และฟิลด์ย่อย
+      // ใส่ข้อมูล Preview
       document.getElementById('gemini-preview-code').textContent = GEMINI_SKILL_CONTENT;
       document.getElementById('chatgpt-preview-code').textContent = CHATGPT_SKILL_CONTENT;
-      document.getElementById('gemini-field-name').textContent = geminiParsed.name;
-      document.getElementById('gemini-field-desc').textContent = geminiParsed.description;
 
       // สลับแท็บ Gemini / ChatGPT
       setupTabs();
@@ -1659,17 +1581,6 @@ Translate and polish rough drafts, notes, or Thai text into natural, ready-to-se
         triggerDownload(geminiMdBlob, 'SKILL.md');
       });
 
-      document.getElementById('btn-copy-gemini-name').addEventListener('click', (e) => {
-        copyToClipboard(geminiParsed.name, e.currentTarget, '📋 คัดลอก Name แล้ว', '✅ แล้ว');
-      });
-
-      document.getElementById('btn-copy-gemini-desc').addEventListener('click', (e) => {
-        copyToClipboard(geminiParsed.description, e.currentTarget, '📋 คัดลอก Description แล้ว', '✅ แล้ว');
-      });
-
-      document.getElementById('btn-copy-gemini-inst').addEventListener('click', (e) => {
-        copyToClipboard(geminiParsed.instructions, e.currentTarget, '📋 คัดลอก Instructions แล้ว', '✅ แล้ว');
-      });
 
       document.getElementById('btn-gemini-download-zip').addEventListener('click', () => {
         triggerDownload(geminiZipBlob, GEMINI_ZIP_FILENAME);
