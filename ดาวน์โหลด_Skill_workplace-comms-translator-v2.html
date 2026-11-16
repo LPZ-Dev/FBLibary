@@ -354,19 +354,6 @@
       border-color: #94a3b8;
     }
 
-    .btn-soft {
-      background: var(--bg-muted);
-      color: var(--text-primary);
-      border-color: var(--border-subtle);
-      font-size: 13.5px;
-      min-height: 44px;
-    }
-
-    .btn-soft:hover {
-      background: #eef2f7;
-      border-color: var(--border-strong);
-    }
-
     .btn.is-copied {
       background: var(--success-bg) !important;
       color: var(--success-text) !important;
@@ -780,12 +767,12 @@
           <h2 id="chatgpt-convert-heading" class="section-title">
             <span>🔄 สำหรับ ChatGPT (ฟรี 100%)</span>
           </h2>
-          <span class="section-tag recommended">พอดี Custom Instructions</span>
+          <span class="section-tag recommended">ไม่ต้องตั้งค่า</span>
         </div>
         <div class="callout info-chatgpt">
           <strong>ฉบับกระชับสำหรับบัญชีฟรี:</strong>
           <ul class="convert-list">
-            <li>ย่อคำสั่งให้พอดีช่อง <strong>Custom Instructions</strong> (ไม่เกิน 1,500 ตัวอักษร วางได้ครบไม่โดนตัด)</li>
+            <li>วางคำสั่งในแชทใหม่ใช้ได้ทันที <strong>ไม่ต้องตั้งค่าบัญชี</strong> (ปักหมุดแชทไว้ใช้ซ้ำได้)</li>
             <li>ฟังเสียงอ่านฟรีด้วย <strong>Read Aloud (🔊)</strong> ในแอป ChatGPT</li>
             <li>ครบทั้ง <strong>3 โหมด</strong> (บอส / พนักงาน / ลูกค้า), <strong>2 ตัวเลือกพร้อมปุ่ม Copy</strong> และคำแปลไทย</li>
           </ul>
@@ -798,21 +785,20 @@
       <section aria-labelledby="chatgpt-free-heading">
         <div class="section-head">
           <h2 id="chatgpt-free-heading" class="section-title">
-            <span>📱 เลือกวิธีใช้งานบนมือถือ</span>
+            <span>📱 ติดตั้งบน ChatGPT (มือถือ)</span>
           </h2>
           <span class="section-tag recommended">ฟรี • ไม่ต้องใช้ .zip</span>
         </div>
+        <p class="section-desc">
+          กดคัดลอก Prompt ด้านล่าง แล้วไป <strong>วาง (Paste)</strong> ส่งในแชทใหม่ของแอป ChatGPT ได้ทันที
+        </p>
 
         <div class="btn-stack">
-          <button id="btn-chatgpt-copy-instructions" type="button" class="btn btn-chatgpt">
-            <span>📋 คัดลอกคำสั่ง fbts (ใส่ Custom Instructions)</span>
-          </button>
-
-          <button id="btn-chatgpt-copy-chat-prompt" type="button" class="btn btn-secondary">
+          <button id="btn-chatgpt-copy-chat-prompt" type="button" class="btn btn-chatgpt">
             <span>💬 คัดลอก Prompt เริ่มแชททันที (ไม่ต้องตั้งค่า)</span>
           </button>
 
-          <button id="btn-chatgpt-download-md" type="button" class="btn btn-soft">
+          <button id="btn-chatgpt-download-md" type="button" class="btn btn-secondary">
             <span>📄 ดาวน์โหลดไฟล์ SKILL-chatgpt.md</span>
           </button>
         </div>
@@ -824,18 +810,23 @@
       <section aria-labelledby="chatgpt-install-heading">
         <div class="section-head">
           <h2 id="chatgpt-install-heading" class="section-title">
-            <span>🛠️ วิธีตั้งค่าบน ChatGPT</span>
+            <span>🛠️ วิธีติดตั้ง 3 ขั้นตอน</span>
           </h2>
+          <span class="section-tag recommended">พร้อมใช้ใน 10 วิ</span>
         </div>
 
         <ol class="steps-list">
           <li class="step-item">
             <span class="step-num">1</span>
-            <span><strong>จำถาวรทุกแชท (แนะนำ):</strong> กดปุ่มแรก → แอป ChatGPT → แตะโปรไฟล์ → <strong>Settings → Personalization → Custom Instructions</strong> → วางในช่องล่าง → <strong>Save</strong></span>
+            <span>กดปุ่ม <strong>"💬 คัดลอก Prompt เริ่มแชททันที (ไม่ต้องตั้งค่า)"</strong> ด้านบน</span>
           </li>
           <li class="step-item">
             <span class="step-num">2</span>
-            <span><strong>ใช้ทันทีในแชทเดียว:</strong> กดปุ่มที่ 2 → เปิดแชทใหม่แล้ววางส่ง จากนั้นพิมพ์ข้อความที่ต้องการแปลต่อได้เลย <em>(ปักหมุดแชทไว้ใช้ซ้ำได้)</em></span>
+            <span>เปิดแอป <strong>ChatGPT</strong> บนมือถือ เปิดแชทใหม่แล้ว <strong>วาง (Paste)</strong> ส่งในแชท</span>
+          </li>
+          <li class="step-item">
+            <span class="step-num">3</span>
+            <span>รอตอบกลับ <strong>"สกิลพร้อมใช้งาน"</strong> พร้อมตัวอย่างวิธีใช้ แล้วส่งข้อความแปลต่อได้เลย <em>(ปักหมุดแชทไว้ใช้ซ้ำได้)</em></span>
           </li>
         </ol>
       </section>
@@ -877,7 +868,7 @@
       <ol class="steps-list">
         <li class="step-item">
           <span class="step-num">1</span>
-          <span><strong>เรียกใช้:</strong> ใน <strong>Gemini</strong> พิมพ์ <code class="inline-code">/fbts</code> (หรือขอแปลเลย) — ใน <strong>ChatGPT</strong> พิมพ์ในแชทที่ตั้งค่าไว้ได้เลย</span>
+          <span><strong>เรียกใช้:</strong> ใน <strong>Gemini</strong> พิมพ์ <code class="inline-code">/fbts</code> (หรือขอแปลเลย) — ใน <strong>ChatGPT</strong> พิมพ์ในแชทที่วาง Prompt ไว้ได้เลย</span>
         </li>
         <li class="step-item">
           <span class="step-num">2</span>
@@ -982,7 +973,7 @@ Polish Thai/English drafts into natural workplace chats ("krub", "na krub", no A
 - No corporate words ("furthermore", "utilize", "commence", "rectify the situation", "deeply regret"), em-dashes, or stiff punctuation. Keep lines short for mobile.`;
 
     // =========================================================================
-    // 2. เนื้อหา SKILL-chatgpt.md สำหรับ ChatGPT (พอดีช่อง Custom Instructions)
+    // 2. เนื้อหา SKILL-chatgpt.md สำหรับ ChatGPT
     // =========================================================================
     const CHATGPT_SKILL_CONTENT = `---
 name: fbts
@@ -992,6 +983,15 @@ description: Translate, polish, and grammar-check workplace chats (Boss, Staff, 
 # fbts — Workplace Comms
 
 Polish Thai/English drafts into natural workplace chats ("krub", "na krub", no AI tone).
+
+## Setup (First Time Only)
+- On first install/paste (with no draft text to translate yet), reply starting with \`สกิลพร้อมใช้งาน\` and show short Thai examples of how to use the skill:
+  - ส่งบอส: \`ส่งบอส: POS สาขา 2 ค้าง 15 นาที รีสตาร์ทหายแล้ว ยอด 16,450 บาท\`
+  - กลุ่มพนักงาน: \`กลุ่มพนักงาน: พรุ่งนี้เปิดร้าน 9 โมง เช็คสต็อกถ่ายรูปส่งก่อน 10 โมง\`
+  - ตอบลูกค้า: \`ตอบลูกค้า: ขอเช็คสต็อกอีกสาขาก่อนนะคะ พรุ่งนี้เช้าทักแจ้งทันที\`
+  - เช็คแกรมม่า: \`grammar check (boss): Boss krub today aircon not cold...\`
+  - ฟังเสียงอ่าน: พิมพ์ \`ขอไฟล์เสียง\` หรือ \`ขอปุ่มฟังเสียง\`
+- Show this setup reply only once; for translation requests, apply Modes & Output directly.
 
 ## Modes (infer if unstated)
 - **Boss:** Simple Thai-manager mobile English ("krub", "na krub", "Boss krub"). Bullets + commas for numbers (16,000 THB). Mistakes: no self-pity ("It's all my fault"); own it + 2-3 concrete fixes.
@@ -1190,16 +1190,8 @@ Polish Thai/English drafts into natural workplace chats ("krub", "na krub", no A
 
       // --- ปุ่มฝั่ง ChatGPT (เวอร์ชันฟรี 100%) ---
       const chatgptInstantPrompt =
-        'ใช้สกิล fbts ตามกฎนี้ ถ้าเข้าใจแล้วตอบแค่ "พร้อมใช้ fbts ครับ ส่งข้อความมาได้เลย"\n\n' +
+        'ติดตั้งสกิล fbts ตามกฎนี้ (หลังติดตั้งครั้งแรกให้ตอบว่า "สกิลพร้อมใช้งาน" พร้อมยกตัวอย่างวิธีการใช้สกิล แล้วรอรับข้อความแรก):\n\n' +
         chatgptParsed.instructions;
-
-      document.getElementById('btn-chatgpt-copy-instructions').addEventListener('click', (e) => {
-        copyToClipboard(
-          chatgptParsed.instructions,
-          e.currentTarget,
-          '📋 คัดลอกคำสั่ง fbts แล้ว! วางใน Custom Instructions ได้เลย'
-        );
-      });
 
       document.getElementById('btn-chatgpt-copy-chat-prompt').addEventListener('click', (e) => {
         copyToClipboard(

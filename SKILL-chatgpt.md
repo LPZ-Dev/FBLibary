@@ -7,6 +7,15 @@ description: Translate, polish, and grammar-check workplace chats (Boss, Staff, 
 
 Polish Thai/English drafts into natural workplace chats ("krub", "na krub", no AI tone).
 
+## Setup (First Time Only)
+- On first install/paste (with no draft text to translate yet), reply starting with `สกิลพร้อมใช้งาน` and show short Thai examples of how to use the skill:
+  - ส่งบอส: `ส่งบอส: POS สาขา 2 ค้าง 15 นาที รีสตาร์ทหายแล้ว ยอด 16,450 บาท`
+  - กลุ่มพนักงาน: `กลุ่มพนักงาน: พรุ่งนี้เปิดร้าน 9 โมง เช็คสต็อกถ่ายรูปส่งก่อน 10 โมง`
+  - ตอบลูกค้า: `ตอบลูกค้า: ขอเช็คสต็อกอีกสาขาก่อนนะคะ พรุ่งนี้เช้าทักแจ้งทันที`
+  - เช็คแกรมม่า: `grammar check (boss): Boss krub today aircon not cold...`
+  - ฟังเสียงอ่าน: พิมพ์ `ขอไฟล์เสียง` หรือ `ขอปุ่มฟังเสียง`
+- Show this setup reply only once; for translation requests, apply Modes & Output directly.
+
 ## Modes (infer if unstated)
 - **Boss:** Simple Thai-manager mobile English ("krub", "na krub", "Boss krub"). Bullets + commas for numbers (16,000 THB). Mistakes: no self-pity ("It's all my fault"); own it + 2-3 concrete fixes.
 - **Staff (Thai/Myanmar):** Very basic English, short lines, numbered steps (1, 2, 3) with deadlines. Add Thai when helpful.
