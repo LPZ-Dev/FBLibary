@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workplace Comms Translator V2 — ติดตั้งสกิลสำหรับ Gemini &amp; ChatGPT</title>
+  <meta name="description" content="ดาวน์โหลดและติดตั้งสกิล workplace-comms-translator-v2 สำหรับ Gemini (ทั้งคอมและมือถือไม่ต้องใช้ .zip) และเวอร์ชันแปลงสำหรับ ChatGPT พร้อมคู่มือวิธีใช้งานครบจบในหน้าเดียว" />
+  <meta property="og:title" content="Workplace Comms Translator V2 — Gemini &amp; ChatGPT Skill" />
+  <meta property="og:description" content="สกิลแปลและเกลาแชททำงานสำหรับบอส พนักงาน และลูกค้า พร้อมคำอธิบายไทยและเสียงอ่าน รองรับทั้ง Gemini และ ChatGPT" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-canvas: #f4f6f9;
+      --bg-surface: #ffffff;
+      --bg-muted: #f8fafc;
+      --bg-code: #0f172a;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+
+      --border-subtle: #e2e8f0;
+      --border-strong: #cbd5e1;
+
+      --gemini-accent: #1d4ed8;
+      --gemini-accent-hover: #1e40af;
+      --gemini-soft: #eff6ff;
+      --gemini-border: #bfdbfe;
+
+      --chatgpt-accent: #0f766e;
+      --chatgpt-accent-hover: #115e59;
+      --chatgpt-soft: #f0fdfa;
+      --chatgpt-border: #99f6e4;
+
+      --amber-bg: #fffbeb;
+      --amber-border: #fde68a;
+      --amber-text: #92400e;
+
+      --success-bg: #ecfdf5;
+      --success-border: #a7f3d0;
+      --success-text: #065f46;
+
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+
+      --shadow-page: 0 20px 45px -20px rgba(15, 23, 42, 0.14), 0 4px 12px -4px rgba(15, 23, 42, 0.06);
+      --shadow-btn: 0 6px 16px -4px rgba(15, 23, 42, 0.16);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'IBM Plex Sans Thai', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-primary);
+      background:
+        radial-gradient(1100px 520px at 15% -5%, #dbeafe 0%, transparent 60%),
+        radial-gradient(900px 480px at 90% 5%, #ccfbf1 0%, transparent 55%),
+        var(--bg-canvas);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      padding: 20px 14px 48px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Header */
+    .hero {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-page);
+      padding: 28px 24px 24px;
+    }
+
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 0 0 8px;
+    }
+
+    .hero-title {
+      font-size: clamp(22px, 4vw, 28px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: var(--text-primary);
+      margin: 0 0 8px;
+      word-break: break-word;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin: 0 0 18px;
+    }
+
+    .feature-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .feature-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-muted);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-weight: 500;
+    }
+
+    /* Platform Switcher */
+    .platform-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 8px;
+      box-shadow: var(--shadow-page);
+    }
+
+    .platform-tab {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      border-radius: var(--radius-md);
+      padding: 13px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+      min-height: 52px;
+      text-align: left;
+    }
+
+    .platform-tab:hover {
+      background: var(--bg-muted);
+      color: var(--text-primary);
+    }
+
+    .platform-tab:active {
+      transform: scale(0.99);
+    }
+
+    .platform-tab[aria-selected="true"][data-platform="gemini"] {
+      background: var(--gemini-soft);
+      color: var(--gemini-accent);
+      border-color: var(--gemini-border);
+    }
+
+    .platform-tab[aria-selected="true"][data-platform="chatgpt"] {
+      background: var(--chatgpt-soft);
+      color: var(--chatgpt-accent);
+      border-color: var(--chatgpt-border);
+    }
+
+    .tab-meta {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+
+    .tab-sub {
+      font-size: 11.5px;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+
+    /* Panel Cards */
+    .panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-page);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .panel[hidden] {
+      display: none;
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 0 0 10px;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-tag {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: var(--bg-muted);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+
+    .section-tag.recommended {
+      background: var(--success-bg);
+      border-color: var(--success-border);
+      color: var(--success-text);
+    }
+
+    .section-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin: 0 0 14px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border-subtle);
+      border: 0;
+      margin: 0;
+    }
+
+    /* Callouts */
+    .callout {
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-muted);
+      color: var(--text-secondary);
+    }
+
+    .callout strong {
+      color: var(--text-primary);
+    }
+
+    .callout.warn {
+      background: var(--amber-bg);
+      border-color: var(--amber-border);
+      color: var(--amber-text);
+    }
+
+    .callout.warn strong {
+      color: #78350f;
+    }
+
+    .callout.info-gemini {
+      background: var(--gemini-soft);
+      border-color: var(--gemini-border);
+      color: #1e3a8a;
+    }
+
+    .callout.info-chatgpt {
+      background: var(--chatgpt-soft);
+      border-color: var(--chatgpt-border);
+      color: #134e4a;
+    }
+
+    /* Buttons */
+    .btn-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn {
+      appearance: none;
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 14.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.12s ease, box-shadow 0.16s ease;
+      text-decoration: none;
+    }
+
+    .btn:active {
+      transform: scale(0.99);
+    }
+
+    .btn-gemini {
+      background: var(--gemini-accent);
+      color: #ffffff;
+      box-shadow: var(--shadow-btn);
+    }
+
+    .btn-gemini:hover {
+      background: var(--gemini-accent-hover);
+    }
+
+    .btn-chatgpt {
+      background: var(--chatgpt-accent);
+      color: #ffffff;
+      box-shadow: var(--shadow-btn);
+    }
+
+    .btn-chatgpt:hover {
+      background: var(--chatgpt-accent-hover);
+    }
+
+    .btn-secondary {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-muted);
+      border-color: #94a3b8;
+    }
+
+    .btn-soft {
+      background: var(--bg-muted);
+      color: var(--text-primary);
+      border-color: var(--border-subtle);
+      font-size: 13.5px;
+      min-height: 44px;
+    }
+
+    .btn-soft:hover {
+      background: #eef2f7;
+      border-color: var(--border-strong);
+    }
+
+    .btn.is-copied {
+      background: var(--success-bg) !important;
+      color: var(--success-text) !important;
+      border-color: var(--success-border) !important;
+    }
+
+    /* Manual Field Copy Grid (Gemini Mobile Fallback) */
+    .manual-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      background: var(--bg-muted);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .manual-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 10px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+    }
+
+    .manual-item-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .manual-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .manual-value {
+      font-size: 13px;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn-mini {
+      appearance: none;
+      flex-shrink: 0;
+      min-height: 36px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn-mini:hover {
+      background: var(--bg-muted);
+    }
+
+    .btn-mini.is-copied {
+      background: var(--success-bg);
+      color: var(--success-text);
+      border-color: var(--success-border);
+    }
+
+    /* ZIP Structure Box */
+    .zip-tree {
+      background: var(--bg-muted);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+
+    .zip-tree-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .zip-tree-body {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12.5px;
+      line-height: 1.75;
+      color: var(--text-primary);
+      overflow-x: auto;
+    }
+
+    .tree-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .tree-indent-1 {
+      padding-left: 18px;
+      color: var(--text-secondary);
+    }
+
+    .tree-indent-2 {
+      padding-left: 40px;
+      font-weight: 600;
+    }
+
+    .tree-branch {
+      color: #94a3b8;
+      user-select: none;
+    }
+
+    /* Steps List */
+    .steps-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12.5px;
+      font-weight: 700;
+      background: var(--bg-muted);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      margin-top: 1px;
+    }
+
+    .step-item strong {
+      color: var(--text-primary);
+    }
+
+    code.inline-code {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 12.5px;
+      background: var(--bg-muted);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 1px 6px;
+      color: var(--text-primary);
+      word-break: break-word;
+    }
+
+    /* Conversion Comparison List */
+    .convert-list {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    /* Collapsible Code Preview */
+    .preview-box {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--bg-surface);
+    }
+
+    .preview-toggle {
+      appearance: none;
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-surface);
+      border: 0;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .preview-toggle:hover {
+      background: var(--bg-muted);
+    }
+
+    .preview-chevron {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.2s ease;
+    }
+
+    .preview-toggle[aria-expanded="true"] .preview-chevron {
+      transform: rotate(180deg);
+    }
+
+    .preview-body {
+      background: var(--bg-code);
+      color: #e2e8f0;
+      padding: 16px;
+      max-height: 290px;
+      overflow: auto;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .preview-body pre {
+      margin: 0;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Usage Guide Card */
+    .usage-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-page);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .example-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .example-row {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      background: var(--bg-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .example-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .example-role {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .example-prompt {
+      margin: 0;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      line-height: 1.5;
+    }
+
+    .audio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .audio-tip {
+      background: var(--bg-muted);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+    }
+
+    .audio-tip h4 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    .audio-tip p {
+      margin: 0;
+    }
+
+    /* Footer */
+    .page-footer {
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      padding: 6px 12px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translate(-50%, 14px);
+      z-index: 100;
+      width: min(92vw, 400px);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.24s ease, transform 0.24s ease;
+    }
+
+    .toast.is-visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .toast-inner {
+      background: rgba(15, 23, 42, 0.96);
+      color: #ffffff;
+      font-size: 13.5px;
+      font-weight: 500;
+      padding: 12px 16px;
+      border-radius: 14px;
+      box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.35);
+      text-align: center;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      body {
+        padding: 12px 10px 40px;
+      }
+
+      .hero,
+      .panel,
+      .usage-section {
+        padding: 18px 16px;
+      }
+
+      .btn-row,
+      .audio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .platform-tab {
+        padding: 10px 10px;
+        font-size: 14px;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Hero -->
+    <header class="hero">
+      <p class="hero-eyebrow">Skill Package • Version 2.0 • Gemini &amp; ChatGPT</p>
+      <h1 class="hero-title">workplace-comms-translator-v2</h1>
+      <p class="hero-subtitle">
+        แพ็กเกจสกิลช่วยแปล-เช็คแกรมม่า และขัดเกลาข้อความแชททำงาน (บอส / พนักงาน / ลูกค้า) ให้ดูเป็นธรรมชาติเหมือนคนพิมพ์จริง ไม่แข็งแบบ AI พร้อมคำอธิบายภาษาไทยและตัวช่วยฟังเสียงอ่าน
+      </p>
+      <div class="feature-strip" aria-label="จุดเด่นของสกิล">
+        <span class="feature-item">2 ตัวเลือกพร้อมปุ่ม Copy</span>
+        <span class="feature-item">คำอธิบายภาษาไทยทุกตัวเลือก</span>
+        <span class="feature-item">รองรับมือถือไม่ต้องแนบ .zip</span>
+        <span class="feature-item">แปลงสกิลให้ใช้ใน ChatGPT ได้</span>
+      </div>
+    </header>
+
+    <!-- Platform Selector -->
+    <nav class="platform-nav" role="tablist" aria-label="เลือกแพลตฟอร์ม AI ที่ใช้งาน">
+      <button
+        id="tab-gemini"
+        class="platform-tab"
+        role="tab"
+        type="button"
+        data-platform="gemini"
+        aria-selected="true"
+        aria-controls="panel-gemini"
+      >
+        <span aria-hidden="true">✨</span>
+        <span class="tab-meta">
+          <span>สำหรับ Gemini</span>
+          <span class="tab-sub">มือถือไม่ใช้ zip • คอมใช้ zip</span>
+        </span>
+      </button>
+
+      <button
+        id="tab-chatgpt"
+        class="platform-tab"
+        role="tab"
+        type="button"
+        data-platform="chatgpt"
+        aria-selected="false"
+        aria-controls="panel-chatgpt"
+      >
+        <span aria-hidden="true">🤖</span>
+        <span class="tab-meta">
+          <span>สำหรับ ChatGPT</span>
+          <span class="tab-sub">แปลงสกิลแล้ว • ใช้ได้ทุกแพ็กเกจ</span>
+        </span>
+      </button>
+    </nav>
+
+    <!-- ==================== PANEL 1: GEMINI ==================== -->
+    <main id="panel-gemini" class="panel" role="tabpanel" aria-labelledby="tab-gemini">
+      <!-- 1. Mobile Section (No ZIP needed) -->
+      <section aria-labelledby="gemini-mobile-heading">
+        <div class="section-head">
+          <h2 id="gemini-mobile-heading" class="section-title">
+            <span>📱 สำหรับมือถือ (iPhone / Android)</span>
+          </h2>
+          <span class="section-tag recommended">แนะนำสำหรับมือถือ • ไม่ต้องใช้ .zip</span>
+        </div>
+        <p class="section-desc">
+          ในแอป Gemini บนมือถือ ปุ่ม <strong>+</strong> ในช่องแชทไม่สามารถแนบไฟล์ <code class="inline-code">.zip</code> ได้ ให้ใช้วิธี <strong>คัดลอกข้อความ SKILL.md ไปแปะตอนติดตั้ง</strong> ในแชทหรือหน้า Skills แทน (ใช้ได้ 100%)
+        </p>
+
+        <div class="callout warn" style="margin-bottom: 14px;">
+          <strong>วิธีที่ง่ายที่สุดบนมือถือ:</strong> กดปุ่มสีน้ำเงินด้านล่าง → เปิดแอป Gemini → <strong>แปะ (Paste)</strong> ลงในช่องแชทแล้วกดส่งได้เลย <em>(ไม่ต้องแนบไฟล์ .zip)</em>
+        </div>
+
+        <div class="btn-stack">
+          <button id="btn-gemini-copy-chat-prompt" type="button" class="btn btn-gemini">
+            <span>✨ คัดลอกคำสั่ง + SKILL.md (นำไปแปะในแชท Gemini)</span>
+          </button>
+
+          <button id="btn-gemini-download-md" type="button" class="btn btn-secondary">
+            <span>📄 ดาวน์โหลดเฉพาะไฟล์ SKILL.md (ไม่ต้องบีบอัด)</span>
+          </button>
+        </div>
+
+        <!-- 3-field quick copy for Gemini "Create manually" -->
+        <div class="manual-grid" aria-label="คัดลอกแยกทีละช่องสำหรับสร้างสกิลด้วยตัวเองในมือถือ">
+          <div style="font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px;">
+            หรือกรอกแยกช่องในหน้า Skills → Create manually (กดคัดลอกไปแปะทีละช่อง):
+          </div>
+
+          <div class="manual-item">
+            <div class="manual-item-info">
+              <div class="manual-label">1. Name (ชื่อสกิล)</div>
+              <div class="manual-value" id="gemini-field-name">workplace-comms-translator-v2</div>
+            </div>
+            <button id="btn-copy-gemini-name" type="button" class="btn-mini">คัดลอก</button>
+          </div>
+
+          <div class="manual-item">
+            <div class="manual-item-info">
+              <div class="manual-label">2. Description (คำอธิบาย)</div>
+              <div class="manual-value" id="gemini-field-desc">Translate, polish, and check grammar for multi-branch store operations...</div>
+            </div>
+            <button id="btn-copy-gemini-desc" type="button" class="btn-mini">คัดลอก</button>
+          </div>
+
+          <div class="manual-item">
+            <div class="manual-item-info">
+              <div class="manual-label">3. Instructions (คำสั่งสกิล)</div>
+              <div class="manual-value"># Workplace Comms Translator (V2) ...</div>
+            </div>
+            <button id="btn-copy-gemini-inst" type="button" class="btn-mini">คัดลอก</button>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- 2. Desktop Section (Original ZIP structure preserved) -->
+      <section aria-labelledby="gemini-desktop-heading">
+        <div class="section-head">
+          <h2 id="gemini-desktop-heading" class="section-title">
+            <span>💻 สำหรับคอมพิวเตอร์ (ไฟล์ .zip โครงสร้างเดิม)</span>
+          </h2>
+          <span class="section-tag">โครงสร้างมาตรฐาน</span>
+        </div>
+        <p class="section-desc">
+          คงโครงสร้างโฟลเดอร์ภายในไฟล์ <code class="inline-code">.zip</code> เหมือนต้นฉบับทุกประการ เหมาะสำหรับอัปโหลดผ่านหน้าเว็บ Gemini บนคอมพิวเตอร์หรือแชร์ให้ทีม
+        </p>
+
+        <div class="zip-tree" aria-label="โครงสร้างไฟล์ในแพ็กเกจ ZIP ของ Gemini">
+          <div class="zip-tree-head">
+            <span>โครงสร้างไฟล์ภายในแพ็กเกจ (Gemini)</span>
+            <span id="gemini-zip-size">กำลังคำนวณ...</span>
+          </div>
+          <div class="zip-tree-body">
+            <div class="tree-line"><span>📦</span><span>workplace-comms-translator-v2.zip</span></div>
+            <div class="tree-line tree-indent-1"><span class="tree-branch">└──</span><span>📁</span><span>workplace-comms-translator-v2/</span></div>
+            <div class="tree-line tree-indent-2" style="color: var(--gemini-accent);"><span class="tree-branch">└──</span><span>📄</span><span>SKILL.md</span></div>
+          </div>
+        </div>
+
+        <div class="btn-stack">
+          <div class="btn-row">
+            <button id="btn-gemini-download-zip" type="button" class="btn btn-secondary">
+              <span>⬇️ ดาวน์โหลดไฟล์ .zip</span>
+            </button>
+            <button id="btn-gemini-share-zip" type="button" class="btn btn-secondary">
+              <span>📤 แชร์ไฟล์ .zip ให้เพื่อน</span>
+            </button>
+          </div>
+          <button id="btn-gemini-copy-full" type="button" class="btn btn-soft">
+            <span>📋 คัดลอกเนื้อหา SKILL.md ฉบับเต็ม (สำหรับแปะตอนติดตั้ง)</span>
+          </button>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- 3. Gemini Installation Steps -->
+      <section aria-labelledby="gemini-install-heading">
+        <div class="section-head">
+          <h2 id="gemini-install-heading" class="section-title">
+            <span>🛠️ วิธีติดตั้งลงใน Gemini</span>
+          </h2>
+        </div>
+
+        <div class="callout info-gemini" style="margin-bottom: 14px;">
+          <strong>ตัวเลือกที่ 1 — บนมือถือ (แนะนำ):</strong> กดปุ่ม <em>"คัดลอกคำสั่ง + SKILL.md"</em> ด้านบน → เปิดแอป Gemini → <strong>แปะ (Paste)</strong> ส่งในแชท (ไม่ต้องแนบไฟล์) Gemini จะบันทึกสกิลให้อัตโนมัติ หรือเข้าเมนู <strong>ปรับแต่ง (Customize) → สกิล (Skills) → สร้างด้วยตัวเอง</strong> แล้วกดคัดลอก 3 ช่องด้านบนมาแปะทีละช่อง
+        </div>
+
+        <ol class="steps-list">
+          <li class="step-item">
+            <span class="step-num">1</span>
+            <span><strong>บนคอมพิวเตอร์ (ใช้ไฟล์ .zip):</strong> กดดาวน์โหลดไฟล์ <code class="inline-code">workplace-comms-translator-v2.zip</code> (หรือไฟล์ <code class="inline-code">SKILL.md</code>)</span>
+          </li>
+          <li class="step-item">
+            <span class="step-num">2</span>
+            <span>เปิดเว็บ <code class="inline-code">gemini.google.com</code> → แถบเมนูซ้ายเลือก <strong>Settings / Customize → Skills</strong> <em>(อัปโหลดที่หน้า Skills ไม่ใช่กด + ในช่องแชท)</em></span>
+          </li>
+          <li class="step-item">
+            <span class="step-num">3</span>
+            <span>กด <strong>Create → Upload</strong> แล้วเลือกไฟล์ <code class="inline-code">.zip</code> (หรือ <code class="inline-code">SKILL.md</code>) ตรวจสอบความเรียบร้อยแล้วกด <strong>Create</strong> เพื่อบันทึก</span>
+          </li>
+        </ol>
+      </section>
+
+      <!-- 4. Gemini SKILL.md Preview -->
+      <div class="preview-box">
+        <button
+          id="btn-toggle-gemini-preview"
+          type="button"
+          class="preview-toggle"
+          aria-expanded="false"
+          aria-controls="gemini-preview-body"
+        >
+          <span>👁️ ดูเนื้อหาต้นฉบับ SKILL.md (สำหรับ Gemini)</span>
+          <svg class="preview-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="gemini-preview-body" class="preview-body" hidden>
+          <pre id="gemini-preview-code"></pre>
+        </div>
+      </div>
+    </main>
+
+    <!-- ==================== PANEL 2: CHATGPT ==================== -->
+    <main id="panel-chatgpt" class="panel" role="tabpanel" aria-labelledby="tab-chatgpt" hidden>
+      <!-- 1. Conversion Summary -->
+      <section aria-labelledby="chatgpt-convert-heading">
+        <div class="section-head">
+          <h2 id="chatgpt-convert-heading" class="section-title">
+            <span>🔄 แปลงสกิลให้รองรับ ChatGPT แล้ว</span>
+          </h2>
+          <span class="section-tag recommended">พร้อมใช้งานบน ChatGPT</span>
+        </div>
+        <div class="callout info-chatgpt">
+          <strong>สิ่งที่ปรับแปลงจากเวอร์ชัน Gemini เพื่อให้ ChatGPT ทำงานได้ดีที่สุด:</strong>
+          <ul class="convert-list">
+            <li>ตัดคำสั่งเฉพาะของ Gemini (<code class="inline-code">web_code_canvas</code>) ออก เพื่อไม่ให้ ChatGPT พิมพ์โค้ด HTML ยาวๆ รกหน้าแชท</li>
+            <li>เปลี่ยนระบบฟังเสียงเป็น <strong>Read Aloud (🔊 อ่านออกเสียง)</strong> ที่มีใน ChatGPT ทั้งมือถือและเว็บ + รองรับสั่งขอไฟล์ <code class="inline-code">.mp3</code> หรือปุ่มฟังเสียง HTML เมื่อต้องการ</li>
+            <li>คง <strong>3 โหมดภาษา</strong> (บอส / พนักงาน / ลูกค้า), <strong>2 ตัวเลือกพร้อมปุ่ม Copy</strong> และ <strong>คำอธิบายภาษาไทย</strong> ไว้ครบ 100%</li>
+          </ul>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- 2. ChatGPT Free / Go / Plus / Pro (Projects & Direct Chat - Works on Mobile & Desktop) -->
+      <section aria-labelledby="chatgpt-personal-heading">
+        <div class="section-head">
+          <h2 id="chatgpt-personal-heading" class="section-title">
+            <span>📱💻 สำหรับ ChatGPT ทั่วไป (Free / Plus / Go / Pro)</span>
+          </h2>
+          <span class="section-tag recommended">ใช้ได้ทั้งมือถือและคอม</span>
+        </div>
+        <p class="section-desc">
+          บัญชี ChatGPT ส่วนตัว (Free, Go, Plus, Pro) แนะนำให้ติดตั้งผ่าน <strong>Projects (โปรเจกต์)</strong> หรือวางใช้งานในแชทได้ทันที ไม่ต้องอัปโหลด <code class="inline-code">.zip</code>
+        </p>
+
+        <div class="btn-stack">
+          <button id="btn-chatgpt-copy-instructions" type="button" class="btn btn-chatgpt">
+            <span>📋 คัดลอกคำสั่งสกิลสำหรับ ChatGPT (ใส่ใน Project / Instructions)</span>
+          </button>
+
+          <button id="btn-chatgpt-copy-chat-prompt" type="button" class="btn btn-secondary">
+            <span>💬 คัดลอก Prompt เริ่มใช้งานในแชททันที (ไม่ต้องตั้งค่า)</span>
+          </button>
+
+          <button id="btn-chatgpt-download-md" type="button" class="btn btn-soft">
+            <span>📄 ดาวน์โหลดไฟล์ SKILL-chatgpt.md (สำหรับแนบใน Project)</span>
+          </button>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- 3. ChatGPT Business / Enterprise / Edu & Codex (.zip Skills) -->
+      <section aria-labelledby="chatgpt-business-heading">
+        <div class="section-head">
+          <h2 id="chatgpt-business-heading" class="section-title">
+            <span>📦 สำหรับ ChatGPT Business / Enterprise / Edu / Codex</span>
+          </h2>
+          <span class="section-tag">โครงสร้าง .zip มาตรฐาน</span>
+        </div>
+        <p class="section-desc">
+          หากองค์กรหรือบัญชีของคุณเปิดใช้เมนู <strong>Plugins → Skills</strong> หรือใช้ <strong>Codex</strong> สามารถดาวน์โหลดไฟล์ <code class="inline-code">.zip</code> ฉบับแปลงแล้วไปอัปโหลดได้ทันที
+        </p>
+
+        <div class="zip-tree" aria-label="โครงสร้างไฟล์ในแพ็กเกจ ZIP ของ ChatGPT">
+          <div class="zip-tree-head">
+            <span>โครงสร้างไฟล์ภายในแพ็กเกจ (ChatGPT)</span>
+            <span id="chatgpt-zip-size">กำลังคำนวณ...</span>
+          </div>
+          <div class="zip-tree-body">
+            <div class="tree-line"><span>📦</span><span>workplace-comms-translator-v2-chatgpt.zip</span></div>
+            <div class="tree-line tree-indent-1"><span class="tree-branch">└──</span><span>📁</span><span>workplace-comms-translator-v2/</span></div>
+            <div class="tree-line tree-indent-2" style="color: var(--chatgpt-accent);"><span class="tree-branch">└──</span><span>📄</span><span>SKILL.md (ฉบับแปลงสำหรับ ChatGPT)</span></div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button id="btn-chatgpt-download-zip" type="button" class="btn btn-secondary">
+            <span>⬇️ ดาวน์โหลด .zip (ChatGPT)</span>
+          </button>
+          <button id="btn-chatgpt-share-zip" type="button" class="btn btn-secondary">
+            <span>📤 แชร์ไฟล์ .zip ให้เพื่อน</span>
+          </button>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- 4. ChatGPT Installation Steps -->
+      <section aria-labelledby="chatgpt-install-heading">
+        <div class="section-head">
+          <h2 id="chatgpt-install-heading" class="section-title">
+            <span>🛠️ วิธีติดตั้งสกิลใน ChatGPT (เลือกตามแพ็กเกจที่ใช้)</span>
+          </h2>
+        </div>
+
+        <ol class="steps-list">
+          <li class="step-item">
+            <span class="step-num">1</span>
+            <span><strong>วิธีแนะนำสำหรับทุกคน (ChatGPT Projects — ใช้ได้ทั้ง iPhone, Android, คอม):</strong> กดปุ่มสีเขียวด้านบนเพื่อคัดลอกคำสั่ง → เปิด ChatGPT → กด <strong>Projects → New Project</strong> ตั้งชื่อ (เช่น <em>แปลแชททำงาน</em>) → เข้าไปที่ <strong>Instructions (คำสั่ง)</strong> แล้ววางคำสั่งลงไป → กด <strong>Save</strong></span>
+          </li>
+          <li class="step-item">
+            <span class="step-num">2</span>
+            <span><strong>วิธีเร่งด่วน (ไม่อยากสร้าง Project):</strong> กดปุ่ม <em>"คัดลอก Prompt เริ่มใช้งานในแชททันที"</em> → วางส่งในห้องแชทใหม่ แล้วพิมพ์ข้อความที่ต้องการแปลต่อท้ายได้เลย</span>
+          </li>
+          <li class="step-item">
+            <span class="step-num">3</span>
+            <span><strong>บัญชี Business / Enterprise / Edu (Skills Upload):</strong> เปิด <code class="inline-code">chatgpt.com</code> → เมนูซ้ายเลือก <strong>Plugins → แท็บ Skills → Create → Upload from your computer</strong> → เลือกไฟล์ <code class="inline-code">workplace-comms-translator-v2-chatgpt.zip</code> <em>(หรือพิมพ์ <code class="inline-code">@skill-creator</code> ในแชทแล้ววางคำสั่ง)</em></span>
+          </li>
+        </ol>
+      </section>
+
+      <!-- 5. ChatGPT SKILL.md Preview -->
+      <div class="preview-box">
+        <button
+          id="btn-toggle-chatgpt-preview"
+          type="button"
+          class="preview-toggle"
+          aria-expanded="false"
+          aria-controls="chatgpt-preview-body"
+        >
+          <span>👁️ ดูเนื้อหา SKILL.md ฉบับแปลงสำหรับ ChatGPT</span>
+          <svg class="preview-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="chatgpt-preview-body" class="preview-body" hidden>
+          <pre id="chatgpt-preview-code"></pre>
+        </div>
+      </div>
+    </main>
+
+    <!-- ==================== SHARED USAGE GUIDE ==================== -->
+    <section class="usage-section" aria-labelledby="usage-guide-heading">
+      <div>
+        <div class="section-head">
+          <h2 id="usage-guide-heading" class="section-title">
+            <span>📖 วิธีใช้งานจริง (ใช้ได้ทั้ง Gemini และ ChatGPT)</span>
+          </h2>
+          <span class="section-tag">กดคัดลอกตัวอย่างไปลองได้ทันที</span>
+        </div>
+        <p class="section-desc" style="margin-bottom: 0;">
+          เมื่อติดตั้งเสร็จแล้ว คุณสามารถเรียกใช้ได้ทันทีตามขั้นตอนด้านล่าง โดยสกิลจะแยกรูปแบบภาษาให้เหมาะกับคนรับอัตโนมัติ
+        </p>
+      </div>
+
+      <ol class="steps-list">
+        <li class="step-item">
+          <span class="step-num">1</span>
+          <span><strong>เรียกใช้งานสกิล:</strong> ใน <strong>Gemini</strong> พิมพ์ <code class="inline-code">/workplace-comms-translator-v2</code> (หรือพิมพ์ขอแปล/เช็คแกรมม่าในแชทได้เลย) — ใน <strong>ChatGPT</strong> เปิดแชทใน <strong>Project</strong> ที่สร้างไว้ (หรือพิมพ์ <code class="inline-code">@workplace-comms-translator-v2</code> สำหรับบัญชี Business)</span>
+        </li>
+        <li class="step-item">
+          <span class="step-num">2</span>
+          <span><strong>พิมพ์สิ่งที่ต้องการสื่อสาร:</strong> จะพิมพ์ภาษาไทยล้วน โน้ตสั้นๆ หรือร่างภาษาอังกฤษแบบไม่มั่นใจแกรมม่าก็ได้ พร้อมระบุว่าส่งให้ใคร (บอส / พนักงาน / ลูกค้า)</span>
+        </li>
+        <li class="step-item">
+          <span class="step-num">3</span>
+          <span><strong>เลือกตัวเลือกที่ถูกใจแล้วกด Copy:</strong> AI จะตอบกลับมา <strong>2 ตัวเลือก</strong> (<em>Option 1: ชัดเจน แนะนำ</em> และ <em>Option 2: สั้น กระชับ</em>) ในกล่องโค้ด กดปุ่ม Copy มุมขวาบนของกล่องพร้อม <strong>คำอธิบายภาษาไทย</strong> ด้านล่างได้เลย</span>
+        </li>
+      </ol>
+
+      <hr class="divider" />
+
+      <div>
+        <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 12px; color: var(--text-primary);">
+          ตัวอย่างคำสั่งที่ใช้บ่อยในร้าน (กด Copy ไปลองได้):
+        </h3>
+
+        <div class="example-list">
+          <div class="example-row">
+            <div class="example-head">
+              <span class="example-role">👔 1. ส่งรายงาน / แจ้งปัญหาให้บอส (Mode 1: Boss)</span>
+              <button type="button" class="btn-mini btn-copy-example" data-example="ส่งให้บอส: วันนี้เครื่อง POS สาขา 2 ค้างไป 15 นาที ตอนนี้รีสตาร์ทหายแล้ว ยอดขายรวม 16,450 บาท กำลังให้พนักงานถ่ายรูปสลิปเทียบยอดทุกชั่วโมงครับ">คัดลอกตัวอย่าง</button>
+            </div>
+            <p class="example-prompt">ส่งให้บอส: วันนี้เครื่อง POS สาขา 2 ค้างไป 15 นาที ตอนนี้รีสตาร์ทหายแล้ว ยอดขายรวม 16,450 บาท กำลังให้พนักงานถ่ายรูปสลิปเทียบยอดทุกชั่วโมงครับ</p>
+          </div>
+
+          <div class="example-row">
+            <div class="example-head">
+              <span class="example-role">👥 2. สั่งงานในกลุ่มพนักงานไทย / เมียนมา (Mode 2: Staff)</span>
+              <button type="button" class="btn-mini btn-copy-example" data-example="ส่งในกลุ่มพนักงาน: พรุ่งนี้เปิดร้าน 9 โมง ช่วยเช็คสต็อกหน้าเคาน์เตอร์ ถ่ายรูปส่งในกลุ่มก่อน 10 โมง และอย่าลืมล็อคประตูหลังตอนปิดร้านด้วย">คัดลอกตัวอย่าง</button>
+            </div>
+            <p class="example-prompt">ส่งในกลุ่มพนักงาน: พรุ่งนี้เปิดร้าน 9 โมง ช่วยเช็คสต็อกหน้าเคาน์เตอร์ ถ่ายรูปส่งในกลุ่มก่อน 10 โมง และอย่าลืมล็อคประตูหลังตอนปิดร้านด้วย</p>
+          </div>
+
+          <div class="example-row">
+            <div class="example-head">
+              <span class="example-role">💬 3. ตอบแชทลูกค้า / แจ้งบรอดแคสต์ (Mode 3: Customer)</span>
+              <button type="button" class="btn-mini btn-copy-example" data-example="ตอบลูกค้า: ขอเช็คสต็อกที่สาขาอื่นให้ก่อนนะคะ เดี๋ยวพรุ่งนี้เช้าทักแจ้งทันทีเลยค่ะ ขออภัยที่ให้รอด้วยนะคะ">คัดลอกตัวอย่าง</button>
+            </div>
+            <p class="example-prompt">ตอบลูกค้า: ขอเช็คสต็อกที่สาขาอื่นให้ก่อนนะคะ เดี๋ยวพรุ่งนี้เช้าทักแจ้งทันทีเลยค่ะ ขออภัยที่ให้รอด้วยนะคะ</p>
+          </div>
+
+          <div class="example-row">
+            <div class="example-head">
+              <span class="example-role">✍️ 4. เช็คแกรมม่าข้อความที่ร่างเอง (Grammar Check)</span>
+              <button type="button" class="btn-mini btn-copy-example" data-example="grammar check pls, try not to be AI (for boss): Boss krub today aircon at branch 2 not cold, technician will come check tomorrow 10am">คัดลอกตัวอย่าง</button>
+            </div>
+            <p class="example-prompt">grammar check pls, try not to be AI (for boss): Boss krub today aircon at branch 2 not cold, technician will come check tomorrow 10am</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Audio Tips -->
+      <div class="audio-grid">
+        <div class="audio-tip">
+          <h4>🔊 วิธีฟังเสียงอ่านบน Gemini</h4>
+          <p>เมื่อได้คำตอบภาษาอังกฤษ สกิลจะเปิดการ์ด <strong>Audio &amp; Copy Helper</strong> บน Canvas ให้กดปุ่ม <strong>ฟังเสียง (Listen)</strong> ได้ทันที หรือกดไอคอนลำโพงของ Gemini</p>
+        </div>
+        <div class="audio-tip">
+          <h4>🔊 วิธีฟังเสียงอ่านบน ChatGPT</h4>
+          <p><strong>บนมือถือ:</strong> กดค้างที่คำตอบแล้วเลือก <strong>Read Aloud (อ่านออกเสียง)</strong> — <strong>บนเว็บ:</strong> กดไอคอนลำโพงใต้คำตอบ หรือพิมพ์ต่อว่า <code class="inline-code">ขอไฟล์เสียง</code> / <code class="inline-code">ขอปุ่มฟังเสียง</code> ได้เลย</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      workplace-comms-translator-v2 • โครงสร้างไฟล์ ZIP สร้างในเบราว์เซอร์โดยตรง ไม่มีการเก็บข้อมูลส่วนตัว
+    </footer>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    <div id="toast-inner" class="toast-inner">แจ้งเตือน</div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. เนื้อหา SKILL.md ต้นฉบับสำหรับ Gemini (รักษาเนื้อหาและโครงสร้างเดิม 100%)
+    // =========================================================================
+    const GEMINI_SKILL_CONTENT = `---
+name: workplace-comms-translator-v2
+description: Translate, polish, and check grammar for multi-branch store operations and workplace chat messages. Includes Thai explanations for each option, copy-ready blocks, and interactive audio pronunciation buttons for English options. Use when the user asks to check grammar, translate Thai to English or English to Thai, or draft messages for their boss, coworkers, staff group chats, or customers using a natural, non-native, human tone without sounding like AI.
+---
+
+# Workplace Comms Translator (V2)
+
+Translate and polish rough drafts, notes, or Thai text into natural, ready-to-send workplace chat messages tailored to the recipient (Boss, Staff/Coworkers, or Customers). Strip out robotic AI phrasing and keep the practical Thai-English workplace style ("krub", "na krub", short direct sentences).
+
+## When to Use
+
+  - The user shares a rough English draft and asks for a grammar check or polish ("grammar check", "pls do grammar adjustment", "try not to be AI").
+  - The user wants to report store updates, POS breakdowns, shift coverage, staff illness, or facility maintenance to their boss.
+  - The user needs to send instructions, warnings, or checklists to Thai or Myanmar coworkers in simple, easy-to-understand English or Thai.
+  - The user wants to inform a customer (or broadcast to customers) about orders, payments, deliveries, or store hours in a friendly human admin tone.
+
+## Steps
+
+1.  **Identify the Recipient:** Determine whether the message is for the **Boss**, **Staff / Coworkers**, or **Customer(s)**. If not explicitly stated, infer from context (e.g., shift reports, quotations, and POS math are for the Boss; checklists and task reminders are for Staff; order/transfer notices are for Customers).
+
+2.  **Apply the Target Tone:**
+    
+      - **Mode 1: For Boss (Reports, Updates & Accountability)**
+        
+          - Keep English simple, direct, and non-native enough to sound authentic to a Thai operations manager writing quickly on mobile.
+          - Use "krub", "na krub", or "Boss krub" naturally.
+          - For numeric breakdowns (POS totals, quotations, specs), use clean bullet points and commas for numbers (e.g., 16,000 THB).
+          - When replying to complaints or mistakes, never use overly emotional self-pity (avoid "It's all my fault"). Instead, state ownership clearly and list 2-3 immediate, concrete fix steps (e.g., photo proof in group chat, hourly sign-off sheet, strict warnings).
+    
+      - **Mode 2: For Staff / Coworkers (Group Chat & Instructions)**
+        
+          - Use very simple, basic English words and short sentences so non-native speakers (Thai and Myanmar staff) understand immediately without confusion.
+          - Put action items in numbered lists (1, 2, 3) with clear deadlines or shift rules.
+          - Include a natural Thai translation alongside the simple English when helpful for team clarity.
+    
+      - **Mode 3: For Customers (1-on-1 Chat or Broadcast)**
+        
+          - Sound like a friendly, helpful human chat admin on LINE or Instagram DM, never like a corporate robot or automated system.
+          - Replace stiff words ("process your transaction", "inconvenience caused") with natural human phrases ("sort it out for you", "first thing tomorrow morning", "no worries at all").
+          - Adjust pronouns for a single customer ("your order", "I'll sort this out for you") vs. a broadcast ("Hey everyone!", "our shops").
+
+3.  **Format the Output (Chat + Interactive Audio & Copy Card):**
+    
+      - **Part A — Chat Output (Fast Copy & Thai Explanation):**
+        - Always provide **2 concise options**: **Option 1 (Recommended / Clear)** and **Option 2 (Short & Quick)**.
+        - Wrap the English message of **both** Option 1 and Option 2 inside separate fenced code blocks (\` \`\`\`text ... \`\`\` \`) so each option has a built-in one-click **Copy** button.
+        - Directly under each option's code block, include a clear **คำอธิบายภาษาไทย** (Thai translation/explanation of the nuance and meaning) so the user knows exact tone and meaning before sending.
+        - Do not give long grammar lectures. If the user asked for a grammar check, include at most 2-3 brief bullet points at the bottom showing key fixes.
+
+      - **Part B — Interactive Audio Pronunciation Buttons (ปุ่มฟังเสียงอ่านภาษาอังกฤษ):**
+        - Whenever English options are generated, ALSO render a clean, mobile-friendly interactive HTML/JS widget in **Canvas** (\`web_code_canvas\`) titled \`Audio & Copy Helper\`.
+        - The widget must display both Option 1 and Option 2 with:
+          1. A **🔊 ฟังเสียง (Listen)** button for each option using browser Web Speech API (\`window.speechSynthesis\`, \`lang = 'en-US'\`, \`rate = 0.92\`) plus a **⏹ หยุด (Stop)** toggle so the user can listen to natural English pronunciation.
+          2. A **📋 Copy** button for each option using \`navigator.clipboard.writeText(...)\` with a visual "Copied!" confirmation.
+        - *Fallback:* If Canvas/interactive rendering is unavailable in the user's current client, mention that they can tap Gemini's built-in speaker/Listen icon or ask to generate an \`.mp3\` audio file.
+
+## Gotchas
+
+  - Never use complex corporate vocabulary ("furthermore", "utilize", "commence", "rectify the situation", "deeply regret").
+  - Do not use em-dashes or overly formal punctuation that screams AI generation.
+  - Keep sentences short and mobile-friendly with clean line breaks.`;
+
+    // =========================================================================
+    // 2. เนื้อหา SKILL.md ฉบับแปลงสำหรับ ChatGPT (ตัดเครื่องมือ Gemini ออก + ปรับ Audio)
+    // =========================================================================
+    const CHATGPT_SKILL_CONTENT = `---
+name: workplace-comms-translator-v2
+description: Translate, polish, and check grammar for multi-branch store operations and workplace chat messages in ChatGPT. Includes Thai explanations for each option, copy-ready code blocks, and English pronunciation audio guidance (Read Aloud / on-demand audio or HTML player). Use when the user asks to check grammar, translate Thai to English or English to Thai, or draft messages for their boss, coworkers, staff group chats, or customers using a natural, non-native, human tone without sounding like AI.
+---
+
+# Workplace Comms Translator (V2 - ChatGPT Edition)
+
+Translate and polish rough drafts, notes, or Thai text into natural, ready-to-send workplace chat messages tailored to the recipient (Boss, Staff/Coworkers, or Customers). Strip out robotic AI phrasing and keep the practical Thai-English workplace style ("krub", "na krub", short direct sentences).
+
+## When to Use
+
+  - The user shares a rough English draft and asks for a grammar check or polish ("grammar check", "pls do grammar adjustment", "try not to be AI").
+  - The user wants to report store updates, POS breakdowns, shift coverage, staff illness, or facility maintenance to their boss.
+  - The user needs to send instructions, warnings, or checklists to Thai or Myanmar coworkers in simple, easy-to-understand English or Thai.
+  - The user wants to inform a customer (or broadcast to customers) about orders, payments, deliveries, or store hours in a friendly human admin tone.
+
+## Steps
+
+1.  **Identify the Recipient:** Determine whether the message is for the **Boss**, **Staff / Coworkers**, or **Customer(s)**. If not explicitly stated, infer from context (e.g., shift reports, quotations, and POS math are for the Boss; checklists and task reminders are for Staff; order/transfer notices are for Customers).
+
+2.  **Apply the Target Tone:**
+
+      - **Mode 1: For Boss (Reports, Updates & Accountability)**
+
+          - Keep English simple, direct, and non-native enough to sound authentic to a Thai operations manager writing quickly on mobile.
+          - Use "krub", "na krub", or "Boss krub" naturally.
+          - For numeric breakdowns (POS totals, quotations, specs), use clean bullet points and commas for numbers (e.g., 16,000 THB).
+          - When replying to complaints or mistakes, never use overly emotional self-pity (avoid "It's all my fault"). Instead, state ownership clearly and list 2-3 immediate, concrete fix steps (e.g., photo proof in group chat, hourly sign-off sheet, strict warnings).
+
+      - **Mode 2: For Staff / Coworkers (Group Chat & Instructions)**
+
+          - Use very simple, basic English words and short sentences so non-native speakers (Thai and Myanmar staff) understand immediately without confusion.
+          - Put action items in numbered lists (1, 2, 3) with clear deadlines or shift rules.
+          - Include a natural Thai translation alongside the simple English when helpful for team clarity.
+
+      - **Mode 3: For Customers (1-on-1 Chat or Broadcast)**
+
+          - Sound like a friendly, helpful human chat admin on LINE or Instagram DM, never like a corporate robot or automated system.
+          - Replace stiff words ("process your transaction", "inconvenience caused") with natural human phrases ("sort it out for you", "first thing tomorrow morning", "no worries at all").
+          - Adjust pronouns for a single customer ("your order", "I'll sort this out for you") vs. a broadcast ("Hey everyone!", "our shops").
+
+3.  **Format the Output (Fast Copy, Thai Explanation & Audio Support):**
+
+      - **Part A — Chat Output (Fast Copy & Thai Explanation):**
+        - Always provide **2 concise options**: **Option 1 (Recommended / Clear)** and **Option 2 (Short & Quick)**.
+        - Wrap the English message of **both** Option 1 and Option 2 inside separate fenced code blocks (\` \`\`\`text ... \`\`\` \`) so each option has a built-in one-click **Copy** button in ChatGPT.
+        - Directly under each option's code block, include a clear **คำอธิบายภาษาไทย** (Thai translation/explanation of the nuance and meaning) so the user knows exact tone and meaning before sending.
+        - Do not give long grammar lectures. If the user asked for a grammar check, include at most 2-3 brief bullet points at the bottom showing key fixes.
+
+      - **Part B — English Pronunciation Audio Support (การฟังเสียงอ่านภาษาอังกฤษใน ChatGPT):**
+        - Keep the normal reply clean and mobile-friendly without unsolicited HTML/JS widgets.
+        - At the end of each reply, add a short 1-line note in Thai: \`🔊 ฟังเสียงอ่าน: กดค้างที่ข้อความ (บนมือถือ) แล้วเลือก Read Aloud หรือกดไอคอนลำโพงใต้คำตอบ — หรือพิมพ์ "ขอไฟล์เสียง" / "ขอปุ่มฟังเสียง" ได้เลยครับ\`
+        - **If the user asks for audio or interactive pronunciation buttons** ("ขอไฟล์เสียง", "ขอปุ่มฟังเสียง", "audio", "mp3"):
+          - If Python / Code Interpreter is available, generate a downloadable \`.mp3\` or \`.wav\` audio file reading Option 1 and Option 2 clearly, OR generate a downloadable \`audio-helper.html\` file containing both options with Web Speech API (\`window.speechSynthesis\`, \`lang = 'en-US'\`, \`rate = 0.92\`) Listen/Stop buttons and Copy buttons.
+          - If file download is unavailable, output a clean self-contained \`html\` code block titled \`Audio & Copy Helper\` with Listen/Stop (\`window.speechSynthesis\`, \`lang = 'en-US'\`, \`rate = 0.92\`) and Copy buttons.
+
+## Gotchas
+
+  - Never use complex corporate vocabulary ("furthermore", "utilize", "commence", "rectify the situation", "deeply regret").
+  - Do not use em-dashes or overly formal punctuation that screams AI generation.
+  - Keep sentences short and mobile-friendly with clean line breaks.`;
+
+    const GEMINI_ZIP_FILENAME = 'workplace-comms-translator-v2.zip';
+    const CHATGPT_ZIP_FILENAME = 'workplace-comms-translator-v2-chatgpt.zip';
+    const ENTRY_PATH = 'workplace-comms-translator-v2/SKILL.md';
+
+    // ตัวช่วยแยก Frontmatter กับ Body
+    function parseSkillMarkdown(markdownText) {
+      const match = markdownText.match(/^---\n([\s\S]*?)\n---\n\n?([\s\S]*)$/);
+      if (!match) {
+        return { name: 'workplace-comms-translator-v2', description: '', instructions: markdownText };
+      }
+      const frontmatter = match[1];
+      const instructions = match[2];
+      const nameMatch = frontmatter.match(/^name:\s*(.+)$/m);
+      const descMatch = frontmatter.match(/^description:\s*(.+)$/m);
+      return {
+        name: nameMatch ? nameMatch[1].trim() : 'workplace-comms-translator-v2',
+        description: descMatch ? descMatch[1].trim() : '',
+        instructions: instructions.trim()
+      };
+    }
+
+    // =========================================================================
+    // 3. ตัวสร้างไฟล์ ZIP มาตรฐานแบบไม่บีบอัด (STORE Method) ด้วย Vanilla JS ล้วน
+    //    โครงสร้างไฟล์ภายใน: workplace-comms-translator-v2/SKILL.md
+    // =========================================================================
+    const CRC_TABLE = (() => {
+      const table = new Uint32Array(256);
+      for (let i = 0; i < 256; i++) {
+        let c = i;
+        for (let k = 0; k < 8; k++) {
+          c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+        }
+        table[i] = c >>> 0;
+      }
+      return table;
+    })();
+
+    function computeCrc32(bytes) {
+      let crc = 0xFFFFFFFF;
+      for (let i = 0; i < bytes.length; i++) {
+        crc = (crc >>> 8) ^ CRC_TABLE[(crc ^ bytes[i]) & 0xFF];
+      }
+      return (crc ^ 0xFFFFFFFF) >>> 0;
+    }
+
+    function getDosDateTime(date = new Date()) {
+      const year = Math.max(1980, date.getFullYear());
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      const seconds = date.getSeconds();
+
+      const dosTime = ((hours & 0x1F) << 11) | ((minutes & 0x3F) << 5) | ((Math.floor(seconds / 2)) & 0x1F);
+      const dosDate = (((year - 1980) & 0x7F) << 9) | ((month & 0x0F) << 5) | (day & 0x1F);
+      return { dosTime, dosDate };
+    }
+
+    function buildUncompressedZip(entryPath, contentText) {
+      const encoder = new TextEncoder();
+      const nameBytes = encoder.encode(entryPath);
+      const dataBytes = encoder.encode(contentText);
+
+      const crc = computeCrc32(dataBytes);
+      const { dosTime, dosDate } = getDosDateTime(new Date());
+
+      const localHeaderSize = 30 + nameBytes.length;
+      const centralDirSize = 46 + nameBytes.length;
+      const eocdSize = 22;
+      const totalSize = localHeaderSize + dataBytes.length + centralDirSize + eocdSize;
+
+      const buffer = new ArrayBuffer(totalSize);
+      const view = new DataView(buffer);
+      const uint8 = new Uint8Array(buffer);
+
+      let offset = 0;
+
+      // Local File Header
+      view.setUint32(offset, 0x04034b50, true); offset += 4;
+      view.setUint16(offset, 20, true); offset += 2;
+      view.setUint16(offset, 0x0800, true); offset += 2;
+      view.setUint16(offset, 0, true); offset += 2;
+      view.setUint16(offset, dosTime, true); offset += 2;
+      view.setUint16(offset, dosDate, true); offset += 2;
+      view.setUint32(offset, crc, true); offset += 4;
+      view.setUint32(offset, dataBytes.length, true); offset += 4;
+      view.setUint32(offset, dataBytes.length, true); offset += 4;
+      view.setUint16(offset, nameBytes.length, true); offset += 2;
+      view.setUint16(offset, 0, true); offset += 2;
+      uint8.set(nameBytes, offset);
+      offset += nameBytes.length;
+
+      // File Data
+      uint8.set(dataBytes, offset);
+      offset += dataBytes.length;
+
+      // Central Directory File Header
+      const cdOffset = offset;
+      view.setUint32(offset, 0x02014b50, true); offset += 4;
+      view.setUint16(offset, 20, true); offset += 2;
+      view.setUint16(offset, 20, true); offset += 2;
+      view.setUint16(offset, 0x0800, true); offset += 2;
+      view.setUint16(offset, 0, true); offset += 2;
+      view.setUint16(offset, dosTime, true); offset += 2;
+      view.setUint16(offset, dosDate, true); offset += 2;
+      view.setUint32(offset, crc, true); offset += 4;
+      view.setUint32(offset, dataBytes.length, true); offset += 4;
+      view.setUint32(offset, dataBytes.length, true); offset += 4;
+      view.setUint16(offset, nameBytes.length, true); offset += 2;
+      view.setUint16(offset, 0, true); offset += 2;
+      view.setUint16(offset, 0, true); offset += 2;
+      view.setUint16(offset, 0, true); offset += 2;
+      view.setUint16(offset, 0, true); offset += 2;
+      view.setUint32(offset, 0, true); offset += 4;
+      view.setUint32(offset, 0, true); offset += 4;
+      uint8.set(nameBytes, offset);
+      offset += nameBytes.length;
+
+      // End of Central Directory Record
+      view.setUint32(offset, 0x06054b50, true); offset += 4;
+      view.setUint16(offset, 0, true); offset += 2;
+      view.setUint16(offset, 0, true); offset += 2;
+      view.setUint16(offset, 1, true); offset += 2;
+      view.setUint16(offset, 1, true); offset += 2;
+      view.setUint32(offset, centralDirSize, true); offset += 4;
+      view.setUint32(offset, cdOffset, true); offset += 4;
+      view.setUint16(offset, 0, true); offset += 2;
+
+      return new Blob([buffer], { type: 'application/zip' });
+    }
+
+    // =========================================================================
+    // 4. ระบบ UI, Toast, Download, Share และ Copy
+    // =========================================================================
+    let toastTimer = null;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastInner = document.getElementById('toast-inner');
+      toastInner.textContent = message;
+      toast.classList.add('is-visible');
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('is-visible');
+      }, 3000);
+    }
+
+    function triggerDownload(blob, filename) {
+      try {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setTimeout(() => URL.revokeObjectURL(url), 15000);
+        showToast('⬇️ กำลังดาวน์โหลด ' + filename);
+      } catch (err) {
+        console.error('Download error:', err);
+        showToast('ไม่สามารถดาวน์โหลดอัตโนมัติได้ กรุณากดปุ่มคัดลอกคำสั่งแทน');
+      }
+    }
+
+    async function handleShareFile(blob, filename, title, text) {
+      try {
+        const fileObj = new File([blob], filename, { type: blob.type || 'application/zip' });
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [fileObj] })) {
+          await navigator.share({ title, text, files: [fileObj] });
+          showToast('✅ เปิดหน้าต่างแชร์ไฟล์เรียบร้อยแล้ว');
+        } else {
+          triggerDownload(blob, filename);
+          showToast('⬇️ อุปกรณ์นี้ไม่รองรับแชร์ตรง ระบบดาวน์โหลด ' + filename + ' ให้แล้ว');
+        }
+      } catch (err) {
+        if (err && err.name === 'AbortError') return;
+        console.warn('Share fallback to download:', err);
+        triggerDownload(blob, filename);
+      }
+    }
+
+    async function copyToClipboard(text, buttonEl, successToast, successLabel = '✅ คัดลอกแล้ว!') {
+      let copied = false;
+
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+          copied = true;
+        } catch (err) {
+          copied = false;
+        }
+      }
+
+      if (!copied) {
+        try {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'fixed';
+          textarea.style.top = '-9999px';
+          textarea.style.left = '-9999px';
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          textarea.setSelectionRange(0, textarea.value.length);
+          copied = document.execCommand('copy');
+          document.body.removeChild(textarea);
+        } catch (err) {
+          copied = false;
+        }
+      }
+
+      if (copied) {
+        if (buttonEl) {
+          if (!buttonEl.dataset.origHtml) {
+            buttonEl.dataset.origHtml = buttonEl.innerHTML;
+          }
+          buttonEl.textContent = successLabel;
+          buttonEl.classList.add('is-copied');
+          clearTimeout(Number(buttonEl.dataset.resetTimer || 0));
+          const timer = setTimeout(() => {
+            buttonEl.innerHTML = buttonEl.dataset.origHtml;
+            buttonEl.classList.remove('is-copied');
+          }, 2200);
+          buttonEl.dataset.resetTimer = String(timer);
+        }
+        showToast(successToast || '📋 คัดลอกลงคลิปบอร์ดแล้ว!');
+      } else {
+        showToast('คัดลอกอัตโนมัติไม่สำเร็จ กรุณาเปิดดูตัวอย่างโค้ดด้านล่างเพื่อคัดลอกเอง');
+      }
+    }
+
+    function setupTabs() {
+      const tabs = document.querySelectorAll('.platform-tab');
+      const panels = {
+        gemini: document.getElementById('panel-gemini'),
+        chatgpt: document.getElementById('panel-chatgpt')
+      };
+
+      function activatePlatform(platform) {
+        tabs.forEach((tab) => {
+          const isActive = tab.dataset.platform === platform;
+          tab.setAttribute('aria-selected', String(isActive));
+        });
+        Object.entries(panels).forEach(([key, panel]) => {
+          panel.hidden = key !== platform;
+        });
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const platform = tab.dataset.platform;
+          activatePlatform(platform);
+          if (history.replaceState) {
+            history.replaceState(null, '', '#' + platform);
+          }
+        });
+      });
+
+      if (window.location.hash === '#chatgpt') {
+        activatePlatform('chatgpt');
+      }
+    }
+
+    function setupPreviewToggle(btnId, bodyId) {
+      const btn = document.getElementById(btnId);
+      const body = document.getElementById(bodyId);
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        body.hidden = expanded;
+      });
+    }
+
+    // =========================================================================
+    // 5. เริ่มต้นทำงานเมื่อโหลดหน้าเว็บ
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      const geminiParsed = parseSkillMarkdown(GEMINI_SKILL_CONTENT);
+      const chatgptParsed = parseSkillMarkdown(CHATGPT_SKILL_CONTENT);
+
+      // สร้าง ZIP ทั้ง 2 เวอร์ชัน (โครงสร้าง workplace-comms-translator-v2/SKILL.md เหมือนเดิม)
+      const geminiZipBlob = buildUncompressedZip(ENTRY_PATH, GEMINI_SKILL_CONTENT);
+      const chatgptZipBlob = buildUncompressedZip(ENTRY_PATH, CHATGPT_SKILL_CONTENT);
+
+      const geminiMdBlob = new Blob([GEMINI_SKILL_CONTENT], { type: 'text/markdown;charset=utf-8' });
+      const chatgptMdBlob = new Blob([CHATGPT_SKILL_CONTENT], { type: 'text/markdown;charset=utf-8' });
+
+      // แสดงขนาดไฟล์จริง
+      document.getElementById('gemini-zip-size').textContent =
+        `${(geminiZipBlob.size / 1024).toFixed(1)} KB (${geminiZipBlob.size.toLocaleString()} bytes)`;
+      document.getElementById('chatgpt-zip-size').textContent =
+        `${(chatgptZipBlob.size / 1024).toFixed(1)} KB (${chatgptZipBlob.size.toLocaleString()} bytes)`;
+
+      // ใส่ข้อมูล Preview และฟิลด์ย่อย
+      document.getElementById('gemini-preview-code').textContent = GEMINI_SKILL_CONTENT;
+      document.getElementById('chatgpt-preview-code').textContent = CHATGPT_SKILL_CONTENT;
+      document.getElementById('gemini-field-name').textContent = geminiParsed.name;
+      document.getElementById('gemini-field-desc').textContent = geminiParsed.description;
+
+      // สลับแท็บ Gemini / ChatGPT
+      setupTabs();
+
+      // พับ/เปิดดูตัวอย่างโค้ด
+      setupPreviewToggle('btn-toggle-gemini-preview', 'gemini-preview-body');
+      setupPreviewToggle('btn-toggle-chatgpt-preview', 'chatgpt-preview-body');
+
+      // --- ปุ่มฝั่ง Gemini ---
+      const geminiChatPrompt =
+        'สร้างสกิลใหม่ (Create a new skill) ตามข้อมูล SKILL.md ด้านล่างนี้เลยครับ:\n\n' +
+        GEMINI_SKILL_CONTENT;
+
+      document.getElementById('btn-gemini-copy-chat-prompt').addEventListener('click', (e) => {
+        copyToClipboard(
+          geminiChatPrompt,
+          e.currentTarget,
+          '✨ คัดลอกคำสั่งแล้ว! เปิดแอป Gemini แล้ววางส่งในแชทได้เลย'
+        );
+      });
+
+      document.getElementById('btn-gemini-download-md').addEventListener('click', () => {
+        triggerDownload(geminiMdBlob, 'SKILL.md');
+      });
+
+      document.getElementById('btn-copy-gemini-name').addEventListener('click', (e) => {
+        copyToClipboard(geminiParsed.name, e.currentTarget, '📋 คัดลอก Name แล้ว', '✅ แล้ว');
+      });
+
+      document.getElementById('btn-copy-gemini-desc').addEventListener('click', (e) => {
+        copyToClipboard(geminiParsed.description, e.currentTarget, '📋 คัดลอก Description แล้ว', '✅ แล้ว');
+      });
+
+      document.getElementById('btn-copy-gemini-inst').addEventListener('click', (e) => {
+        copyToClipboard(geminiParsed.instructions, e.currentTarget, '📋 คัดลอก Instructions แล้ว', '✅ แล้ว');
+      });
+
+      document.getElementById('btn-gemini-download-zip').addEventListener('click', () => {
+        triggerDownload(geminiZipBlob, GEMINI_ZIP_FILENAME);
+      });
+
+      document.getElementById('btn-gemini-share-zip').addEventListener('click', () => {
+        handleShareFile(
+          geminiZipBlob,
+          GEMINI_ZIP_FILENAME,
+          'Skill: workplace-comms-translator-v2 (Gemini)',
+          'ไฟล์ Skill สำหรับติดตั้งใน Gemini (Settings → Skills → Upload)'
+        );
+      });
+
+      document.getElementById('btn-gemini-copy-full').addEventListener('click', (e) => {
+        copyToClipboard(GEMINI_SKILL_CONTENT, e.currentTarget, '📋 คัดลอกโค้ด SKILL.md (Gemini) แล้ว!');
+      });
+
+      // --- ปุ่มฝั่ง ChatGPT ---
+      const chatgptInstantPrompt =
+        'จากนี้ในแชทนี้ ให้ทำหน้าที่เป็นผู้ช่วยแปลและเกลาข้อความทำงานตามกฎด้านล่างนี้อย่างเคร่งครัด หากเข้าใจแล้วให้ตอบรับสั้นๆ ว่า "พร้อมใช้งานครับ ส่งข้อความมาได้เลย" แล้วรอรับข้อความแรก:\n\n' +
+        chatgptParsed.instructions;
+
+      document.getElementById('btn-chatgpt-copy-instructions').addEventListener('click', (e) => {
+        copyToClipboard(
+          chatgptParsed.instructions,
+          e.currentTarget,
+          '📋 คัดลอกคำสั่ง ChatGPT แล้ว! นำไปวางใน Project → Instructions ได้เลย'
+        );
+      });
+
+      document.getElementById('btn-chatgpt-copy-chat-prompt').addEventListener('click', (e) => {
+        copyToClipboard(
+          chatgptInstantPrompt,
+          e.currentTarget,
+          '💬 คัดลอก Prompt แล้ว! วางในแชท ChatGPT เพื่อเริ่มใช้ทันที'
+        );
+      });
+
+      document.getElementById('btn-chatgpt-download-md').addEventListener('click', () => {
+        triggerDownload(chatgptMdBlob, 'SKILL-chatgpt.md');
+      });
+
+      document.getElementById('btn-chatgpt-download-zip').addEventListener('click', () => {
+        triggerDownload(chatgptZipBlob, CHATGPT_ZIP_FILENAME);
+      });
+
+      document.getElementById('btn-chatgpt-share-zip').addEventListener('click', () => {
+        handleShareFile(
+          chatgptZipBlob,
+          CHATGPT_ZIP_FILENAME,
+          'Skill: workplace-comms-translator-v2 (ChatGPT)',
+          'ไฟล์ Skill ฉบับแปลงสำหรับ ChatGPT (Plugins → Skills → Upload)'
+        );
+      });
+
+      // --- ปุ่มคัดลอกตัวอย่างคำสั่ง ---
+      document.querySelectorAll('.btn-copy-example').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const sample = btn.dataset.example || '';
+          copyToClipboard(sample, btn, '📋 คัดลอกตัวอย่างคำสั่งแล้ว! ลองไปวางในแชทดูได้เลย', '✅ คัดลอกแล้ว');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
