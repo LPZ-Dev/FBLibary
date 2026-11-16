@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Workplace Comms Translator V2 — ติดตั้งสกิลสำหรับ Gemini &amp; ChatGPT</title>
-  <meta name="description" content="ดาวน์โหลดและติดตั้งสกิล workplace-comms-translator-v2 สำหรับ Gemini (ทั้งคอมและมือถือไม่ต้องใช้ .zip) และเวอร์ชันแปลงสำหรับ ChatGPT พร้อมคู่มือวิธีใช้งานครบจบในหน้าเดียว" />
+  <title>Workplace Comms Translator V2 — ติดตั้งสกิลสำหรับ Gemini &amp; ChatGPT บนมือถือ</title>
+  <meta name="description" content="ดาวน์โหลดและติดตั้งสกิล workplace-comms-translator-v2 สำหรับ Gemini และ ChatGPT บนมือถือ (iPhone & Android) ไม่ต้องใช้ .zip พร้อมคู่มือวิธีใช้งานครบจบในหน้าเดียว" />
   <meta property="og:title" content="Workplace Comms Translator V2 — Gemini &amp; ChatGPT Skill" />
   <meta property="og:description" content="สกิลแปลและเกลาแชททำงานสำหรับบอส พนักงาน และลูกค้า พร้อมคำอธิบายไทยและเสียงอ่าน รองรับทั้ง Gemini และ ChatGPT" />
   <meta property="og:type" content="website" />
@@ -399,58 +399,6 @@
       border-color: var(--success-border);
     }
 
-    /* ZIP Structure Box */
-    .zip-tree {
-      background: var(--bg-muted);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 14px 16px;
-      margin-bottom: 12px;
-    }
-
-    .zip-tree-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--text-muted);
-      padding-bottom: 10px;
-      margin-bottom: 10px;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .zip-tree-body {
-      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 12.5px;
-      line-height: 1.75;
-      color: var(--text-primary);
-      overflow-x: auto;
-    }
-
-    .tree-line {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      white-space: nowrap;
-    }
-
-    .tree-indent-1 {
-      padding-left: 18px;
-      color: var(--text-secondary);
-    }
-
-    .tree-indent-2 {
-      padding-left: 40px;
-      font-weight: 600;
-    }
-
-    .tree-branch {
-      color: #94a3b8;
-      user-select: none;
-    }
-
     /* Steps List */
     .steps-list {
       margin: 0;
@@ -731,7 +679,7 @@
         <span aria-hidden="true">✨</span>
         <span class="tab-meta">
           <span>สำหรับ Gemini</span>
-          <span class="tab-sub">มือถือไม่ใช้ zip • คอมใช้ zip</span>
+          <span class="tab-sub">สำหรับมือถือ • ไม่ต้องใช้ zip</span>
         </span>
       </button>
 
@@ -747,7 +695,7 @@
         <span aria-hidden="true">🤖</span>
         <span class="tab-meta">
           <span>สำหรับ ChatGPT</span>
-          <span class="tab-sub">ฟรี 100% • ใช้ได้ทั้งมือถือและคอม</span>
+          <span class="tab-sub">ฟรี 100% • สำหรับมือถือ</span>
         </span>
       </button>
     </nav>
@@ -763,7 +711,7 @@
           <span class="section-tag recommended">แนะนำสำหรับมือถือ • ไม่ต้องใช้ .zip</span>
         </div>
         <p class="section-desc">
-          ในแอป Gemini บนมือถือ ปุ่ม <strong>+</strong> ในช่องแชทไม่สามารถแนบไฟล์ <code class="inline-code">.zip</code> ได้ ให้ใช้วิธี <strong>คัดลอกข้อความ SKILL.md ไปแปะตอนติดตั้ง</strong> ในแชทหรือหน้า Skills แทน (ใช้ได้ 100%)
+          ในแอป Gemini บนมือถือ ปุ่ม <strong>+</strong> ในช่องแชทไม่สามารถแนบไฟล์ <code class="inline-code">.zip</code> ได้ ให้ใช้วิธี <strong>คัดลอกข้อความคำสั่งไปแปะในแชท</strong> ได้ทันที (สะดวกและเร็วที่สุด)
         </p>
 
         <div class="callout warn" style="margin-bottom: 14px;">
@@ -784,76 +732,32 @@
 
       <hr class="divider" />
 
-      <!-- 2. Desktop Section (Original ZIP structure preserved) -->
-      <section aria-labelledby="gemini-desktop-heading">
-        <div class="section-head">
-          <h2 id="gemini-desktop-heading" class="section-title">
-            <span>💻 สำหรับคอมพิวเตอร์ (ไฟล์ .zip โครงสร้างเดิม)</span>
-          </h2>
-          <span class="section-tag">โครงสร้างมาตรฐาน</span>
-        </div>
-        <p class="section-desc">
-          คงโครงสร้างโฟลเดอร์ภายในไฟล์ <code class="inline-code">.zip</code> เหมือนต้นฉบับทุกประการ เหมาะสำหรับอัปโหลดผ่านหน้าเว็บ Gemini บนคอมพิวเตอร์หรือแชร์ให้ทีม
-        </p>
-
-        <div class="zip-tree" aria-label="โครงสร้างไฟล์ในแพ็กเกจ ZIP ของ Gemini">
-          <div class="zip-tree-head">
-            <span>โครงสร้างไฟล์ภายในแพ็กเกจ (Gemini)</span>
-            <span id="gemini-zip-size">กำลังคำนวณ...</span>
-          </div>
-          <div class="zip-tree-body">
-            <div class="tree-line"><span>📦</span><span>workplace-comms-translator-v2.zip</span></div>
-            <div class="tree-line tree-indent-1"><span class="tree-branch">└──</span><span>📁</span><span>workplace-comms-translator-v2/</span></div>
-            <div class="tree-line tree-indent-2" style="color: var(--gemini-accent);"><span class="tree-branch">└──</span><span>📄</span><span>SKILL.md</span></div>
-          </div>
-        </div>
-
-        <div class="btn-stack">
-          <div class="btn-row">
-            <button id="btn-gemini-download-zip" type="button" class="btn btn-secondary">
-              <span>⬇️ ดาวน์โหลดไฟล์ .zip</span>
-            </button>
-            <button id="btn-gemini-share-zip" type="button" class="btn btn-secondary">
-              <span>📤 แชร์ไฟล์ .zip ให้เพื่อน</span>
-            </button>
-          </div>
-          <button id="btn-gemini-copy-full" type="button" class="btn btn-soft">
-            <span>📋 คัดลอกเนื้อหา SKILL.md ฉบับเต็ม (สำหรับแปะตอนติดตั้ง)</span>
-          </button>
-        </div>
-      </section>
-
-      <hr class="divider" />
-
-      <!-- 3. Gemini Installation Steps -->
+      <!-- 2. Gemini Installation Steps -->
       <section aria-labelledby="gemini-install-heading">
         <div class="section-head">
           <h2 id="gemini-install-heading" class="section-title">
-            <span>🛠️ วิธีติดตั้งลงใน Gemini</span>
+            <span>🛠️ วิธีติดตั้งลงใน Gemini (บนมือถือ)</span>
           </h2>
-        </div>
-
-        <div class="callout info-gemini" style="margin-bottom: 14px;">
-          <strong>ตัวเลือกที่ 1 — บนมือถือ (แนะนำ):</strong> กดปุ่ม <em>"คัดลอกคำสั่ง + SKILL.md"</em> ด้านบน → เปิดแอป Gemini → <strong>แปะ (Paste)</strong> ส่งในแชท (ไม่ต้องแนบไฟล์) Gemini จะบันทึกสกิลให้อัตโนมัติ หรือเข้าเมนู <strong>ปรับแต่ง (Customize) → สกิล (Skills) → สร้างด้วยตัวเอง</strong> แล้วกดคัดลอก 3 ช่องด้านบนมาแปะทีละช่อง
+          <span class="section-tag recommended">ทำตาม 3 ขั้นตอนนี้ได้เลย</span>
         </div>
 
         <ol class="steps-list">
           <li class="step-item">
             <span class="step-num">1</span>
-            <span><strong>บนคอมพิวเตอร์ (ใช้ไฟล์ .zip):</strong> กดดาวน์โหลดไฟล์ <code class="inline-code">workplace-comms-translator-v2.zip</code> (หรือไฟล์ <code class="inline-code">SKILL.md</code>)</span>
+            <span>กดปุ่ม <strong>"✨ คัดลอกคำสั่ง + SKILL.md"</strong> ด้านบน</span>
           </li>
           <li class="step-item">
             <span class="step-num">2</span>
-            <span>เปิดเว็บ <code class="inline-code">gemini.google.com</code> → แถบเมนูซ้ายเลือก <strong>Settings / Customize → Skills</strong> <em>(อัปโหลดที่หน้า Skills ไม่ใช่กด + ในช่องแชท)</em></span>
+            <span>เปิดแอป <strong>Gemini</strong> บนมือถือ (iPhone หรือ Android)</span>
           </li>
           <li class="step-item">
             <span class="step-num">3</span>
-            <span>กด <strong>Create → Upload</strong> แล้วเลือกไฟล์ <code class="inline-code">.zip</code> (หรือ <code class="inline-code">SKILL.md</code>) ตรวจสอบความเรียบร้อยแล้วกด <strong>Create</strong> เพื่อบันทึก</span>
+            <span><strong>แปะ (Paste)</strong> ข้อความลงในช่องแชทแล้วกดส่งได้ทันที — Gemini จะเรียนรู้คำสั่งและพร้อมใช้งานทันที</span>
           </li>
         </ol>
       </section>
 
-      <!-- 4. Gemini SKILL.md Preview -->
+      <!-- 3. Gemini SKILL.md Preview -->
       <div class="preview-box">
         <button
           id="btn-toggle-gemini-preview"
@@ -899,12 +803,12 @@
       <section aria-labelledby="chatgpt-free-heading">
         <div class="section-head">
           <h2 id="chatgpt-free-heading" class="section-title">
-            <span>📱💻 วิธีใช้งานสำหรับ ChatGPT บัญชีฟรี</span>
+            <span>📱 วิธีใช้งานสำหรับ ChatGPT ฟรีบนมือถือ</span>
           </h2>
           <span class="section-tag recommended">ฟรี 100% • ไม่ต้องใช้ .zip</span>
         </div>
         <p class="section-desc">
-          สำหรับบัญชี ChatGPT ฟรี สามารถใช้งานได้ทันทีทั้งบนมือถือและคอมพิวเตอร์ โดยไม่ต้องอัปโหลดไฟล์ เลือกวิธีที่สะดวกได้ด้านล่าง:
+          สำหรับแอป ChatGPT บนมือถือ (iOS / Android) สามารถใช้งานฟรีได้ทันทีโดยไม่ต้องอัปโหลดไฟล์ เลือกวิธีที่สะดวกได้ด้านล่าง:
         </p>
 
         <div class="btn-stack">
@@ -936,7 +840,7 @@
           <li class="step-item">
             <span class="step-num">1</span>
             <span><strong>วิธีที่ 1: ตั้งค่าให้ ChatGPT จำสกิลนี้ถาวรทุกแชท (แนะนำ — ฟรี 100%):</strong>
-            กดปุ่ม <em>"📋 คัดลอกคำสั่งสกิล"</em> ด้านบน → เปิด ChatGPT (บนเว็บหรือแอปมือถือ) → แตะที่รูปโปรไฟล์ของคุณ → เลือก <strong>Settings (การตั้งค่า) → Personalization (การปรับแต่ง) → Custom Instructions (คำแนะนำที่กำหนดเอง)</strong> → วางคำสั่งลงในช่องล่าง <em>(คุณต้องการให้ ChatGPT ตอบกลับอย่างไร?)</em> แล้วกด <strong>Save (บันทึก)</strong> → หลังจากนี้ทุกห้องแชทใหม่ที่คุณเปิดจะแปลและเกลาข้อความตามสกิลนี้อัตโนมัติ</span>
+            กดปุ่ม <em>"📋 คัดลอกคำสั่งสกิล"</em> ด้านบน → เปิดแอป ChatGPT บนมือถือ → แตะที่แถบเมนูด้านข้าง/รูปโปรไฟล์ → เลือก <strong>Settings (การตั้งค่า) → Personalization (การปรับแต่ง) → Custom Instructions (คำแนะนำที่กำหนดเอง)</strong> → วางคำสั่งลงในช่องล่าง <em>(คุณต้องการให้ ChatGPT ตอบกลับอย่างไร?)</em> แล้วกด <strong>Save (บันทึก)</strong> → หลังจากนี้ทุกห้องแชทใหม่ที่คุณเปิดจะแปลและเกลาข้อความตามสกิลนี้อัตโนมัติ</span>
           </li>
           <li class="step-item">
             <span class="step-num">2</span>
@@ -1193,9 +1097,6 @@ Translate and polish rough drafts, notes, or Thai text into natural, ready-to-se
   - Do not use em-dashes or overly formal punctuation that screams AI generation.
   - Keep sentences short and mobile-friendly with clean line breaks.`;
 
-    const GEMINI_ZIP_FILENAME = 'workplace-comms-translator-v2.zip';
-    const ENTRY_PATH = 'workplace-comms-translator-v2/SKILL.md';
-
     // ตัวช่วยแยก Frontmatter กับ Body
     function parseSkillMarkdown(markdownText) {
       const match = markdownText.match(/^---\n([\s\S]*?)\n---\n\n?([\s\S]*)$/);
@@ -1214,117 +1115,7 @@ Translate and polish rough drafts, notes, or Thai text into natural, ready-to-se
     }
 
     // =========================================================================
-    // 3. ตัวสร้างไฟล์ ZIP มาตรฐานแบบไม่บีบอัด (STORE Method) ด้วย Vanilla JS ล้วน
-    //    โครงสร้างไฟล์ภายใน: workplace-comms-translator-v2/SKILL.md
-    // =========================================================================
-    const CRC_TABLE = (() => {
-      const table = new Uint32Array(256);
-      for (let i = 0; i < 256; i++) {
-        let c = i;
-        for (let k = 0; k < 8; k++) {
-          c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
-        }
-        table[i] = c >>> 0;
-      }
-      return table;
-    })();
-
-    function computeCrc32(bytes) {
-      let crc = 0xFFFFFFFF;
-      for (let i = 0; i < bytes.length; i++) {
-        crc = (crc >>> 8) ^ CRC_TABLE[(crc ^ bytes[i]) & 0xFF];
-      }
-      return (crc ^ 0xFFFFFFFF) >>> 0;
-    }
-
-    function getDosDateTime(date = new Date()) {
-      const year = Math.max(1980, date.getFullYear());
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      const hours = date.getHours();
-      const minutes = date.getMinutes();
-      const seconds = date.getSeconds();
-
-      const dosTime = ((hours & 0x1F) << 11) | ((minutes & 0x3F) << 5) | ((Math.floor(seconds / 2)) & 0x1F);
-      const dosDate = (((year - 1980) & 0x7F) << 9) | ((month & 0x0F) << 5) | (day & 0x1F);
-      return { dosTime, dosDate };
-    }
-
-    function buildUncompressedZip(entryPath, contentText) {
-      const encoder = new TextEncoder();
-      const nameBytes = encoder.encode(entryPath);
-      const dataBytes = encoder.encode(contentText);
-
-      const crc = computeCrc32(dataBytes);
-      const { dosTime, dosDate } = getDosDateTime(new Date());
-
-      const localHeaderSize = 30 + nameBytes.length;
-      const centralDirSize = 46 + nameBytes.length;
-      const eocdSize = 22;
-      const totalSize = localHeaderSize + dataBytes.length + centralDirSize + eocdSize;
-
-      const buffer = new ArrayBuffer(totalSize);
-      const view = new DataView(buffer);
-      const uint8 = new Uint8Array(buffer);
-
-      let offset = 0;
-
-      // Local File Header
-      view.setUint32(offset, 0x04034b50, true); offset += 4;
-      view.setUint16(offset, 20, true); offset += 2;
-      view.setUint16(offset, 0x0800, true); offset += 2;
-      view.setUint16(offset, 0, true); offset += 2;
-      view.setUint16(offset, dosTime, true); offset += 2;
-      view.setUint16(offset, dosDate, true); offset += 2;
-      view.setUint32(offset, crc, true); offset += 4;
-      view.setUint32(offset, dataBytes.length, true); offset += 4;
-      view.setUint32(offset, dataBytes.length, true); offset += 4;
-      view.setUint16(offset, nameBytes.length, true); offset += 2;
-      view.setUint16(offset, 0, true); offset += 2;
-      uint8.set(nameBytes, offset);
-      offset += nameBytes.length;
-
-      // File Data
-      uint8.set(dataBytes, offset);
-      offset += dataBytes.length;
-
-      // Central Directory File Header
-      const cdOffset = offset;
-      view.setUint32(offset, 0x02014b50, true); offset += 4;
-      view.setUint16(offset, 20, true); offset += 2;
-      view.setUint16(offset, 20, true); offset += 2;
-      view.setUint16(offset, 0x0800, true); offset += 2;
-      view.setUint16(offset, 0, true); offset += 2;
-      view.setUint16(offset, dosTime, true); offset += 2;
-      view.setUint16(offset, dosDate, true); offset += 2;
-      view.setUint32(offset, crc, true); offset += 4;
-      view.setUint32(offset, dataBytes.length, true); offset += 4;
-      view.setUint32(offset, dataBytes.length, true); offset += 4;
-      view.setUint16(offset, nameBytes.length, true); offset += 2;
-      view.setUint16(offset, 0, true); offset += 2;
-      view.setUint16(offset, 0, true); offset += 2;
-      view.setUint16(offset, 0, true); offset += 2;
-      view.setUint16(offset, 0, true); offset += 2;
-      view.setUint32(offset, 0, true); offset += 4;
-      view.setUint32(offset, 0, true); offset += 4;
-      uint8.set(nameBytes, offset);
-      offset += nameBytes.length;
-
-      // End of Central Directory Record
-      view.setUint32(offset, 0x06054b50, true); offset += 4;
-      view.setUint16(offset, 0, true); offset += 2;
-      view.setUint16(offset, 0, true); offset += 2;
-      view.setUint16(offset, 1, true); offset += 2;
-      view.setUint16(offset, 1, true); offset += 2;
-      view.setUint32(offset, centralDirSize, true); offset += 4;
-      view.setUint32(offset, cdOffset, true); offset += 4;
-      view.setUint16(offset, 0, true); offset += 2;
-
-      return new Blob([buffer], { type: 'application/zip' });
-    }
-
-    // =========================================================================
-    // 4. ระบบ UI, Toast, Download, Share และ Copy
+    // 3. ระบบ UI, Toast, Download และ Copy
     // =========================================================================
     let toastTimer = null;
     function showToast(message) {
@@ -1355,23 +1146,6 @@ Translate and polish rough drafts, notes, or Thai text into natural, ready-to-se
       } catch (err) {
         console.error('Download error:', err);
         showToast('ไม่สามารถดาวน์โหลดอัตโนมัติได้ กรุณากดปุ่มคัดลอกคำสั่งแทน');
-      }
-    }
-
-    async function handleShareFile(blob, filename, title, text) {
-      try {
-        const fileObj = new File([blob], filename, { type: blob.type || 'application/zip' });
-        if (navigator.share && navigator.canShare && navigator.canShare({ files: [fileObj] })) {
-          await navigator.share({ title, text, files: [fileObj] });
-          showToast('✅ เปิดหน้าต่างแชร์ไฟล์เรียบร้อยแล้ว');
-        } else {
-          triggerDownload(blob, filename);
-          showToast('⬇️ อุปกรณ์นี้ไม่รองรับแชร์ตรง ระบบดาวน์โหลด ' + filename + ' ให้แล้ว');
-        }
-      } catch (err) {
-        if (err && err.name === 'AbortError') return;
-        console.warn('Share fallback to download:', err);
-        triggerDownload(blob, filename);
       }
     }
 
@@ -1474,15 +1248,8 @@ Translate and polish rough drafts, notes, or Thai text into natural, ready-to-se
     document.addEventListener('DOMContentLoaded', () => {
       const chatgptParsed = parseSkillMarkdown(CHATGPT_SKILL_CONTENT);
 
-      // สร้าง ZIP สำหรับ Gemini (โครงสร้าง workplace-comms-translator-v2/SKILL.md)
-      const geminiZipBlob = buildUncompressedZip(ENTRY_PATH, GEMINI_SKILL_CONTENT);
-
       const geminiMdBlob = new Blob([GEMINI_SKILL_CONTENT], { type: 'text/markdown;charset=utf-8' });
       const chatgptMdBlob = new Blob([CHATGPT_SKILL_CONTENT], { type: 'text/markdown;charset=utf-8' });
-
-      // แสดงขนาดไฟล์จริง (Gemini)
-      document.getElementById('gemini-zip-size').textContent =
-        `${(geminiZipBlob.size / 1024).toFixed(1)} KB (${geminiZipBlob.size.toLocaleString()} bytes)`;
 
       // ใส่ข้อมูล Preview
       document.getElementById('gemini-preview-code').textContent = GEMINI_SKILL_CONTENT;
@@ -1510,24 +1277,6 @@ Translate and polish rough drafts, notes, or Thai text into natural, ready-to-se
 
       document.getElementById('btn-gemini-download-md').addEventListener('click', () => {
         triggerDownload(geminiMdBlob, 'SKILL.md');
-      });
-
-
-      document.getElementById('btn-gemini-download-zip').addEventListener('click', () => {
-        triggerDownload(geminiZipBlob, GEMINI_ZIP_FILENAME);
-      });
-
-      document.getElementById('btn-gemini-share-zip').addEventListener('click', () => {
-        handleShareFile(
-          geminiZipBlob,
-          GEMINI_ZIP_FILENAME,
-          'Skill: workplace-comms-translator-v2 (Gemini)',
-          'ไฟล์ Skill สำหรับติดตั้งใน Gemini (Settings → Skills → Upload)'
-        );
-      });
-
-      document.getElementById('btn-gemini-copy-full').addEventListener('click', (e) => {
-        copyToClipboard(GEMINI_SKILL_CONTENT, e.currentTarget, '📋 คัดลอกโค้ด SKILL.md (Gemini) แล้ว!');
       });
 
       // --- ปุ่มฝั่ง ChatGPT (เวอร์ชันฟรี 100%) ---
