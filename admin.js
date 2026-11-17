@@ -186,17 +186,45 @@
   }
 
   function enterAuthView() {
+    document.body.setAttribute('data-admin-view', 'login');
     const authView = document.getElementById('admin-auth-view');
     const editorView = document.getElementById('admin-editor-view');
-    if (authView) authView.hidden = false;
-    if (editorView) editorView.hidden = true;
+    const pwdInput = document.getElementById('admin-password-input');
+    const errorEl = document.getElementById('admin-login-error');
+
+    if (authView) {
+      authView.hidden = false;
+      authView.style.display = '';
+    }
+    if (editorView) {
+      editorView.hidden = true;
+      editorView.style.display = 'none';
+    }
+    if (pwdInput) pwdInput.value = '';
+    if (errorEl) errorEl.hidden = true;
+    document.title = 'Fat Buds Wiki • เข้าสู่ระบบ Admin CMS';
+    window.scrollTo(0, 0);
   }
 
   async function enterEditorView() {
+    document.body.setAttribute('data-admin-view', 'editor');
     const authView = document.getElementById('admin-auth-view');
     const editorView = document.getElementById('admin-editor-view');
-    if (authView) authView.hidden = true;
-    if (editorView) editorView.hidden = false;
+    const pwdInput = document.getElementById('admin-password-input');
+    const errorEl = document.getElementById('admin-login-error');
+
+    if (authView) {
+      authView.hidden = true;
+      authView.style.display = 'none';
+    }
+    if (editorView) {
+      editorView.hidden = false;
+      editorView.style.display = '';
+    }
+    if (pwdInput) pwdInput.value = '';
+    if (errorEl) errorEl.hidden = true;
+    document.title = 'Fat Buds Wiki • แก้ไขบทความ SOP';
+    window.scrollTo(0, 0);
 
     const statusBadge = document.getElementById('admin-status-badge');
     if (statusBadge) {

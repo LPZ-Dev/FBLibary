@@ -160,6 +160,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 76px;
@@ -2046,6 +2050,13 @@ button:active,
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.admin-auth-container[hidden],
+.admin-editor-shell[hidden],
+.admin-body[data-admin-view="editor"] #admin-auth-view,
+.admin-body[data-admin-view="login"] #admin-editor-view {
+  display: none !important;
 }
 
 .admin-auth-container {

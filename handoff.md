@@ -6,6 +6,7 @@
   - พัฒนาระบบจัดการเนื้อหา Markdown แบบ Vanilla JS ไม่มี Dependency ภายนอก ([admin.html](file:///d:/workplace-comms-translator-v2/admin.html), [admin.js](file:///d:/workplace-comms-translator-v2/admin.js))
   - รองรับ Live Markdown Preview, คัดลอกสคริปต์, ดาวน์โหลด `.md` และบันทึกผ่าน [api/sources.js](file:///d:/workplace-comms-translator-v2/api/sources.js) (GitHub Contents API เมื่อตั้งค่า Token, เขียนไฟล์จริงบน Local Node, หรือ Local Draft fallback ในเบราว์เซอร์เมื่อเซิร์ฟเวอร์เป็น Read-only)
   - ป้องกันสิทธิ์ด้วย [api/auth.js](file:///d:/workplace-comms-translator-v2/api/auth.js) (`HttpOnly; SameSite=Strict` Signed Cookie), ป้องกัน XSS ด้วย `escapeHtml` / `sanitizeUrl` และป้องกัน Path Traversal ด้วย `resolveSafePath`
+  - แยกหน้า Login (`#admin-auth-view`) กับหน้า Edit บทความ (`#admin-editor-view`) ออกจากกันอย่างเด็ดขาดด้วยกฎ `[hidden] { display: none !important; }` ใน [styles.css](file:///d:/workplace-comms-translator-v2/styles.css) และสถานะ `data-admin-view="login"|"editor"` (พร้อมล้างค่ารหัสผ่านและเลื่อนหน้าขึ้นบนสุด) ใน [admin.html](file:///d:/workplace-comms-translator-v2/admin.html) และ [admin.js](file:///d:/workplace-comms-translator-v2/admin.js)
 - **แยกคลังข้อมูล Grounded Sources (`sources/`):**
   - โครงสร้าง External Memory 9 SOP + 6 สาขา BKK พร้อมเวลาทำการ `10:30 AM – 03:00 AM`
   - มีดัชนีรวม `sources/index.json` และทุกไฟล์มี YAML Frontmatter พร้อมป้ายกำกับ `source: sources/...` ครบถ้วน
@@ -19,9 +20,9 @@
   - **Check 1 (No Heavy Dependencies):** PASS (ไม่มี `package.json`, ไม่มี `node_modules/`, ไฟล์หลักครบ 8 ไฟล์)
   - **Check 2 (JS Syntax):** PASS (รัน `node --check` ผ่านครบทุกไฟล์ทั้ง 6 ไฟล์)
   - **Check 3 (Sources Integrity):** PASS (6 สาขา BKK, เวลาทำการ `10:30 AM – 03:00 AM`, 4 หมวดหมู่, 9 ไฟล์ SOP สมบูรณ์)
-  - **Check 4 (HTML Static Integrity & XSS Guard):** PASS (0 Duplicate ID, มี `<link rel="stylesheet" href="styles.css">`, มีลิงก์ `/admin` และ `#mobile-bottom-bar`, มีฟังก์ชัน `escapeHtml` / `sanitizeUrl`, มี Vercel Rewrite `/admin` -> `/admin.html` และ `includeFiles: "sources/**"`)
+  - **Check 4 (HTML Static Integrity & XSS Guard):** PASS (0 Duplicate ID, มี `<link rel="stylesheet" href="styles.css">`, มีลิงก์ `/admin` และ `#mobile-bottom-bar`, มีฟังก์ชัน `escapeHtml` / `sanitizeUrl`, มี Vercel Rewrite `/admin` -> `/admin.html`, `includeFiles: "sources/**"`, และตรวจแยกหน้า Login/Editor ใน `/admin`)
   - **Check 5 (Serverless API Security & Unit Smoke Check):** PASS (Unauthorized POST 401, Path Traversal 400, DELETE 405, Wrong Password 401, Dev Password 200 พร้อม Set-Cookie HttpOnly SameSite=Strict)
-  - **สรุปผล:** ผ่าน 36/36 รายการ (100% Pass, Exit Code 0) — พร้อม Deploy ขึ้น Vercel แล้ว (รอเจ้าของโปรเจ็กต์ยืนยัน Push/Deploy)
+  - **สรุปผล:** ผ่าน 39/39 รายการ (100% Pass, Exit Code 0) — พร้อม Deploy ขึ้น Vercel แล้ว (รอเจ้าของโปรเจ็กต์ยืนยัน Push/Deploy)
 
 ## แนวทางการตั้งค่าบน Vercel (Deployment Configuration)
 เมื่อนำโค้ดขึ้นระบบ Vercel ให้กำหนด Environment Variables ดังต่อไปนี้ในหน้า Dashboard (Settings > Environment Variables):
@@ -58,9 +59,11 @@
 - **แก้ไข:**
   - `GEMINI.md` (เพิ่มสกิล `/fb-deploy` ใน Anti-Bloat Map)
   - `index.html` (เพิ่มลิงก์ `/admin`, Mobile Bottom Bar `#mobile-bottom-bar`, ป้องกัน Duplicate IDs)
-  - `styles.css` (ยกระดับ UI ตาม `ui-polish`: Mobile Ergonomics, Micro-interactions, Badges)
+  - `styles.css` (เพิ่มกฎ `[hidden] { display: none !important; }` และแยกหน้า Login/Editor ผ่าน `data-admin-view`)
+  - `admin.html` (กำหนด `data-admin-view="login"` เริ่มต้น และซ่อน `#admin-editor-view` ด้วย `hidden style="display: none;"`)
+  - `admin.js` (อัปเดต `enterAuthView()` และ `enterEditorView()` สลับ `data-admin-view` + `hidden` + `style.display`, ล้างรหัสผ่าน, เลื่อนขึ้นบนสุด)
   - `app.js` (รองรับ Grounded Sources, ฟังก์ชัน XSS Guard, Mobile Navigation)
   - `api/sources.js` (ตั้ง default `GITHUB_REPO` เป็น `LPZnailstudio/workplace-comms-translator-v2`)
-  - `scripts/verify.mjs` (เพิ่มการตรวจ `.agents/skills/fb-deploy/SKILL.md` และ `vercel.json` `includeFiles`)
+  - `scripts/verify.mjs` (เพิ่ม Regression Check แยกหน้า Login/Editor ใน Check 4.6)
   - `vercel.json` (ตั้งค่า Header ความปลอดภัย, `functions["api/*.js"].includeFiles`, และ Rewrite `/admin` -> `/admin.html`)
-  - `handoff.md` (บันทึกสรุปสถานะระบบ ผลการรัน QA และคู่มือ Vercel Env)
+  - `handoff.md` (บันทึกการแยกหน้า Login/Edit และผลการรัน QA 39/39 รายการ)

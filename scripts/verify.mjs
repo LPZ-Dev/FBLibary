@@ -306,6 +306,34 @@ async function run() {
       `vercel.json ต้องกำหนด functions["api/*.js"].includeFiles = "sources/**" (ได้: "${includeFiles}")`
     );
     logPass('vercel.json Functions Bundle', 'กำหนด includeFiles: "sources/**" สำหรับ api/*.js เรียบร้อย');
+
+    // 4.6 Admin Login / Editor View Isolation Regression Check
+    const stylesCss = fs.readFileSync(path.join(ROOT_DIR, 'styles.css'), 'utf8');
+    assert.ok(
+      /\[hidden\]\s*\{[^}]*display:\s*none\s*!important/i.test(stylesCss),
+      'styles.css ต้องมีกฎ [hidden] { display: none !important; } เพื่อไม่ให้ display: flex ทับ hidden'
+    );
+    assert.ok(
+      stylesCss.includes('.admin-body[data-admin-view="editor"] #admin-auth-view') &&
+        stylesCss.includes('.admin-body[data-admin-view="login"] #admin-editor-view'),
+      'styles.css ต้องแยกกฎแสดงผลระหว่าง data-admin-view="login" และ "editor"'
+    );
+    logPass('Admin View CSS Isolation', 'styles.css มีกฎ [hidden] !important และแยก data-admin-view ครบถ้วน');
+
+    const adminHtml = fs.readFileSync(path.join(ROOT_DIR, 'admin.html'), 'utf8');
+    assert.ok(
+      adminHtml.includes('data-admin-view="login"'),
+      'admin.html ต้องกำหนดค่าเริ่มต้น data-admin-view="login" ที่แท็ก body'
+    );
+    logPass('Admin HTML Initial View', 'admin.html กำหนด data-admin-view="login" เรียบร้อย');
+
+    const adminJs = fs.readFileSync(path.join(ROOT_DIR, 'admin.js'), 'utf8');
+    assert.ok(
+      adminJs.includes("setAttribute('data-admin-view', 'login')") &&
+        adminJs.includes("setAttribute('data-admin-view', 'editor')"),
+      'admin.js ต้องสลับ data-admin-view ระหว่าง login และ editor'
+    );
+    logPass('Admin JS View Switching', 'admin.js สลับ data-admin-view ระหว่าง login และ editor ครบถ้วน');
   } catch (err) {
     logFail('Check 4 Failed', err);
   }
