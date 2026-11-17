@@ -1,0 +1,137 @@
+{
+  "version": "1.0",
+  "hours": "10:30 AM – 03:00 AM",
+  "source": "sources/index.json",
+  "branches": [
+    {
+      "id": "sathorn",
+      "name": "Sathorn (สาทร)",
+      "zone": "โซนสาทร / สีลม / พระราม 4",
+      "hours": "10:30 AM – 03:00 AM",
+      "services": "หน้าร้าน • Lounge • Express Delivery",
+      "source": "sources/hr-branches/branches-contacts.md"
+    },
+    {
+      "id": "ekkamai",
+      "name": "Ekkamai (เอกมัย)",
+      "zone": "สุขุมวิท 63 / โซนเอกมัย",
+      "hours": "10:30 AM – 03:00 AM",
+      "services": "หน้าร้าน • Lounge • Express Delivery",
+      "source": "sources/hr-branches/branches-contacts.md"
+    },
+    {
+      "id": "on-nut",
+      "name": "On Nut (อ่อนนุช)",
+      "zone": "สุขุมวิท 77 / BTS อ่อนนุช",
+      "hours": "10:30 AM – 03:00 AM",
+      "services": "หน้าร้าน • Lounge • Express Delivery",
+      "source": "sources/hr-branches/branches-contacts.md"
+    },
+    {
+      "id": "sukhumvit-34",
+      "name": "Sukhumvit 34 (สุขุมวิท 34)",
+      "zone": "ระหว่างพร้อมพงษ์ – ทองหล่อ (ติดถนนสุขุมวิท 34)",
+      "hours": "10:30 AM – 03:00 AM",
+      "services": "หน้าร้าน • Lounge • Express Delivery",
+      "source": "sources/hr-branches/branches-contacts.md"
+    },
+    {
+      "id": "phrom-phong",
+      "name": "Phrom Phong (พร้อมพงษ์)",
+      "zone": "โซน BTS พร้อมพงษ์ / สุขุมวิทตอนกลาง",
+      "hours": "10:30 AM – 03:00 AM",
+      "services": "หน้าร้าน • Lounge • Express Delivery",
+      "source": "sources/hr-branches/branches-contacts.md"
+    },
+    {
+      "id": "thong-lor",
+      "name": "Thong Lor (ทองหล่อ)",
+      "zone": "สุขุมวิท 55 / โซนทองหล่อ",
+      "hours": "10:30 AM – 03:00 AM",
+      "services": "หน้าร้าน • Lounge • Express Delivery",
+      "source": "sources/hr-branches/branches-contacts.md"
+    }
+  ],
+  "categories": [
+    {
+      "id": "ai-tools",
+      "icon": "🤖",
+      "title": "AI Tools & แปลแชททำงาน",
+      "desc": "สกิลแปลแชท fbts และคลังคำสั่ง AI สำหรับคุยกับบอส พนักงาน และลูกค้า"
+    },
+    {
+      "id": "store-sop",
+      "icon": "🏪",
+      "title": "SOP การปฏิบัติงานหน้าร้าน",
+      "desc": "ขั้นตอนมาตรฐานในการเปิด-ปิดร้าน ระบบ POS การเงิน และการดูแลสต็อก"
+    },
+    {
+      "id": "customer-care",
+      "icon": "💬",
+      "title": "บริการลูกค้า & สคริปต์แชท",
+      "desc": "รวมสคริปต์ตอบลูกค้า LINE/IG มาตรฐาน Budtender และข้อกฎหมาย 20+"
+    },
+    {
+      "id": "hr-branches",
+      "icon": "📋",
+      "title": "กฎระเบียบ & ข้อมูลสาขา",
+      "desc": "กฎการเข้ากะ การลางาน ข้อมูลทั้ง 6 สาขา และเบอร์ติดต่อฉุกเฉิน"
+    }
+  ],
+  "files": [
+    {
+      "id": "fbts-skill",
+      "categoryId": "ai-tools",
+      "path": "ai-tools/fbts-skill.md",
+      "source": "sources/ai-tools/fbts-skill.md"
+    },
+    {
+      "id": "ai-prompts-pack",
+      "categoryId": "ai-tools",
+      "path": "ai-tools/ai-prompts-pack.md",
+      "source": "sources/ai-tools/ai-prompts-pack.md"
+    },
+    {
+      "id": "daily-open-close",
+      "categoryId": "store-sop",
+      "path": "store-sop/daily-open-close.md",
+      "source": "sources/store-sop/daily-open-close.md"
+    },
+    {
+      "id": "pos-cash-sop",
+      "categoryId": "store-sop",
+      "path": "store-sop/pos-cash-sop.md",
+      "source": "sources/store-sop/pos-cash-sop.md"
+    },
+    {
+      "id": "stock-curing-sop",
+      "categoryId": "store-sop",
+      "path": "store-sop/stock-curing-sop.md",
+      "source": "sources/store-sop/stock-curing-sop.md"
+    },
+    {
+      "id": "customer-chat-scripts",
+      "categoryId": "customer-care",
+      "path": "customer-care/customer-chat-scripts.md",
+      "source": "sources/customer-care/customer-chat-scripts.md"
+    },
+    {
+      "id": "budtender-etiquette",
+      "categoryId": "customer-care",
+      "path": "customer-care/budtender-etiquette.md",
+      "source": "sources/customer-care/budtender-etiquette.md"
+    },
+    {
+      "id": "staff-rules-shifts",
+      "categoryId": "hr-branches",
+      "path": "hr-branches/staff-rules-shifts.md",
+      "source": "sources/hr-branches/staff-rules-shifts.md"
+    },
+    {
+      "id": "branches-contacts",
+      "categoryId": "hr-branches",
+      "path": "hr-branches/branches-contacts.md",
+      "source": "sources/hr-branches/branches-contacts.md"
+    }
+  ]
+}

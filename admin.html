@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="dark" data-font-size="normal">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#110d18" />
+  <title>Fat Buds Wiki • Admin CMS</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="admin-body">
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    <div id="toast-inner" class="toast-inner">แจ้งเตือน</div>
+  </div>
+
+  <!-- ==================== 1. LOGIN / AUTH VIEW ==================== -->
+  <div id="admin-auth-view" class="admin-auth-container">
+    <div class="admin-login-card">
+      <div class="admin-login-header">
+        <a href="/" class="admin-back-home" title="กลับหน้าแรก Staff Wiki">← กลับหน้า Wiki</a>
+        <img src="assets/fatbuds-logo.png" alt="Fat Buds Logo" class="admin-login-logo" width="56" height="56" />
+        <h1 class="admin-login-title">Fat Buds Wiki • Admin CMS</h1>
+        <p class="admin-login-subtitle">
+          จัดการและแก้ไขคู่มือปฏิบัติงาน SOP ของทั้ง 6 สาขา (10:30 AM – 03:00 AM)
+        </p>
+      </div>
+
+      <form id="admin-login-form" class="admin-login-form">
+        <div class="admin-form-group">
+          <label for="admin-password-input" class="admin-form-label">รหัสผ่านผู้ดูแลระบบ</label>
+          <input
+            id="admin-password-input"
+            type="password"
+            class="admin-form-input"
+            placeholder="ใส่รหัสผ่านแอดมิน..."
+            autocomplete="current-password"
+            required
+          />
+        </div>
+
+        <button type="submit" id="btn-admin-login" class="btn-primary-purple admin-submit-btn">
+          <span>เข้าสู่ระบบจัดการคู่มือ</span>
+          <span class="btn-spinner" aria-hidden="true" hidden>⏳</span>
+        </button>
+
+        <div id="admin-login-error" class="admin-login-error" hidden></div>
+      </form>
+
+      <div class="admin-login-footer">
+        <button type="button" id="btn-enter-local-draft" class="btn-text-muted">
+          ✏️ เข้าโหมดแก้ไขฉบับร่างในเครื่อง (Local Draft Mode)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2. CMS EDITOR VIEW ==================== -->
+  <div id="admin-editor-view" class="admin-editor-shell" hidden>
+    <!-- Topbar -->
+    <header class="admin-topbar">
+      <div class="admin-topbar-left">
+        <a href="/" class="admin-brand-link" title="กลับหน้าแรก Staff Wiki">
+          <img src="assets/fatbuds-logo.png" alt="Logo" class="admin-mini-logo" width="32" height="32" />
+          <span class="admin-brand-text">Fat Buds CMS</span>
+        </a>
+        <span id="admin-status-badge" class="pill-badge purple">โหมดออนไลน์</span>
+      </div>
+
+      <div class="admin-topbar-right">
+        <button
+          type="button"
+          id="btn-admin-theme-toggle"
+          class="icon-btn"
+          title="สลับโหมดมืด Purple-Gold / โหมดสว่าง"
+        >
+          <span aria-hidden="true">☀️</span>
+          <span class="hide-on-mobile">โหมดสว่าง</span>
+        </button>
+        <a href="/" class="icon-btn" title="เปิดหน้าเว็บ Wiki ในแท็บใหม่" target="_blank" rel="noopener">
+          <span>👁️ ดูหน้าเว็บ</span>
+        </a>
+        <button type="button" id="btn-admin-logout" class="icon-btn" title="ออกจากระบบ">
+          <span>🚪 ออกจากระบบ</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- File selector & meta strip -->
+    <div class="admin-file-toolbar">
+      <div class="admin-selector-col">
+        <label for="admin-file-select" class="admin-select-label">เลือกคู่มือที่ต้องการแก้ไข:</label>
+        <select id="admin-file-select" class="admin-file-select" aria-label="เลือกไฟล์คู่มือ"></select>
+      </div>
+
+      <div class="admin-file-meta-col">
+        <span class="source-trace-pill">
+          📁 <span id="admin-source-label">sources/...</span>
+        </span>
+        <span id="admin-draft-indicator" class="pill-badge gold tabular-nums" hidden>
+          ✏️ มีฉบับร่างในเครื่อง
+        </span>
+      </div>
+    </div>
+
+    <!-- Mobile view switcher tabs (Editor vs Preview) -->
+    <div class="admin-mobile-tabs" role="tablist" aria-label="สลับโหมดแก้ไขและพรีวิว">
+      <button
+        type="button"
+        id="btn-tab-editor"
+        class="admin-tab-btn is-active"
+        role="tab"
+        aria-selected="true"
+      >
+        <span>📝 แก้ไข Markdown</span>
+      </button>
+      <button
+        type="button"
+        id="btn-tab-preview"
+        class="admin-tab-btn"
+        role="tab"
+        aria-selected="false"
+      >
+        <span>👁️ พรีวิว SOP ทันที</span>
+      </button>
+    </div>
+
+    <!-- Main 2-column workspace (side-by-side on desktop, tabbed on mobile) -->
+    <div class="admin-workspace-grid">
+      <!-- Editor Column -->
+      <section id="admin-editor-col" class="admin-col admin-editor-column">
+        <div class="admin-col-header">
+          <span class="admin-col-title">Markdown Editor</span>
+          <span class="admin-col-hint">รองรับ :::callout, :::script, :::toggle, [[checklist:id]]</span>
+        </div>
+        <textarea
+          id="admin-editor-textarea"
+          class="admin-editor-textarea"
+          placeholder="กำลังโหลดเนื้อหาคู่มือ..."
+          spellcheck="false"
+        ></textarea>
+      </section>
+
+      <!-- Live Preview Column -->
+      <section id="admin-preview-col" class="admin-col admin-preview-column">
+        <div class="admin-col-header">
+          <span class="admin-col-title">Live Preview (แบบที่พนักงานเห็น)</span>
+          <span class="admin-col-hint">เรนเดอร์แบบ Realtime ปลอดภัย 100%</span>
+        </div>
+        <div class="admin-preview-scroll">
+          <div id="admin-preview-doc" class="wiki-doc">
+            <header class="doc-header">
+              <div class="doc-eyebrow-row">
+                <span id="preview-doc-icon" class="doc-icon-large">📄</span>
+                <span id="preview-doc-badge" class="pill-badge gold">SOP</span>
+              </div>
+              <h1 id="preview-doc-title" class="doc-title">หัวข้อคู่มือ</h1>
+              <p id="preview-doc-subtitle" class="doc-subtitle">คำอธิบาย</p>
+            </header>
+            <div id="preview-doc-body" class="doc-content"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Thumb-Zone Sticky Bottom Bar -->
+    <div class="admin-sticky-bar" role="toolbar" aria-label="แถบควบคุมการบันทึก">
+      <div class="admin-sticky-inner">
+        <button type="button" id="btn-save-content" class="btn-primary-purple admin-btn-action">
+          <span>💾 บันทึกการเปลี่ยนแปลง</span>
+        </button>
+        <button type="button" id="btn-download-md" class="btn-secondary-outline admin-btn-action">
+          <span>⬇️ ดาวน์โหลด .md</span>
+        </button>
+        <button type="button" id="btn-reset-draft" class="btn-secondary-outline admin-btn-action" title="ยกเลิกฉบับร่างที่แก้ไขในเครื่องและคืนค่าเดิมจากเซิร์ฟเวอร์">
+          <span>↺ คืนค่าเดิม</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="wiki-data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

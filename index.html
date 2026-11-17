@@ -55,11 +55,11 @@
       <nav id="sidebar-nav-content" class="sidebar-scroll" aria-label="หมวดหมู่คู่มือ"></nav>
 
       <div class="sidebar-footer">
-        <span class="shop-hours-pill">
+        <span class="shop-hours-pill tabular-nums">
           <span class="status-dot" aria-hidden="true"></span>
           <span>10:30AM–3:00AM</span>
         </span>
-        <span>6 Branches BKK</span>
+        <span class="tabular-nums">6 Branches BKK</span>
       </div>
     </aside>
 
@@ -86,12 +86,12 @@
           <button
             id="btn-topbar-search"
             type="button"
-            class="icon-btn"
+            class="icon-btn hide-on-mobile"
             data-open-search="true"
             title="ค้นหาด่วน (Ctrl+K / Cmd+K)"
           >
             <span aria-hidden="true">🔍</span>
-            <span class="hide-on-mobile">ค้นหา</span>
+            <span>ค้นหา</span>
           </button>
 
           <button
@@ -124,6 +124,16 @@
             <span aria-hidden="true">☀️</span>
             <span class="hide-on-mobile">โหมดสว่าง</span>
           </button>
+
+          <a
+            href="/admin"
+            id="btn-topbar-admin"
+            class="icon-btn hide-on-mobile"
+            title="เข้าสู่ระบบ Admin CMS เพื่อจัดการคู่มือ"
+          >
+            <span aria-hidden="true">⚙️</span>
+            <span>Admin</span>
+          </a>
         </div>
       </header>
 
@@ -157,6 +167,26 @@
       </div>
     </div>
   </div>
+
+  <!-- ==================== MOBILE BOTTOM THUMB BAR ==================== -->
+  <nav id="mobile-bottom-bar" class="mobile-bottom-bar" aria-label="เมนูด่วนมือถือ">
+    <button type="button" class="bottom-nav-btn is-active" data-nav-target="home" aria-label="หน้าแรก">
+      <span class="bottom-nav-icon" aria-hidden="true">🏠</span>
+      <span class="bottom-nav-label">หน้าแรก</span>
+    </button>
+    <button type="button" class="bottom-nav-btn" data-open-search="true" aria-label="ค้นหาคู่มือ">
+      <span class="bottom-nav-icon" aria-hidden="true">🔍</span>
+      <span class="bottom-nav-label">ค้นหา</span>
+    </button>
+    <button type="button" class="bottom-nav-btn" data-nav-target="daily-open-close" aria-label="เช็คลิสต์เปิดปิดร้าน">
+      <span class="bottom-nav-icon" aria-hidden="true">📋</span>
+      <span class="bottom-nav-label">เช็คลิสต์</span>
+    </button>
+    <a href="/admin" class="bottom-nav-btn" aria-label="จัดการระบบแอดมิน">
+      <span class="bottom-nav-icon" aria-hidden="true">⚙️</span>
+      <span class="bottom-nav-label">แอดมิน</span>
+    </a>
+  </nav>
 
   <!-- ==================== INSTANT SEARCH MODAL (CMD+K) ==================== -->
   <div id="search-modal-backdrop" class="search-modal-backdrop" role="dialog" aria-modal="true" aria-label="ค้นหาคู่มือพนักงาน" hidden>
