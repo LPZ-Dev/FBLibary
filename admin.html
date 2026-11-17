@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th" data-theme="dark" data-font-size="normal">
+<html lang="en" data-lang="en" data-theme="dark" data-font-size="normal">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,40 +15,59 @@
     rel="stylesheet"
   />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('fb_wiki_lang_v1');
+        var navLang = navigator.language || (navigator.languages && navigator.languages[0]) || navigator.userLanguage || '';
+        var lang = (saved === 'th' || saved === '"th"') ? 'th' : (saved === 'en' || saved === '"en"') ? 'en' : (String(navLang).trim().toLowerCase().indexOf('th') === 0 ? 'th' : 'en');
+        document.documentElement.lang = lang;
+        document.documentElement.setAttribute('data-lang', lang);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body class="admin-body" data-admin-view="login">
   <!-- ==================== TOAST NOTIFICATION ==================== -->
   <div id="toast" class="toast" role="status" aria-live="polite">
-    <div id="toast-inner" class="toast-inner">แจ้งเตือน</div>
+    <div id="toast-inner" class="toast-inner" data-i18n="toast.default">Notification</div>
   </div>
 
   <!-- ==================== 1. LOGIN / AUTH VIEW ==================== -->
   <div id="admin-auth-view" class="admin-auth-container">
     <div class="admin-login-card">
+      <div class="admin-login-top-bar">
+        <a href="/" class="admin-back-home" title="Back to Staff Wiki Home" data-i18n="auth.backHome" data-i18n-title="auth.backHomeTitle">← Back to Wiki</a>
+        <div id="admin-auth-lang-toggle" class="lang-toggle" role="group" aria-label="Switch language" data-i18n-aria="topbar.langAria">
+          <button type="button" class="lang-toggle-btn active" data-set-lang="en" aria-pressed="true">EN</button>
+          <button type="button" class="lang-toggle-btn" data-set-lang="th" aria-pressed="false">TH</button>
+        </div>
+      </div>
+
       <div class="admin-login-header">
-        <a href="/" class="admin-back-home" title="กลับหน้าแรก Staff Wiki">← กลับหน้า Wiki</a>
         <img src="assets/fatbuds-logo.png" alt="Fat Buds Logo" class="admin-login-logo" width="56" height="56" />
         <h1 class="admin-login-title">Fat Buds Wiki • Admin CMS</h1>
-        <p class="admin-login-subtitle">
-          จัดการและแก้ไขคู่มือปฏิบัติงาน SOP ของทั้ง 6 สาขา (10:30 AM – 03:00 AM)
+        <p class="admin-login-subtitle" data-i18n="auth.subtitle">
+          Manage and update store SOP guides across all 6 branches (10:30 AM – 03:00 AM)
         </p>
       </div>
 
       <form id="admin-login-form" class="admin-login-form">
         <div class="admin-form-group">
-          <label for="admin-password-input" class="admin-form-label">รหัสผ่านผู้ดูแลระบบ</label>
+          <label for="admin-password-input" class="admin-form-label" data-i18n="auth.passwordLabel">Admin Password</label>
           <input
             id="admin-password-input"
             type="password"
             class="admin-form-input"
-            placeholder="ใส่รหัสผ่านแอดมิน..."
+            placeholder="Enter admin password..."
+            data-i18n-placeholder="auth.passwordPlaceholder"
             autocomplete="current-password"
             required
           />
         </div>
 
         <button type="submit" id="btn-admin-login" class="btn-primary-purple admin-submit-btn">
-          <span>เข้าสู่ระบบจัดการคู่มือ</span>
+          <span data-i18n="auth.loginBtn">Sign in to Admin CMS</span>
           <span class="btn-spinner" aria-hidden="true" hidden>⏳</span>
         </button>
 
@@ -56,8 +75,8 @@
       </form>
 
       <div class="admin-login-footer">
-        <button type="button" id="btn-enter-local-draft" class="btn-text-muted">
-          ✏️ เข้าโหมดแก้ไขฉบับร่างในเครื่อง (Local Draft Mode)
+        <button type="button" id="btn-enter-local-draft" class="btn-text-muted" data-i18n="auth.localDraftBtn">
+          ✏️ Enter Local Draft Mode (Offline Browser Draft)
         </button>
       </div>
     </div>
@@ -68,28 +87,36 @@
     <!-- Topbar -->
     <header class="admin-topbar">
       <div class="admin-topbar-left">
-        <a href="/" class="admin-brand-link" title="กลับหน้าแรก Staff Wiki">
+        <a href="/" class="admin-brand-link" title="Back to Staff Wiki Home" data-i18n-title="auth.backHomeTitle">
           <img src="assets/fatbuds-logo.png" alt="Logo" class="admin-mini-logo" width="32" height="32" />
           <span class="admin-brand-text">Fat Buds CMS</span>
         </a>
-        <span id="admin-status-badge" class="pill-badge purple">โหมดออนไลน์</span>
+        <span id="admin-status-badge" class="pill-badge purple" data-i18n="status.online">Online Mode</span>
       </div>
 
       <div class="admin-topbar-right">
+        <div id="admin-lang-toggle" class="lang-toggle" role="group" aria-label="Switch language" data-i18n-aria="topbar.langAria">
+          <button type="button" class="lang-toggle-btn active" data-set-lang="en" aria-pressed="true">EN</button>
+          <button type="button" class="lang-toggle-btn" data-set-lang="th" aria-pressed="false">TH</button>
+        </div>
+
         <button
           type="button"
           id="btn-admin-theme-toggle"
           class="icon-btn"
-          title="สลับโหมดมืด Purple-Gold / โหมดสว่าง"
+          title="Switch Dark Purple-Gold / Light Mode"
+          data-i18n-title="topbar.themeTitle"
         >
           <span aria-hidden="true">☀️</span>
-          <span class="hide-on-mobile">โหมดสว่าง</span>
+          <span class="hide-on-mobile" data-i18n="topbar.themeLight">Light Mode</span>
         </button>
-        <a href="/" class="icon-btn" title="เปิดหน้าเว็บ Wiki ในแท็บใหม่" target="_blank" rel="noopener">
-          <span>👁️ ดูหน้าเว็บ</span>
+        <a href="/" class="icon-btn" title="Open Staff Wiki in new tab" data-i18n-title="topbar.viewSiteTitle" target="_blank" rel="noopener">
+          <span aria-hidden="true">👁️</span>
+          <span class="hide-on-mobile" data-i18n="topbar.viewSite">View Site</span>
         </a>
-        <button type="button" id="btn-admin-logout" class="icon-btn" title="ออกจากระบบ">
-          <span>🚪 ออกจากระบบ</span>
+        <button type="button" id="btn-admin-logout" class="icon-btn" title="Sign out" data-i18n-title="topbar.logoutTitle">
+          <span aria-hidden="true">🚪</span>
+          <span class="hide-on-mobile" data-i18n="topbar.logout">Sign Out</span>
         </button>
       </div>
     </header>
@@ -97,22 +124,22 @@
     <!-- File selector & meta strip -->
     <div class="admin-file-toolbar">
       <div class="admin-selector-col">
-        <label for="admin-file-select" class="admin-select-label">เลือกคู่มือที่ต้องการแก้ไข:</label>
-        <select id="admin-file-select" class="admin-file-select" aria-label="เลือกไฟล์คู่มือ"></select>
+        <label for="admin-file-select" class="admin-select-label" data-i18n="toolbar.selectLabel">Select SOP guide to edit:</label>
+        <select id="admin-file-select" class="admin-file-select" aria-label="Select guide file" data-i18n-aria="toolbar.selectAria"></select>
       </div>
 
       <div class="admin-file-meta-col">
         <span class="source-trace-pill">
           📁 <span id="admin-source-label">sources/...</span>
         </span>
-        <span id="admin-draft-indicator" class="pill-badge gold tabular-nums" hidden>
-          ✏️ มีฉบับร่างในเครื่อง
+        <span id="admin-draft-indicator" class="pill-badge gold tabular-nums" hidden data-i18n="toolbar.draftBadge">
+          ✏️ Local Draft Active
         </span>
       </div>
     </div>
 
     <!-- Mobile view switcher tabs (Editor vs Preview) -->
-    <div class="admin-mobile-tabs" role="tablist" aria-label="สลับโหมดแก้ไขและพรีวิว">
+    <div class="admin-mobile-tabs" role="tablist" aria-label="Switch Editor and Preview" data-i18n-aria="tabs.aria">
       <button
         type="button"
         id="btn-tab-editor"
@@ -120,7 +147,7 @@
         role="tab"
         aria-selected="true"
       >
-        <span>📝 แก้ไข Markdown</span>
+        <span data-i18n="tabs.editor">📝 Edit Markdown</span>
       </button>
       <button
         type="button"
@@ -129,7 +156,7 @@
         role="tab"
         aria-selected="false"
       >
-        <span>👁️ พรีวิว SOP ทันที</span>
+        <span data-i18n="tabs.preview">👁️ Live Preview</span>
       </button>
     </div>
 
@@ -138,13 +165,14 @@
       <!-- Editor Column -->
       <section id="admin-editor-col" class="admin-col admin-editor-column">
         <div class="admin-col-header">
-          <span class="admin-col-title">Markdown Editor</span>
-          <span class="admin-col-hint">รองรับ :::callout, :::script, :::toggle, [[checklist:id]]</span>
+          <span class="admin-col-title" data-i18n="editor.title">Markdown Editor</span>
+          <span class="admin-col-hint" data-i18n="editor.hint">Supports :::callout, :::script, :::toggle, [[checklist:id]], &lt;!-- LANG:TH --&gt;</span>
         </div>
         <textarea
           id="admin-editor-textarea"
           class="admin-editor-textarea"
-          placeholder="กำลังโหลดเนื้อหาคู่มือ..."
+          placeholder="Loading guide content..."
+          data-i18n-placeholder="editor.loading"
           spellcheck="false"
         ></textarea>
       </section>
@@ -152,8 +180,8 @@
       <!-- Live Preview Column -->
       <section id="admin-preview-col" class="admin-col admin-preview-column">
         <div class="admin-col-header">
-          <span class="admin-col-title">Live Preview (แบบที่พนักงานเห็น)</span>
-          <span class="admin-col-hint">เรนเดอร์แบบ Realtime ปลอดภัย 100%</span>
+          <span class="admin-col-title" data-i18n="preview.title">Live Preview (Staff View)</span>
+          <span id="preview-lang-hint" class="admin-col-hint" data-i18n="preview.hint">Previewing: EN (Safe Real-time Render)</span>
         </div>
         <div class="admin-preview-scroll">
           <div id="admin-preview-doc" class="wiki-doc">
@@ -162,8 +190,8 @@
                 <span id="preview-doc-icon" class="doc-icon-large">📄</span>
                 <span id="preview-doc-badge" class="pill-badge gold">SOP</span>
               </div>
-              <h1 id="preview-doc-title" class="doc-title">หัวข้อคู่มือ</h1>
-              <p id="preview-doc-subtitle" class="doc-subtitle">คำอธิบาย</p>
+              <h1 id="preview-doc-title" class="doc-title" data-i18n="preview.noTitle">Untitled Guide</h1>
+              <p id="preview-doc-subtitle" class="doc-subtitle" data-i18n="preview.subtitle">Description</p>
             </header>
             <div id="preview-doc-body" class="doc-content"></div>
           </div>
@@ -172,16 +200,16 @@
     </div>
 
     <!-- Thumb-Zone Sticky Bottom Bar -->
-    <div class="admin-sticky-bar" role="toolbar" aria-label="แถบควบคุมการบันทึก">
+    <div class="admin-sticky-bar" role="toolbar" aria-label="Save Actions" data-i18n-aria="sticky.aria">
       <div class="admin-sticky-inner">
         <button type="button" id="btn-save-content" class="btn-primary-purple admin-btn-action">
-          <span>💾 บันทึกการเปลี่ยนแปลง</span>
+          <span data-i18n="sticky.save">💾 Save Changes</span>
         </button>
         <button type="button" id="btn-download-md" class="btn-secondary-outline admin-btn-action">
-          <span>⬇️ ดาวน์โหลด .md</span>
+          <span data-i18n="sticky.download">⬇️ Download .md</span>
         </button>
-        <button type="button" id="btn-reset-draft" class="btn-secondary-outline admin-btn-action" title="ยกเลิกฉบับร่างที่แก้ไขในเครื่องและคืนค่าเดิมจากเซิร์ฟเวอร์">
-          <span>↺ คืนค่าเดิม</span>
+        <button type="button" id="btn-reset-draft" class="btn-secondary-outline admin-btn-action" title="Discard local draft and restore from server" data-i18n-title="sticky.resetTitle">
+          <span data-i18n="sticky.reset">↺ Restore Default</span>
         </button>
       </div>
     </div>

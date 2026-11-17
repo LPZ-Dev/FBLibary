@@ -3,20 +3,60 @@ id: "staff-rules-shifts"
 categoryId: "hr-branches"
 icon: "📋"
 badge: "HR & Rules"
+badge_th: "HR & Rules"
 badgeType: "purple"
-title: "กฎระเบียบพนักงาน การเข้ากะ และการลางาน"
-subtitle: "ข้อตกลงการทำงานร่วมกันของครอบครัว Fat Buds เรื่องเวลาเข้างาน การแต่งกาย การขอสลับกะ และวินัยความซื่อสัตย์"
-audience: "พนักงานประจำและพาร์ทไทม์ทุกคน"
-readTime: "4 นาที"
-updatedAt: "อัปเดตล่าสุด • นโยบายร้าน"
+title: "Staff Rules, Shift Attendance & Leave Policy"
+title_th: "กฎระเบียบพนักงาน การเข้ากะ และการลางาน"
+subtitle: "Fat Buds team standards for punctuality, dress code, shift swaps, leave notice, and zero-tolerance integrity rules."
+subtitle_th: "ข้อตกลงการทำงานร่วมกันของครอบครัว Fat Buds เรื่องเวลาเข้างาน การแต่งกาย การขอสลับกะ และวินัยความซื่อสัตย์"
+audience: "All Full-Time & Part-Time Staff"
+audience_th: "พนักงานประจำและพาร์ทไทม์ทุกคน"
+readTime: "4 min"
+readTime_th: "4 นาที"
+updatedAt: "Updated • Store Policy"
+updatedAt_th: "อัปเดตล่าสุด • นโยบายร้าน"
 sourcePath: "sources/hr-branches/staff-rules-shifts.md"
 featured: false
 tags:
+  - "Staff Rules"
+  - "Leave Policy"
+  - "Shifts"
+  - "Zero Tolerance"
+tags_th:
   - "กฎพนักงาน"
   - "การลางาน"
   - "เข้ากะ"
   - "ระเบียบร้าน"
 ---
+
+:::callout{type="purple" icon="🤝" title="Fat Buds Team Agreement"}
+Great teamwork starts with punctuality, personal accountability, and complete honesty with your teammates and the store.
+:::
+
+## ⏰ 1. Punctuality & Dress Code {#punctuality-dress}
+
+- **Shift Arrival:** Arrive at your assigned branch at least `15 minutes` before your shift starts to prepare the counter and complete shift handover.
+- **Late Notice:** In emergencies or heavy traffic, notify the Branch Manager in the LINE group at least `30 minutes` ahead—never go silent without notice.
+- **Dress Code:** Keep your appearance clean and neat. Wear a Fat Buds t-shirt or tidy dark casual shirt, long pants, and closed-toe shoes, and maintain fresh hygiene.
+
+## 📅 2. Leave Requests & Shift Swaps {#leave-swap-rules}
+
+- **Personal Leave:** Notify your Branch Manager at least `3 days` in advance so shift coverage can be scheduled cleanly.
+- **Sick Leave:** Notify your Manager at least `2–3 hours` before store opening so standby staff can cover, and attach a medical certificate if absent for more than `1 day`.
+- **Shift Swaps:** Teammates may arrange swaps with each other, but every swap must be announced and approved by the Branch Manager in the LINE group before the shift starts.
+
+## 🚫 3. Zero-Tolerance Rules {#zero-tolerance}
+
+The following offenses are gross misconduct and result in immediate termination without severance:
+
+1. **Cash or Inventory Theft/Fraud:** Embezzling cash, skipping POS entries, taking products out of the store, or intentionally altering stock records.
+2. **Selling to Minors Under 20:** Failing to verify National ID or Passport and violating controlled herb regulations.
+3. **Alcohol or Illegal Drug Use on Duty:** Consuming alcohol or illegal substances during working hours is strictly prohibited.
+
+---
+source: sources/hr-branches/staff-rules-shifts.md
+
+<!-- LANG:TH -->
 
 :::callout{type="purple" icon="🤝" title="ข้อตกลงร่วมกันของทีมงาน Fat Buds"}
 การทำงานเป็นทีมที่มีประสิทธิภาพเริ่มต้นจากความตรงต่อเวลา ความรับผิดชอบต่อหน้าที่ และความซื่อสัตย์จริงใจต่อเพื่อนร่วมงานและองค์กร

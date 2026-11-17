@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="th" data-theme="dark" data-font-size="normal">
+<html lang="en" data-lang="en" data-theme="dark" data-font-size="normal">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#110d18" />
-  <title>Fat Buds Weed Shop • Staff Wiki &amp; Knowledge Hub (คู่มือพนักงาน &amp; สกิล fbts)</title>
+  <title>Fat Buds Weed Shop • Staff Wiki &amp; Knowledge Hub (SOPs &amp; fbts Skill)</title>
   <meta
     name="description"
-    content="ศูนย์รวมข้อมูลจำเป็นและคู่มือปฏิบัติงานสำหรับพนักงาน Fat Buds Weed Shop Bangkok (SOP เปิด-ปิดร้าน, ระบบ POS, สคริปต์แชทลูกค้า, กฎระเบียบ 6 สาขา และสกิลแปลแชท fbts สำหรับ Gemini &amp; ChatGPT)"
+    content="Central staff knowledge hub and SOP manual for Fat Buds Weed Shop Bangkok (Opening-Closing SOPs, POS & Cash, Customer Chat Scripts, 6 Branches Directory, and fbts AI Chat Translator for Gemini & ChatGPT)."
   />
   <meta property="og:title" content="Fat Buds Weed Shop • Staff Wiki &amp; Knowledge Hub" />
   <meta
     property="og:description"
-    content="เว็บคลังความรู้สไตล์ Notion / Wiki สำหรับทีมงาน Fat Buds รวม SOP หน้าร้าน สคริปต์แอดมิน และสกิลแปลแชท fbts"
+    content="Notion-style internal knowledge base for Fat Buds Bangkok staff featuring frontline SOPs, 1-tap customer chat scripts, and the fbts chat translator skill."
   />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/fatbuds-logo.png" />
@@ -25,13 +25,31 @@
     rel="stylesheet"
   />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('fb_wiki_lang_v1');
+        var navLang = navigator.language || (navigator.languages && navigator.languages[0]) || navigator.userLanguage || '';
+        var lang = (saved === 'th' || saved === '"th"') ? 'th' : (saved === 'en' || saved === '"en"') ? 'en' : (String(navLang).trim().toLowerCase().indexOf('th') === 0 ? 'th' : 'en');
+        document.documentElement.lang = lang;
+        document.documentElement.setAttribute('data-lang', lang);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <div class="wiki-shell">
     <!-- ==================== LEFT SIDEBAR (NOTION NAVIGATION) ==================== -->
-    <aside id="wiki-sidebar" class="wiki-sidebar" aria-label="เมนูหลักคลังข้อมูลพนักงาน">
+    <aside id="wiki-sidebar" class="wiki-sidebar" aria-label="Staff Wiki Navigation" data-i18n-aria="nav.sidebarAria">
       <div class="sidebar-header">
-        <div class="workspace-brand" data-nav-target="home" role="button" tabindex="0" aria-label="กลับสู่หน้าแรก Fat Buds Staff Wiki">
+        <div
+          class="workspace-brand"
+          data-nav-target="home"
+          role="button"
+          tabindex="0"
+          aria-label="Back to Fat Buds Staff Wiki Home"
+          data-i18n-aria="nav.brandAria"
+        >
           <img src="assets/fatbuds-logo.png" alt="Fat Buds Logo" class="workspace-logo" width="40" height="40" />
           <div class="workspace-meta">
             <p class="workspace-title">
@@ -45,21 +63,21 @@
         <button id="btn-sidebar-search" type="button" class="sidebar-search-btn" data-open-search="true">
           <span class="sidebar-search-left">
             <span aria-hidden="true">🔍</span>
-            <span>ค้นหาคู่มือ / สคริปต์...</span>
+            <span data-i18n="nav.sidebarSearch">Search guides / scripts...</span>
           </span>
           <kbd class="kbd-shortcut">⌘K</kbd>
         </button>
       </div>
 
       <!-- Dynamic Navigation Tree -->
-      <nav id="sidebar-nav-content" class="sidebar-scroll" aria-label="หมวดหมู่คู่มือ"></nav>
+      <nav id="sidebar-nav-content" class="sidebar-scroll" aria-label="Guide Categories" data-i18n-aria="nav.categoriesAria"></nav>
 
       <div class="sidebar-footer">
         <span class="shop-hours-pill tabular-nums">
           <span class="status-dot" aria-hidden="true"></span>
           <span>10:30AM–3:00AM</span>
         </span>
-        <span class="tabular-nums">6 Branches BKK</span>
+        <span class="tabular-nums" data-i18n="nav.branchesCount">6 Branches BKK</span>
       </div>
     </aside>
 
@@ -75,11 +93,12 @@
             id="btn-mobile-menu"
             type="button"
             class="mobile-menu-btn"
-            aria-label="เปิดเมนูหมวดหมู่"
+            aria-label="Open menu"
+            data-i18n-aria="topbar.menuAria"
           >
             ☰
           </button>
-          <div id="topbar-breadcrumbs" class="breadcrumbs" aria-label="เส้นทางหน้าปัจจุบัน"></div>
+          <div id="topbar-breadcrumbs" class="breadcrumbs" aria-label="Current page breadcrumb" data-i18n-aria="topbar.breadcrumbAria"></div>
         </div>
 
         <div class="topbar-actions">
@@ -88,10 +107,11 @@
             type="button"
             class="icon-btn hide-on-mobile"
             data-open-search="true"
-            title="ค้นหาด่วน (Ctrl+K / Cmd+K)"
+            title="Quick Search (Ctrl+K / Cmd+K)"
+            data-i18n-title="topbar.searchTitle"
           >
             <span aria-hidden="true">🔍</span>
-            <span>ค้นหา</span>
+            <span data-i18n="topbar.search">Search</span>
           </button>
 
           <button
@@ -99,40 +119,49 @@
             type="button"
             class="icon-btn"
             hidden
-            title="ปักหมุดคู่มือนี้ไว้ในเมนูซ้าย"
+            title="Pin this guide to left sidebar"
+            data-i18n-title="topbar.pinTitle"
           >
             <span aria-hidden="true">☆</span>
-            <span>ปักหมุด</span>
+            <span class="hide-on-xs" data-i18n="topbar.pin">Pin</span>
           </button>
 
           <button
             id="btn-font-toggle"
             type="button"
             class="icon-btn"
-            title="ปรับขนาดตัวอักษร"
+            title="Adjust reading font size"
+            data-i18n-title="topbar.fontTitle"
           >
             <span aria-hidden="true">🔡</span>
-            <span class="hide-on-mobile">ตัวอักษร: ปกติ</span>
+            <span class="hide-on-mobile" data-i18n="topbar.fontNormal">Font: Normal</span>
           </button>
 
           <button
             id="btn-theme-toggle"
             type="button"
             class="icon-btn"
-            title="สลับโหมดมืด Purple-Gold / โหมดสว่าง"
+            title="Switch between Dark Purple-Gold and Light Mode"
+            data-i18n-title="topbar.themeTitle"
           >
             <span aria-hidden="true">☀️</span>
-            <span class="hide-on-mobile">โหมดสว่าง</span>
+            <span class="hide-on-mobile" data-i18n="topbar.themeLight">Light Mode</span>
           </button>
+
+          <div id="lang-toggle" class="lang-toggle" role="group" aria-label="Switch language" data-i18n-aria="topbar.langAria">
+            <button type="button" class="lang-toggle-btn active" data-set-lang="en" aria-pressed="true">EN</button>
+            <button type="button" class="lang-toggle-btn" data-set-lang="th" aria-pressed="false">TH</button>
+          </div>
 
           <a
             href="/admin"
             id="btn-topbar-admin"
             class="icon-btn hide-on-mobile"
-            title="เข้าสู่ระบบ Admin CMS เพื่อจัดการคู่มือ"
+            title="Open Admin CMS to edit guides"
+            data-i18n-title="topbar.adminTitle"
           >
             <span aria-hidden="true">⚙️</span>
-            <span>Admin</span>
+            <span data-i18n="topbar.admin">Admin</span>
           </a>
         </div>
       </header>
@@ -142,25 +171,29 @@
         <main id="wiki-article-container" class="wiki-article-container"></main>
 
         <!-- Right Sticky Table of Contents (Visible on Guide Pages) -->
-        <aside id="wiki-toc-aside" class="wiki-toc-aside" aria-label="สารบัญในบทความ" hidden>
+        <aside id="wiki-toc-aside" class="wiki-toc-aside" aria-label="Article Table of Contents" data-i18n-aria="toc.aria" hidden>
           <div class="toc-box">
-            <h2 class="toc-heading">📑 สารบัญในหน้านี้</h2>
+            <h2 class="toc-heading" data-i18n="toc.heading">📑 On This Page</h2>
             <ul id="toc-list" class="toc-list"></ul>
           </div>
 
           <div class="quick-tools-card">
-            <div class="toc-heading" style="margin-bottom: 4px;">⚡ เครื่องมือด่วน</div>
+            <div class="toc-heading" style="margin-bottom: 4px;" data-i18n="toc.quickTools">⚡ Quick Tools</div>
             <button type="button" class="quick-tool-btn" data-nav-target="fbts-skill">
               <span>✨</span>
-              <span>เปิดสกิลแปลแชท fbts</span>
+              <span data-i18n="toc.openFbts">Open fbts Translator</span>
+            </button>
+            <button type="button" class="quick-tool-btn" id="qa-open-strain-converter" data-nav-target="strain-text-converter">
+              <span>🌿</span>
+              <span data-i18n="toc.openStrainBtn">Strain Text Converter</span>
             </button>
             <button type="button" class="quick-tool-btn" id="btn-copy-page-link">
               <span>🔗</span>
-              <span>คัดลอกลิงก์หน้านี้ส่ง LINE</span>
+              <span data-i18n="toc.copyLink">Copy Page Link for LINE</span>
             </button>
             <button type="button" class="quick-tool-btn" id="btn-print-guide">
               <span>🖨️</span>
-              <span>พิมพ์ / บันทึกเป็น PDF</span>
+              <span data-i18n="toc.printPdf">Print / Save as PDF</span>
             </button>
           </div>
         </aside>
@@ -169,27 +202,27 @@
   </div>
 
   <!-- ==================== MOBILE BOTTOM THUMB BAR ==================== -->
-  <nav id="mobile-bottom-bar" class="mobile-bottom-bar" aria-label="เมนูด่วนมือถือ">
-    <button type="button" class="bottom-nav-btn is-active" data-nav-target="home" aria-label="หน้าแรก">
+  <nav id="mobile-bottom-bar" class="mobile-bottom-bar" aria-label="Mobile Quick Navigation" data-i18n-aria="mobile.navAria">
+    <button type="button" class="bottom-nav-btn is-active" data-nav-target="home" aria-label="Home" data-i18n-aria="mobile.home">
       <span class="bottom-nav-icon" aria-hidden="true">🏠</span>
-      <span class="bottom-nav-label">หน้าแรก</span>
+      <span class="bottom-nav-label" data-i18n="mobile.home">Home</span>
     </button>
-    <button type="button" class="bottom-nav-btn" data-open-search="true" aria-label="ค้นหาคู่มือ">
+    <button type="button" class="bottom-nav-btn" data-open-search="true" aria-label="Search" data-i18n-aria="mobile.search">
       <span class="bottom-nav-icon" aria-hidden="true">🔍</span>
-      <span class="bottom-nav-label">ค้นหา</span>
+      <span class="bottom-nav-label" data-i18n="mobile.search">Search</span>
     </button>
-    <button type="button" class="bottom-nav-btn" data-nav-target="daily-open-close" aria-label="เช็คลิสต์เปิดปิดร้าน">
+    <button type="button" class="bottom-nav-btn" data-nav-target="daily-open-close" aria-label="Checklists" data-i18n-aria="mobile.checklists">
       <span class="bottom-nav-icon" aria-hidden="true">📋</span>
-      <span class="bottom-nav-label">เช็คลิสต์</span>
+      <span class="bottom-nav-label" data-i18n="mobile.checklists">Checklists</span>
     </button>
-    <a href="/admin" class="bottom-nav-btn" aria-label="จัดการระบบแอดมิน">
+    <a href="/admin" class="bottom-nav-btn" aria-label="Admin" data-i18n-aria="mobile.admin">
       <span class="bottom-nav-icon" aria-hidden="true">⚙️</span>
-      <span class="bottom-nav-label">แอดมิน</span>
+      <span class="bottom-nav-label" data-i18n="mobile.admin">Admin</span>
     </a>
   </nav>
 
   <!-- ==================== INSTANT SEARCH MODAL (CMD+K) ==================== -->
-  <div id="search-modal-backdrop" class="search-modal-backdrop" role="dialog" aria-modal="true" aria-label="ค้นหาคู่มือพนักงาน" hidden>
+  <div id="search-modal-backdrop" class="search-modal-backdrop" role="dialog" aria-modal="true" aria-label="Search Staff Wiki" data-i18n-aria="search.modalAria" hidden>
     <div class="search-modal">
       <div class="search-input-bar">
         <span aria-hidden="true" style="font-size: 18px;">🔍</span>
@@ -197,7 +230,8 @@
           id="search-modal-input"
           type="search"
           class="search-input"
-          placeholder="พิมพ์ค้นหาคู่มือ เช่น POS, เปิดร้าน, สคริปต์ลูกค้า, fbts, สาขา..."
+          placeholder="Search guides e.g. POS, opening, customer script, fbts, branch..."
+          data-i18n-placeholder="search.placeholder"
           autocomplete="off"
         />
         <button type="button" class="icon-btn" data-close-search="true" style="padding: 4px 8px; font-size: 11.5px;">
@@ -206,7 +240,7 @@
       </div>
       <div id="search-modal-results" class="search-results"></div>
       <div class="search-modal-footer">
-        <span>ใช้ปุ่ม <strong>↑ ↓</strong> เพื่อเลื่อน และกด <strong>Enter</strong> เพื่อเปิดอ่าน</span>
+        <span data-i18n-html="search.footerHint">Use <strong>↑ ↓</strong> to navigate and <strong>Enter</strong> to open</span>
         <span>Fat Buds Staff Wiki</span>
       </div>
     </div>
@@ -214,7 +248,7 @@
 
   <!-- ==================== TOAST NOTIFICATION ==================== -->
   <div id="toast" class="toast" role="status" aria-live="polite">
-    <div id="toast-inner" class="toast-inner">แจ้งเตือน</div>
+    <div id="toast-inner" class="toast-inner" data-i18n="toast.default">Notification</div>
   </div>
 
   <script src="wiki-data.js"></script>

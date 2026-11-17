@@ -1,54 +1,93 @@
 {
   "version": "1.0",
+  "defaultLang": "auto",
+  "fallbackLang": "en",
+  "supportedLangs": ["en", "th"],
   "hours": "10:30 AM – 03:00 AM",
   "source": "sources/index.json",
   "branches": [
     {
       "id": "sathorn",
       "name": "Sathorn (สาทร)",
-      "zone": "โซนสาทร / สีลม / พระราม 4",
+      "name_en": "Sathorn",
+      "name_th": "สาทร (Sathorn)",
+      "zone": "Sathorn / Silom / Rama IV",
+      "zone_en": "Sathorn / Silom / Rama IV",
+      "zone_th": "โซนสาทร / สีลม / พระราม 4",
       "hours": "10:30 AM – 03:00 AM",
-      "services": "หน้าร้าน • Lounge • Express Delivery",
+      "services": "Walk-in • Lounge • Express Delivery",
+      "services_en": "Walk-in • Lounge • Express Delivery",
+      "services_th": "หน้าร้าน • Lounge • Express Delivery",
       "source": "sources/hr-branches/branches-contacts.md"
     },
     {
       "id": "ekkamai",
       "name": "Ekkamai (เอกมัย)",
-      "zone": "สุขุมวิท 63 / โซนเอกมัย",
+      "name_en": "Ekkamai",
+      "name_th": "เอกมัย (Ekkamai)",
+      "zone": "Ekkamai / Thong Lor / Sukhumvit 63",
+      "zone_en": "Ekkamai / Thong Lor / Sukhumvit 63",
+      "zone_th": "สุขุมวิท 63 / โซนเอกมัย",
       "hours": "10:30 AM – 03:00 AM",
-      "services": "หน้าร้าน • Lounge • Express Delivery",
+      "services": "Walk-in • Lounge • Express Delivery",
+      "services_en": "Walk-in • Lounge • Express Delivery",
+      "services_th": "หน้าร้าน • Lounge • Express Delivery",
       "source": "sources/hr-branches/branches-contacts.md"
     },
     {
       "id": "on-nut",
       "name": "On Nut (อ่อนนุช)",
-      "zone": "สุขุมวิท 77 / BTS อ่อนนุช",
+      "name_en": "On Nut",
+      "name_th": "อ่อนนุช (On Nut)",
+      "zone": "On Nut / Sukhumvit 77 / Phra Khanong",
+      "zone_en": "On Nut / Sukhumvit 77 / Phra Khanong",
+      "zone_th": "สุขุมวิท 77 / BTS อ่อนนุช",
       "hours": "10:30 AM – 03:00 AM",
-      "services": "หน้าร้าน • Lounge • Express Delivery",
+      "services": "Walk-in • Lounge • Express Delivery",
+      "services_en": "Walk-in • Lounge • Express Delivery",
+      "services_th": "หน้าร้าน • Lounge • Express Delivery",
       "source": "sources/hr-branches/branches-contacts.md"
     },
     {
       "id": "sukhumvit-34",
       "name": "Sukhumvit 34 (สุขุมวิท 34)",
-      "zone": "ระหว่างพร้อมพงษ์ – ทองหล่อ (ติดถนนสุขุมวิท 34)",
+      "name_en": "Sukhumvit 34",
+      "name_th": "สุขุมวิท 34 (Sukhumvit 34)",
+      "zone": "Sukhumvit 34 / Thong Lor Front",
+      "zone_en": "Sukhumvit 34 / Thong Lor Front",
+      "zone_th": "ระหว่างพร้อมพงษ์ – ทองหล่อ (ติดถนนสุขุมวิท 34)",
       "hours": "10:30 AM – 03:00 AM",
-      "services": "หน้าร้าน • Lounge • Express Delivery",
+      "services": "Walk-in • Lounge • Express Delivery",
+      "services_en": "Walk-in • Lounge • Express Delivery",
+      "services_th": "หน้าร้าน • Lounge • Express Delivery",
       "source": "sources/hr-branches/branches-contacts.md"
     },
     {
       "id": "phrom-phong",
       "name": "Phrom Phong (พร้อมพงษ์)",
-      "zone": "โซน BTS พร้อมพงษ์ / สุขุมวิทตอนกลาง",
+      "name_en": "Phrom Phong",
+      "name_th": "พร้อมพงษ์ (Phrom Phong)",
+      "zone": "Phrom Phong / Sukhumvit 24–39",
+      "zone_en": "Phrom Phong / Sukhumvit 24–39",
+      "zone_th": "โซน BTS พร้อมพงษ์ / สุขุมวิทตอนกลาง",
       "hours": "10:30 AM – 03:00 AM",
-      "services": "หน้าร้าน • Lounge • Express Delivery",
+      "services": "Walk-in • Lounge • Express Delivery",
+      "services_en": "Walk-in • Lounge • Express Delivery",
+      "services_th": "หน้าร้าน • Lounge • Express Delivery",
       "source": "sources/hr-branches/branches-contacts.md"
     },
     {
       "id": "thong-lor",
       "name": "Thong Lor (ทองหล่อ)",
-      "zone": "สุขุมวิท 55 / โซนทองหล่อ",
+      "name_en": "Thong Lor",
+      "name_th": "ทองหล่อ (Thong Lor)",
+      "zone": "Thong Lor / Sukhumvit 55",
+      "zone_en": "Thong Lor / Sukhumvit 55",
+      "zone_th": "สุขุมวิท 55 / โซนทองหล่อ",
       "hours": "10:30 AM – 03:00 AM",
-      "services": "หน้าร้าน • Lounge • Express Delivery",
+      "services": "Walk-in • Lounge • Express Delivery",
+      "services_en": "Walk-in • Lounge • Express Delivery",
+      "services_th": "หน้าร้าน • Lounge • Express Delivery",
       "source": "sources/hr-branches/branches-contacts.md"
     }
   ],
@@ -56,26 +95,42 @@
     {
       "id": "ai-tools",
       "icon": "🤖",
-      "title": "AI Tools & แปลแชททำงาน",
-      "desc": "สกิลแปลแชท fbts และคลังคำสั่ง AI สำหรับคุยกับบอส พนักงาน และลูกค้า"
+      "title": "AI Tools & Chat Translator",
+      "title_en": "AI Tools & Chat Translator",
+      "title_th": "AI Tools & แปลแชททำงาน",
+      "desc": "fbts translator skill, Strain Text Converter, and ready-to-use AI prompts for Boss, Staff, and Customers",
+      "desc_en": "fbts translator skill, Strain Text Converter, and ready-to-use AI prompts for Boss, Staff, and Customers",
+      "desc_th": "สกิลแปลแชท fbts เครื่องมือแปลงชื่อสายพันธุ์ และคลังคำสั่ง AI สำหรับคุยกับบอส พนักงาน และลูกค้า"
     },
     {
       "id": "store-sop",
       "icon": "🏪",
-      "title": "SOP การปฏิบัติงานหน้าร้าน",
-      "desc": "ขั้นตอนมาตรฐานในการเปิด-ปิดร้าน ระบบ POS การเงิน และการดูแลสต็อก"
+      "title": "Store Operations (SOP)",
+      "title_en": "Store Operations (SOP)",
+      "title_th": "SOP การปฏิบัติงานหน้าร้าน",
+      "desc": "Daily open-close checklists (10:30 AM – 03:00 AM), POS & Cash, and Curing room stock",
+      "desc_en": "Daily open-close checklists (10:30 AM – 03:00 AM), POS & Cash, and Curing room stock",
+      "desc_th": "ขั้นตอนมาตรฐานในการเปิด-ปิดร้าน ระบบ POS การเงิน และการดูแลสต็อก"
     },
     {
       "id": "customer-care",
       "icon": "💬",
-      "title": "บริการลูกค้า & สคริปต์แชท",
-      "desc": "รวมสคริปต์ตอบลูกค้า LINE/IG มาตรฐาน Budtender และข้อกฎหมาย 20+"
+      "title": "Customer Care & Chat Scripts",
+      "title_en": "Customer Care & Chat Scripts",
+      "title_th": "บริการลูกค้า & สคริปต์แชท",
+      "desc": "LINE / IG / WhatsApp scripts, Express Delivery flow, and Budtender etiquette",
+      "desc_en": "LINE / IG / WhatsApp scripts, Express Delivery flow, and Budtender etiquette",
+      "desc_th": "รวมสคริปต์ตอบลูกค้า LINE/IG มาตรฐาน Budtender และข้อกฎหมาย 20+"
     },
     {
       "id": "hr-branches",
       "icon": "📋",
-      "title": "กฎระเบียบ & ข้อมูลสาขา",
-      "desc": "กฎการเข้ากะ การลางาน ข้อมูลทั้ง 6 สาขา และเบอร์ติดต่อฉุกเฉิน"
+      "title": "Staff Rules & 6 Branches",
+      "title_en": "Staff Rules & 6 Branches",
+      "title_th": "กฎระเบียบ & ข้อมูลสาขา",
+      "desc": "Shift rules, leave policy, emergency escalation, and 6 Bangkok branch directory",
+      "desc_en": "Shift rules, leave policy, emergency escalation, and 6 Bangkok branch directory",
+      "desc_th": "กฎการเข้ากะ การลางาน ข้อมูลทั้ง 6 สาขา และเบอร์ติดต่อฉุกเฉิน"
     }
   ],
   "files": [
@@ -90,6 +145,12 @@
       "categoryId": "ai-tools",
       "path": "ai-tools/ai-prompts-pack.md",
       "source": "sources/ai-tools/ai-prompts-pack.md"
+    },
+    {
+      "id": "strain-text-converter",
+      "categoryId": "ai-tools",
+      "path": "ai-tools/strain-text-converter.md",
+      "source": "sources/ai-tools/strain-text-converter.md"
     },
     {
       "id": "daily-open-close",

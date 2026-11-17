@@ -6,6 +6,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import vm from 'node:vm';
 import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
@@ -141,9 +142,9 @@ async function run() {
   }
 
   // =========================================================================
-  // CHECK 3: Sources Integrity (6 Branches, Hours, 4 Categories, 9 Markdown SOPs)
+  // CHECK 3: Sources Integrity (6 Branches, Hours, 4 Categories, 10 Markdown SOPs)
   // =========================================================================
-  section('Check 3: Sources Integrity (6 Branches, Hours, Categories & 9 Markdown SOPs)');
+  section('Check 3: Sources Integrity (6 Branches, Hours, Categories & 10 Markdown SOPs)');
   try {
     const indexPath = path.join(ROOT_DIR, 'sources', 'index.json');
     assert.ok(fs.existsSync(indexPath), 'ไม่พบไฟล์ sources/index.json');
@@ -191,9 +192,9 @@ async function run() {
     }
     logPass('4 Categories Verified', `ครบทั้ง 4 หมวดหมู่ (${requiredCategories.join(', ')})`);
 
-    // 9 Markdown Files check
+    // 10 Markdown Files check
     assert.ok(Array.isArray(indexData.files), 'index.files ต้องเป็น Array');
-    assert.equal(indexData.files.length, 9, `ต้องมีไฟล์ SOP 9 ไฟล์ (พบ ${indexData.files.length} ไฟล์)`);
+    assert.equal(indexData.files.length, 10, `ต้องมีไฟล์ SOP 10 ไฟล์ (พบ ${indexData.files.length} ไฟล์)`);
 
     for (const item of indexData.files) {
       assert.ok(item.path, 'รายการไฟล์ต้องมีฟิลด์ path');
@@ -334,6 +335,79 @@ async function run() {
       'admin.js ต้องสลับ data-admin-view ระหว่าง login และ editor'
     );
     logPass('Admin JS View Switching', 'admin.js สลับ data-admin-view ระหว่าง login และ editor ครบถ้วน');
+
+    // 4.7 Bilingual User-Default Language Detection & Toggle Integrity
+    for (const htmlFile of ['index.html', 'admin.html']) {
+      const htmlSrc = fs.readFileSync(path.join(ROOT_DIR, htmlFile), 'utf8');
+      assert.ok(
+        /<html[^>]*\blang=["']en["']/i.test(htmlSrc),
+        `${htmlFile} ต้องตั้งค่า fallback HTML attribute เป็น <html lang="en">`
+      );
+      assert.ok(
+        htmlSrc.includes('data-set-lang="en"') && htmlSrc.includes('data-set-lang="th"'),
+        `${htmlFile} ต้องมีปุ่มสลับภาษา data-set-lang="en" และ data-set-lang="th"`
+      );
+      assert.ok(
+        htmlSrc.includes('fb_wiki_lang_v1') && htmlSrc.includes('navigator.language'),
+        `${htmlFile} ต้องมีสคริปต์ตรวจภาษาเริ่มต้นตามเบราว์เซอร์ผู้ใช้ (user default) ก่อน render`
+      );
+    }
+
+    const indexJsonObj = JSON.parse(fs.readFileSync(path.join(ROOT_DIR, 'sources', 'index.json'), 'utf8'));
+    assert.equal(
+      indexJsonObj.defaultLang,
+      'auto',
+      `sources/index.json ต้องตั้งค่า defaultLang เป็น "auto" (ได้: "${indexJsonObj.defaultLang}")`
+    );
+    assert.equal(
+      indexJsonObj.fallbackLang,
+      'en',
+      `sources/index.json ต้องตั้งค่า fallbackLang เป็น "en" (ได้: "${indexJsonObj.fallbackLang}")`
+    );
+
+    for (const item of indexJsonObj.files) {
+      const mdSrc = fs.readFileSync(path.join(ROOT_DIR, 'sources', item.path), 'utf8');
+      assert.ok(
+        mdSrc.includes('<!-- LANG:TH -->'),
+        `sources/${item.path} ต้องมีตัวแบ่งภาษา <!-- LANG:TH -->`
+      );
+      assert.ok(
+        /^title_th:\s*.+/m.test(mdSrc),
+        `sources/${item.path} ต้องมีฟิลด์ Frontmatter title_th:`
+      );
+    }
+
+    // Unit-test detectUserDefaultLang() & getInitialLang() in both app.js and admin.js
+    for (const jsFile of ['app.js', 'admin.js']) {
+      const jsSrc = fs.readFileSync(path.join(ROOT_DIR, jsFile), 'utf8');
+      const fnMatch = jsSrc.match(/function detectUserDefaultLang\(\)[\s\S]*?function getInitialLang\(\)[\s\S]*?\n  \}/);
+      assert.ok(fnMatch, `${jsFile} ต้องมีฟังก์ชัน detectUserDefaultLang() และ getInitialLang()`);
+
+      const testLangCase = (navLang, navLangs, savedVal) => {
+        const ctx = {
+          STORAGE_KEYS: { LANG: 'fb_wiki_lang_v1' },
+          navigator: { language: navLang, languages: navLangs },
+          localStorage: {
+            getItem: () => (savedVal === undefined ? null : savedVal)
+          }
+        };
+        vm.runInNewContext(fnMatch[0], ctx);
+        return ctx.getInitialLang();
+      };
+
+      assert.equal(testLangCase('th-TH', ['th-TH', 'th'], undefined), 'th', `${jsFile}: th-TH ต้องเปิดเป็น th`);
+      assert.equal(testLangCase('th', ['th'], undefined), 'th', `${jsFile}: th ต้องเปิดเป็น th`);
+      assert.equal(testLangCase('en-US', ['en-US', 'th'], undefined), 'en', `${jsFile}: en-US ต้องเปิดเป็น en`);
+      assert.equal(testLangCase('ja-JP', ['ja-JP'], undefined), 'en', `${jsFile}: ja-JP (ไม่ใช่ไทย) ต้องเปิดเป็น en`);
+      assert.equal(testLangCase('', [], undefined), 'en', `${jsFile}: ว่างเปล่าต้อง fallback เป็น en`);
+      assert.equal(testLangCase('en-US', ['en-US'], 'th'), 'th', `${jsFile}: ค่าที่ผู้ใช้กดสลับไว้ (th) ต้องชนะ default`);
+      assert.equal(testLangCase('th-TH', ['th-TH'], 'en'), 'en', `${jsFile}: ค่าที่ผู้ใช้กดสลับไว้ (en) ต้องชนะ default`);
+    }
+
+    logPass(
+      'Bilingual User-Default & Toggle Integrity',
+      `ตรวจภาษาผู้ใช้ (TH->th, อื่นๆ->en), localStorage override, defaultLang="auto", และไฟล์ SOP 2 ภาษาทั้ง ${indexJsonObj.files.length} ไฟล์สมบูรณ์`
+    );
   } catch (err) {
     logFail('Check 4 Failed', err);
   }
@@ -438,6 +512,79 @@ async function run() {
     }
   } catch (err) {
     logFail('Check 5 Failed', err);
+  }
+
+  // =========================================================================
+  // CHECK 6: Strain Text Converter Unit & Regression Suite (No Browser)
+  // =========================================================================
+  section('Check 6: Strain Text Converter Unit & Regression Suite (No Browser)');
+  try {
+    const wikiData = require(path.join(ROOT_DIR, 'wiki-data.js'));
+    assert.equal(typeof wikiData.convertStrainText, 'function', 'wiki-data.js ต้อง export ฟังก์ชัน convertStrainText');
+    const convertStrainText = wikiData.convertStrainText;
+
+    // 6.1 Single strain standard format
+    const singleIn =
+      'Blockberry pop (Black Cherry Punch x Tropicana Cookies) [Old Name: Super boof pop] [SZAO - 25.8.26 - CHECK]';
+    const singleExpected = 'BLOCKBERRY pops (Black Cherry Punch x Tropicana Cookies)';
+    assert.equal(convertStrainText(singleIn), singleExpected);
+    logPass('Strain 6.1: Single Strain Standard', singleExpected);
+
+    // 6.2 Multi-line batch input
+    const multiLineIn = [
+      'Blockberry pop (Black Cherry Punch x Tropicana Cookies) [Old Name: Super boof pop]',
+      'gelato 41 Bigs (Sunset Sherbet x Thin Mint GSC) (old name: G41)'
+    ].join('\n');
+    const multiLineExpected =
+      'BLOCKBERRY pops (Black Cherry Punch x Tropicana Cookies) GELATO 41 bigs (Sunset Sherbet x Thin Mint GSC)';
+    assert.equal(convertStrainText(multiLineIn), multiLineExpected);
+    logPass('Strain 6.2: Multi-Line Batch Input', multiLineExpected);
+
+    // 6.3 Single-line joined input (multiple strains without line break)
+    const singleLineJoinedIn =
+      'apple fritter pop (Sour Apple x Animal Cookies) [batch 2] wedding cake BIG (Triangle Kush x Animal Mints)';
+    const singleLineJoinedExpected =
+      'APPLE FRITTER pops (Sour Apple x Animal Cookies) WEDDING CAKE bigs (Triangle Kush x Animal Mints)';
+    assert.equal(convertStrainText(singleLineJoinedIn), singleLineJoinedExpected);
+    logPass('Strain 6.3: Single-Line Joined Strains', singleLineJoinedExpected);
+
+    // 6.4 Glued boundaries without spaces around ] and )
+    const gluedIn =
+      'Blockberry[Old Name: Super boof]pop(Black Cherry Punch x Tropicana Cookies)[SZAO]Gelato 41 big(Sunset Sherbet x Thin Mint GSC)(old name: G41)';
+    const gluedExpected =
+      'BLOCKBERRY pops (Black Cherry Punch x Tropicana Cookies) GELATO 41 bigs (Sunset Sherbet x Thin Mint GSC)';
+    assert.equal(convertStrainText(gluedIn), gluedExpected);
+    logPass('Strain 6.4: Adjacent Glued ] and ) Boundaries', gluedExpected);
+
+    // 6.5 Scope isolation for pop/big vs Genetics & word boundaries
+    const scopeIn = 'Popcorn OG pop (Big Bud x Lemon Pop) Biggie Smalls BIG (Grape Pie x Pop Rocks)';
+    const scopeExpected = 'POPCORN OG pops (Big Bud x Lemon Pop) BIGGIE SMALLS bigs (Grape Pie x Pop Rocks)';
+    assert.equal(convertStrainText(scopeIn), scopeExpected);
+    logPass('Strain 6.5: pop/big Scope Isolation & Word Boundaries', scopeExpected);
+
+    // 6.6 Empty and whitespace-only input
+    assert.equal(convertStrainText(''), '');
+    assert.equal(convertStrainText('   \n\t  '), '');
+    assert.equal(convertStrainText('[Old Name: only tag] (old name: hidden)'), '');
+    logPass('Strain 6.6: Empty & Tag-Only Inputs', 'คืนค่า string ว่างได้อย่างปลอดภัย');
+
+    // 6.7 Widget integration presence check
+    const indexHtmlSrc = fs.readFileSync(path.join(ROOT_DIR, 'index.html'), 'utf8');
+    const appJsSrc = fs.readFileSync(path.join(ROOT_DIR, 'app.js'), 'utf8');
+    const adminJsSrc = fs.readFileSync(path.join(ROOT_DIR, 'admin.js'), 'utf8');
+    const strainMdSrc = fs.readFileSync(path.join(ROOT_DIR, 'sources', 'ai-tools', 'strain-text-converter.md'), 'utf8');
+    assert.ok(indexHtmlSrc.includes('id="qa-open-strain-converter"'), 'index.html ขาดปุ่ม qa-open-strain-converter');
+    assert.ok(
+      appJsSrc.includes('mountStrainConverterWidget') &&
+        appJsSrc.includes('strain-converter-mount') &&
+        appJsSrc.includes('\\[\\[strain-converter\\]\\]'),
+      'app.js ขาด mount widget Strain Converter'
+    );
+    assert.ok(adminJsSrc.includes('\\[\\[strain-converter\\]\\]'), 'admin.js ขาด shortcode preview [[strain-converter]]');
+    assert.ok(strainMdSrc.includes('[[strain-converter]]'), 'strain-text-converter.md ขาด shortcode [[strain-converter]]');
+    logPass('Strain 6.7: UI & Admin Integration', 'index.html, app.js, admin.js, และ sources/ เชื่อมต่อครบสมบูรณ์');
+  } catch (err) {
+    logFail('Check 6 Failed', err);
   }
 
   // =========================================================================

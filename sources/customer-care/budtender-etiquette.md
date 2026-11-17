@@ -3,21 +3,60 @@ id: "budtender-etiquette"
 categoryId: "customer-care"
 icon: "🛡️"
 badge: "Compliance 20+"
+badge_th: "Compliance 20+"
 badgeType: "emerald"
-title: "มาตรฐาน Budtender การแนะนำสินค้า & กฎหมายที่ต้องรู้ (20+)"
-subtitle: "ข้อบังคับตามกฎหมายสมุนไพรควบคุม การตรวจบัตรอายุ 20 ปีบริบูรณ์ วิธีแนะนำลูกค้ามือใหม่ และการดูแลลูกค้าในโซนร้าน"
-audience: "Budtender / พนักงานต้อนรับหน้าร้านทุกคน"
-readTime: "5 นาที"
-updatedAt: "อัปเดตล่าสุด • กฎหมายบังคับใช้"
+title: "Budtender Etiquette, Recommendations & 20+ Law"
+title_th: "มาตรฐาน Budtender การแนะนำสินค้า & กฎหมายที่ต้องรู้ (20+)"
+subtitle: "Controlled herb legal rules, 20+ ID verification, professional strain consultation, and Lounge guest safety care."
+subtitle_th: "ข้อบังคับตามกฎหมายสมุนไพรควบคุม การตรวจบัตรอายุ 20 ปีบริบูรณ์ วิธีแนะนำลูกค้ามือใหม่ และการดูแลลูกค้าในโซนร้าน"
+audience: "Budtenders / All Frontline Staff"
+audience_th: "Budtender / พนักงานต้อนรับหน้าร้านทุกคน"
+readTime: "5 min"
+readTime_th: "5 นาที"
+updatedAt: "Updated • Mandatory Compliance"
+updatedAt_th: "อัปเดตล่าสุด • กฎหมายบังคับใช้"
 sourcePath: "sources/customer-care/budtender-etiquette.md"
 featured: false
 tags:
+  - "Budtender"
+  - "Compliance"
+  - "20+ ID Check"
+  - "Consultation"
+  - "Safety"
+tags_th:
   - "Budtender"
   - "กฎหมาย"
   - "ตรวจบัตร 20+"
   - "แนะนำลูกค้า"
   - "ความปลอดภัย"
 ---
+
+:::callout{type="rose" icon="🔞" title="Controlled Herb Legal Requirements (Strictly Enforced)"}
+1. **No sales to anyone under 20 years old:** Check National ID or Passport every time if age is unclear.
+2. **Strictly no sales to pregnant or breastfeeding women.**
+3. **No smoking in public areas:** Advise customers to consume only in the designated Lounge area or a private residence.
+:::
+
+## 🌿 1. Professional Strain Consultation (3-Question Method) {#budtender-consult}
+
+Start every consultation with these 3 focused questions:
+
+1. **Experience Level:** Ask whether they are a regular consumer or a first-timer so you can recommend an appropriate THC strength.
+2. **Desired Effect & Timing:** Ask if they want an uplifting, active daytime vibe (`Sativa dominant`) or deep evening relaxation (`Indica dominant`).
+3. **Flavor & Terpene Profile:** Ask if they prefer fruity/citrus notes or earthy/gassy/diesel aromas.
+
+## 🥤 2. Guest Care for Dizziness / Overconsumption (Greening Out) {#customer-safety-care}
+
+If a guest feels dizzy, sweaty, pale, or overwhelmed (`Greening Out`), act immediately:
+
+- **Move to Fresh Air:** Guide the guest to a quiet, well-ventilated seat away from dense smoke and adjust AC comfort.
+- **Serve Cold Water or Sugary Drink:** Offer chilled plain water, orange juice, or a sweet drink right away to help stabilize blood sugar and ease dizziness.
+- **Calm Reassurance:** Speak softly and calmly, reminding them it is a temporary reaction that passes within `15–30 minutes`. Stay nearby until they feel better.
+
+---
+source: sources/customer-care/budtender-etiquette.md
+
+<!-- LANG:TH -->
 
 :::callout{type="rose" icon="🔞" title="ข้อบังคับทางกฎหมายสมุนไพรควบคุม (ฝ่าฝืนมีโทษตามกฎหมาย)"}
 1. **ห้ามจำหน่ายแก่บุคคลที่มีอายุต่ำกว่า 20 ปีบริบูรณ์:** ตรวจบัตรประชาชนหรือหนังสือเดินทาง (Passport) ทุกครั้งหากดูลักษณะภายนอกไม่แน่ชัด

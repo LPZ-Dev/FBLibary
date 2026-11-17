@@ -1,5 +1,5 @@
 /**
- * Fat Buds Staff Wiki — Admin CMS Logic
+ * Fat Buds Staff Wiki — Admin CMS Logic (Bilingual: User Default TH/EN + Toggle)
  * Zero external libraries. Pure vanilla JS with 100% safe HTML rendering.
  */
 
@@ -7,25 +7,44 @@
   'use strict';
 
   const STORAGE_KEYS = {
+    LANG: 'fb_wiki_lang_v1',
     THEME: 'fb_wiki_theme_v1',
     DRAFTS: 'fb_wiki_source_overrides_v1'
   };
 
-  const state = {
-    theme: loadJson(STORAGE_KEYS.THEME, 'dark'),
-    isAuthenticated: false,
-    isLocalDraftMode: false,
-    filesList: [],
-    currentFile: null, // e.g. "store-sop/daily-open-close.md"
-    currentOriginalContent: '',
-    currentEditorContent: '',
-    mobileActiveTab: 'editor', // 'editor' | 'preview'
-    isSaving: false
-  };
+  function detectUserDefaultLang() {
+    try {
+      const candidates = [];
+      if (typeof navigator !== 'undefined') {
+        if (navigator.language) candidates.push(navigator.language);
+        if (Array.isArray(navigator.languages) && navigator.languages.length > 0) {
+          candidates.push(navigator.languages[0]);
+        }
+        if (navigator.userLanguage) candidates.push(navigator.userLanguage);
+      }
+      const primary = String(candidates.find((c) => Boolean(c && String(c).trim())) || '')
+        .trim()
+        .toLowerCase();
+      return primary.startsWith('th') ? 'th' : 'en';
+    } catch (e) {
+      return 'en';
+    }
+  }
 
-  let toastTimer = null;
+  function getInitialLang() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEYS.LANG);
+      if (raw) {
+        if (raw === 'th' || raw === 'en') return raw;
+        const parsed = JSON.parse(raw);
+        if (parsed === 'th' || parsed === 'en') return parsed;
+      }
+    } catch (e) {
+      // Ignore storage errors and fall back to browser default
+    }
+    return detectUserDefaultLang();
+  }
 
-  // ==================== HELPERS ====================
   function loadJson(key, fallback) {
     try {
       const raw = localStorage.getItem(key);
@@ -43,6 +62,269 @@
     }
   }
 
+  const state = {
+    lang: getInitialLang(),
+    theme: loadJson(STORAGE_KEYS.THEME, 'dark'),
+    isAuthenticated: false,
+    isLocalDraftMode: false,
+    filesList: [],
+    currentFile: null, // e.g. "store-sop/daily-open-close.md"
+    currentOriginalContent: '',
+    currentEditorContent: '',
+    mobileActiveTab: 'editor', // 'editor' | 'preview'
+    isSaving: false
+  };
+
+  let toastTimer = null;
+
+  // ==================== BILINGUAL ADMIN DICTIONARY ====================
+  const ADMIN_I18N = {
+    en: {
+      titleLogin: 'Fat Buds Wiki • Sign in to Admin CMS',
+      titleEditor: 'Fat Buds Wiki • Edit SOP Guides',
+      auth: {
+        backHome: '← Back to Wiki',
+        backHomeTitle: 'Back to Staff Wiki Home',
+        subtitle: 'Manage and update store SOP guides across all 6 branches (10:30 AM – 03:00 AM)',
+        passwordLabel: 'Admin Password',
+        passwordPlaceholder: 'Enter admin password...',
+        loginBtn: 'Sign in to Admin CMS',
+        localDraftBtn: '✏️ Enter Local Draft Mode (Offline Browser Draft)',
+        loginSuccess: '🔐 Signed in to Admin CMS',
+        logoutSuccess: '👋 Signed out successfully',
+        enterLocalDraft: '✏️ Entered Local Draft Mode (Offline Browser Draft)'
+      },
+      topbar: {
+        langAria: 'Switch language',
+        themeLight: 'Light Mode',
+        themeDark: 'Dark Mode',
+        themeTitle: 'Switch Dark Purple-Gold / Light Mode',
+        viewSite: 'View Site',
+        viewSiteTitle: 'Open Staff Wiki in new tab',
+        logout: 'Sign Out',
+        logoutTitle: 'Sign out'
+      },
+      status: {
+        online: 'Online Mode (API)',
+        localDraft: 'Local Draft Mode (Offline)'
+      },
+      toolbar: {
+        selectLabel: 'Select SOP guide to edit:',
+        selectAria: 'Select guide file',
+        noFiles: 'No guide files available',
+        draftBadge: '✏️ Local Draft Active',
+        draftMark: ' • [Draft]'
+      },
+      tabs: {
+        aria: 'Switch Editor and Preview',
+        editor: '📝 Edit Markdown',
+        preview: '👁️ Live Preview'
+      },
+      editor: {
+        title: 'Markdown Editor',
+        hint: 'Supports :::callout, :::script, :::toggle, [[checklist:id]], <!-- LANG:TH -->',
+        loading: 'Loading guide content...'
+      },
+      preview: {
+        title: 'Live Preview (Staff View)',
+        hint: 'Previewing: EN (Safe Real-time Render)',
+        noTitle: 'Untitled Guide',
+        subtitle: 'Description',
+        emptyBody: 'No content yet',
+        defaultScriptTitle: 'Customer Script',
+        defaultCopyBtn: '📋 Copy Script',
+        toggleDefaultTitle: 'Click to expand details',
+        toggleExpandHint: 'View steps ▾'
+      },
+      sticky: {
+        aria: 'Save Actions',
+        save: '💾 Save Changes',
+        saving: '💾 Saving...',
+        download: '⬇️ Download .md',
+        reset: '↺ Restore Default',
+        resetTitle: 'Discard local draft and restore from server'
+      },
+      toast: {
+        default: 'Notification',
+        langSwitched: '🇬🇧 Switched Admin UI & Preview to English',
+        downloading: '⬇️ Downloaded {{filename}}',
+        downloadErr: 'Auto-download failed: {{err}}',
+        themeDark: '🌙 Switched to Dark Mode',
+        themeLight: '☀️ Switched to Light Mode',
+        savedServer: '✅ Saved successfully: {{detail}}',
+        savedReadonly: 'ℹ️ Saved local browser draft ({{detail}})',
+        savedFallback: '⚠️ Server unavailable — saved locally in browser: {{err}}',
+        savedLocal: '💾 Local Draft saved in browser',
+        resetConfirm: 'Discard local draft changes for "sources/{{file}}" and restore the server version?',
+        resetDone: '↺ Restored server version successfully',
+        copySuccess: '📋 Script copied to clipboard!',
+        copyFail: 'Could not copy automatically'
+      },
+      errors: {
+        INVALID_PASSWORD: 'Incorrect password',
+        ADMIN_PASSWORD_NOT_CONFIGURED: 'Admin password is not configured on Vercel (use Local Draft Mode)',
+        UNAUTHORIZED: 'Unauthorized — please sign in again',
+        INVALID_PATH: 'Invalid file path',
+        INVALID_FILENAME: 'Filename must match folder/file.md inside sources/',
+        EMPTY_CONTENT: 'Content cannot be empty',
+        CONTENT_TOO_LARGE: 'File content exceeds the 200 KB limit',
+        NOT_FOUND: 'File not found on server',
+        METHOD_NOT_ALLOWED: 'HTTP method not allowed',
+        INVALID_BODY: 'Invalid request payload',
+        SERVER_SAVE_FAILED: 'Failed to save to server'
+      },
+      modes: {
+        github: 'Committed to GitHub',
+        filesystem: 'Saved to local sources/ file',
+        'readonly-fallback': 'Server filesystem is read-only'
+      }
+    },
+    th: {
+      titleLogin: 'Fat Buds Wiki • เข้าสู่ระบบ Admin CMS',
+      titleEditor: 'Fat Buds Wiki • แก้ไขบทความ SOP',
+      auth: {
+        backHome: '← กลับหน้า Wiki',
+        backHomeTitle: 'กลับหน้าแรก Staff Wiki',
+        subtitle: 'จัดการและแก้ไขคู่มือปฏิบัติงาน SOP ของทั้ง 6 สาขา (10:30 AM – 03:00 AM)',
+        passwordLabel: 'รหัสผ่านผู้ดูแลระบบ',
+        passwordPlaceholder: 'ใส่รหัสผ่านแอดมิน...',
+        loginBtn: 'เข้าสู่ระบบจัดการคู่มือ',
+        localDraftBtn: '✏️ เข้าโหมดแก้ไขฉบับร่างในเครื่อง (Local Draft Mode)',
+        loginSuccess: '🔐 เข้าสู่ระบบแอดมินสำเร็จ',
+        logoutSuccess: '👋 ออกจากระบบเรียบร้อย',
+        enterLocalDraft: '✏️ เข้าสู่โหมดแก้ไขฉบับร่างในเครื่อง (Offline Draft Mode)'
+      },
+      topbar: {
+        langAria: 'สลับภาษา',
+        themeLight: 'โหมดสว่าง',
+        themeDark: 'โหมดมืด',
+        themeTitle: 'สลับโหมดมืด Purple-Gold / โหมดสว่าง',
+        viewSite: 'ดูหน้าเว็บ',
+        viewSiteTitle: 'เปิดหน้าเว็บ Wiki ในแท็บใหม่',
+        logout: 'ออกจากระบบ',
+        logoutTitle: 'ออกจากระบบ'
+      },
+      status: {
+        online: 'โหมดออนไลน์ (API)',
+        localDraft: 'โหมดฉบับร่างในเครื่อง (Offline)'
+      },
+      toolbar: {
+        selectLabel: 'เลือกคู่มือที่ต้องการแก้ไข:',
+        selectAria: 'เลือกไฟล์คู่มือ',
+        noFiles: 'ไม่มีไฟล์คู่มือ',
+        draftBadge: '✏️ มีฉบับร่างในเครื่อง',
+        draftMark: ' • [ฉบับร่าง]'
+      },
+      tabs: {
+        aria: 'สลับโหมดแก้ไขและพรีวิว',
+        editor: '📝 แก้ไข Markdown',
+        preview: '👁️ พรีวิว SOP ทันที'
+      },
+      editor: {
+        title: 'Markdown Editor',
+        hint: 'รองรับ :::callout, :::script, :::toggle, [[checklist:id]], <!-- LANG:TH -->',
+        loading: 'กำลังโหลดเนื้อหาคู่มือ...'
+      },
+      preview: {
+        title: 'Live Preview (แบบที่พนักงานเห็น)',
+        hint: 'พรีวิวภาษา: TH (เรนเดอร์ปลอดภัย Realtime)',
+        noTitle: 'ไม่มีหัวข้อ',
+        subtitle: 'คำอธิบาย',
+        emptyBody: 'ไม่มีเนื้อหา',
+        defaultScriptTitle: 'สคริปต์ตอบลูกค้า',
+        defaultCopyBtn: '📋 คัดลอกสคริปต์',
+        toggleDefaultTitle: 'คลิกเพื่อดูรายละเอียด',
+        toggleExpandHint: 'คลิกดูขั้นตอน ▾'
+      },
+      sticky: {
+        aria: 'แถบควบคุมการบันทึก',
+        save: '💾 บันทึกการเปลี่ยนแปลง',
+        saving: '💾 กำลังบันทึก...',
+        download: '⬇️ ดาวน์โหลด .md',
+        reset: '↺ คืนค่าเดิม',
+        resetTitle: 'ยกเลิกฉบับร่างที่แก้ไขในเครื่องและคืนค่าเดิมจากเซิร์ฟเวอร์'
+      },
+      toast: {
+        default: 'แจ้งเตือน',
+        langSwitched: '🇹🇭 เปลี่ยนหน้า Admin และพรีวิวเป็นภาษาไทยแล้ว',
+        downloading: '⬇️ ดาวน์โหลด {{filename}} เรียบร้อยแล้ว',
+        downloadErr: 'ไม่สามารถดาวน์โหลดได้อัตโนมัติ: {{err}}',
+        themeDark: '🌙 สลับเป็นโหมดมืด',
+        themeLight: '☀️ สลับเป็นโหมดสว่าง',
+        savedServer: '✅ บันทึกสำเร็จ: {{detail}}',
+        savedReadonly: 'ℹ️ บันทึกฉบับร่างในเครื่องแล้ว ({{detail}})',
+        savedFallback: '⚠️ เซิร์ฟเวอร์ไม่พร้อม — บันทึกฉบับร่างในเบราว์เซอร์แล้ว: {{err}}',
+        savedLocal: '💾 บันทึกฉบับร่างในเครื่อง (Local Draft) เรียบร้อยแล้ว',
+        resetConfirm: 'คุณต้องการลบฉบับร่างที่แก้ไขในเครื่องของ "sources/{{file}}" และคืนค่าเดิมจากเซิร์ฟเวอร์ใช่หรือไม่?',
+        resetDone: '↺ คืนค่าเดิมจากเซิร์ฟเวอร์เรียบร้อย',
+        copySuccess: '📋 คัดลอกสคริปต์ลงคลิปบอร์ดแล้ว!',
+        copyFail: 'ไม่สามารถคัดลอกอัตโนมัติได้'
+      },
+      errors: {
+        INVALID_PASSWORD: 'รหัสผ่านไม่ถูกต้อง',
+        ADMIN_PASSWORD_NOT_CONFIGURED: 'ยังไม่ได้ตั้งค่ารหัสผ่านแอดมินบน Vercel (ใช้โหมดฉบับร่างในเครื่องได้)',
+        UNAUTHORIZED: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง',
+        INVALID_PATH: 'พาธไฟล์ไม่ถูกต้อง',
+        INVALID_FILENAME: 'ชื่อไฟล์ต้องอยู่ในรูปแบบ folder/file.md ภายใต้ sources/',
+        EMPTY_CONTENT: 'เนื้อหาต้องไม่ว่างเปล่า',
+        CONTENT_TOO_LARGE: 'เนื้อหามีขนาดเกินขีดจำกัด 200 KB',
+        NOT_FOUND: 'ไม่พบไฟล์บนเซิร์ฟเวอร์',
+        METHOD_NOT_ALLOWED: 'ไม่รองรับ HTTP Method นี้',
+        INVALID_BODY: 'ข้อมูลที่ส่งไม่ถูกต้อง',
+        SERVER_SAVE_FAILED: 'บันทึกลงเซิร์ฟเวอร์ไม่สำเร็จ'
+      },
+      modes: {
+        github: 'อัปเดตเข้า GitHub เรียบร้อย',
+        filesystem: 'บันทึกไฟล์จริงใน sources/ เรียบร้อย',
+        'readonly-fallback': 'เซิร์ฟเวอร์เป็น Read-only (เก็บในเบราว์เซอร์แทน)'
+      }
+    }
+  };
+
+  function getTranslationValue(dict, pathStr) {
+    const parts = String(pathStr || '').split('.');
+    let cur = dict;
+    for (let i = 0; i < parts.length; i++) {
+      if (cur && Object.prototype.hasOwnProperty.call(cur, parts[i])) {
+        cur = cur[parts[i]];
+      } else {
+        return null;
+      }
+    }
+    return typeof cur === 'string' ? cur : null;
+  }
+
+  function t(key, vars, langOverride) {
+    const activeLang = langOverride || state.lang || 'en';
+    let str =
+      getTranslationValue(ADMIN_I18N[activeLang], key) ??
+      getTranslationValue(ADMIN_I18N.en, key) ??
+      key;
+    if (vars && typeof vars === 'object') {
+      Object.entries(vars).forEach(([k, v]) => {
+        str = str.replace(new RegExp(`\\{\\{${k}\\}\\}`, 'g'), String(v));
+      });
+    }
+    return str;
+  }
+
+  function translateApiError(data, fallbackKey) {
+    if (data && data.error) {
+      const mapped = getTranslationValue(ADMIN_I18N[state.lang], `errors.${data.error}`);
+      if (mapped) return mapped;
+    }
+    return t(fallbackKey || 'errors.SERVER_SAVE_FAILED');
+  }
+
+  function translateSaveMode(data) {
+    if (data && data.mode) {
+      const mapped = getTranslationValue(ADMIN_I18N[state.lang], `modes.${data.mode}`);
+      if (mapped) return mapped;
+    }
+    return state.currentFile || '';
+  }
+
+  // ==================== HELPERS ====================
   function escapeHtml(str) {
     return String(str || '')
       .replace(/&/g, '&amp;')
@@ -93,10 +375,82 @@
       a.click();
       document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(url), 10000);
-      showToast('⬇️ ดาวน์โหลด ' + filename + ' เรียบร้อยแล้ว');
+      showToast(t('toast.downloading', { filename }));
     } catch (err) {
-      showToast('ไม่สามารถดาวน์โหลดได้อัตโนมัติ: ' + err.message);
+      showToast(t('toast.downloadErr', { err: err.message }));
     }
+  }
+
+  // ==================== LANGUAGE MANAGEMENT ====================
+  function updateStatusBadge() {
+    const statusBadge = document.getElementById('admin-status-badge');
+    if (!statusBadge) return;
+    if (state.isLocalDraftMode) {
+      statusBadge.textContent = t('status.localDraft');
+      statusBadge.className = 'pill-badge gold tabular-nums';
+    } else {
+      statusBadge.textContent = t('status.online');
+      statusBadge.className = 'pill-badge emerald tabular-nums';
+    }
+  }
+
+  function applyLanguage() {
+    const lang = state.lang === 'th' ? 'th' : 'en';
+    document.documentElement.lang = lang;
+    document.documentElement.setAttribute('data-lang', lang);
+
+    const view = document.body.getAttribute('data-admin-view') || 'login';
+    document.title = view === 'editor' ? t('titleEditor') : t('titleLogin');
+
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      if (key) el.textContent = t(key);
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (key) el.setAttribute('placeholder', t(key));
+    });
+
+    document.querySelectorAll('[data-i18n-title]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-title');
+      if (key) el.setAttribute('title', t(key));
+    });
+
+    document.querySelectorAll('[data-i18n-aria]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-aria');
+      if (key) el.setAttribute('aria-label', t(key));
+    });
+
+    document.querySelectorAll('[data-set-lang]').forEach((btn) => {
+      const btnLang = btn.getAttribute('data-set-lang');
+      const isActive = btnLang === lang;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+
+    applyTheme();
+    updateStatusBadge();
+
+    if (state.filesList.length > 0) {
+      renderFileSelectDropdown();
+    }
+    if (state.currentEditorContent) {
+      renderLivePreview(state.currentEditorContent);
+    }
+  }
+
+  function setLanguage(lang) {
+    const nextLang = lang === 'th' ? 'th' : 'en';
+    if (state.lang === nextLang) return;
+    state.lang = nextLang;
+    try {
+      localStorage.setItem(STORAGE_KEYS.LANG, nextLang);
+    } catch (e) {
+      // ignore
+    }
+    applyLanguage();
+    showToast(t('toast.langSwitched'));
   }
 
   // ==================== THEME MANAGEMENT ====================
@@ -106,8 +460,9 @@
     if (themeBtn) {
       const isDark = state.theme === 'dark';
       themeBtn.innerHTML = isDark
-        ? '<span aria-hidden="true">☀️</span><span class="hide-on-mobile">โหมดสว่าง</span>'
-        : '<span aria-hidden="true">🌙</span><span class="hide-on-mobile">โหมดมืด</span>';
+        ? `<span aria-hidden="true">☀️</span><span class="hide-on-mobile">${escapeHtml(t('topbar.themeLight'))}</span>`
+        : `<span aria-hidden="true">🌙</span><span class="hide-on-mobile">${escapeHtml(t('topbar.themeDark'))}</span>`;
+      themeBtn.setAttribute('title', t('topbar.themeTitle'));
     }
   }
 
@@ -115,7 +470,7 @@
     state.theme = state.theme === 'dark' ? 'light' : 'dark';
     saveJson(STORAGE_KEYS.THEME, state.theme);
     applyTheme();
-    showToast(state.theme === 'dark' ? '🌙 สลับเป็นโหมดมืด' : '☀️ สลับเป็นโหมดสว่าง');
+    showToast(state.theme === 'dark' ? t('toast.themeDark') : t('toast.themeLight'));
   }
 
   // ==================== AUTHENTICATION ====================
@@ -123,7 +478,6 @@
     try {
       const res = await fetch('/api/auth', { cache: 'no-store' });
       if (!res.ok) {
-        // Static preview environment or 404
         return { ok: false, staticPreview: true };
       }
       return await res.json();
@@ -150,12 +504,12 @@
 
       const data = await res.json();
       if (!res.ok || !data.ok) {
-        throw new Error(data.message || 'รหัสผ่านไม่ถูกต้อง');
+        throw new Error(translateApiError(data, 'errors.INVALID_PASSWORD'));
       }
 
       state.isAuthenticated = true;
       state.isLocalDraftMode = false;
-      showToast('🔐 เข้าสู่ระบบแอดมินสำเร็จ');
+      showToast(t('auth.loginSuccess'));
       await enterEditorView();
     } catch (err) {
       if (errorEl) {
@@ -181,7 +535,7 @@
     }
     state.isAuthenticated = false;
     state.isLocalDraftMode = false;
-    showToast('👋 ออกจากระบบเรียบร้อย');
+    showToast(t('auth.logoutSuccess'));
     enterAuthView();
   }
 
@@ -202,7 +556,7 @@
     }
     if (pwdInput) pwdInput.value = '';
     if (errorEl) errorEl.hidden = true;
-    document.title = 'Fat Buds Wiki • เข้าสู่ระบบ Admin CMS';
+    document.title = t('titleLogin');
     window.scrollTo(0, 0);
   }
 
@@ -223,20 +577,10 @@
     }
     if (pwdInput) pwdInput.value = '';
     if (errorEl) errorEl.hidden = true;
-    document.title = 'Fat Buds Wiki • แก้ไขบทความ SOP';
+    document.title = t('titleEditor');
     window.scrollTo(0, 0);
 
-    const statusBadge = document.getElementById('admin-status-badge');
-    if (statusBadge) {
-      if (state.isLocalDraftMode) {
-        statusBadge.textContent = 'โหมดฉบับร่างในเครื่อง (Offline)';
-        statusBadge.className = 'pill-badge gold tabular-nums';
-      } else {
-        statusBadge.textContent = 'โหมดออนไลน์ (API)';
-        statusBadge.className = 'pill-badge emerald tabular-nums';
-      }
-    }
-
+    updateStatusBadge();
     await loadFilesIndex();
   }
 
@@ -246,15 +590,20 @@
 
     function enrichFileMeta(f) {
       const relPath = f.path || (f.source ? f.source.replace(/^sources\//, '') : f.file || '');
-      let fallbackTitle = f.title || f.name || '';
-      if (!fallbackTitle && typeof WIKI_GUIDES !== 'undefined' && Array.isArray(WIKI_GUIDES)) {
+      let titleEn = f.title || f.name || '';
+      let titleTh = f.title_th || f.name_th || titleEn;
+      if (typeof WIKI_GUIDES !== 'undefined' && Array.isArray(WIKI_GUIDES)) {
         const g = WIKI_GUIDES.find((item) => item.id === f.id);
-        if (g) fallbackTitle = `${g.icon || '📄'} ${g.title}`;
+        if (g) {
+          titleEn = `${g.icon || '📄'} ${g.title}`;
+          titleTh = `${g.icon || '📄'} ${g.titleTh || g.title}`;
+        }
       }
       return {
         id: f.id,
         path: relPath,
-        title: fallbackTitle || relPath
+        titleEn: titleEn || relPath,
+        titleTh: titleTh || titleEn || relPath
       };
     }
 
@@ -296,7 +645,8 @@
         return {
           id: g.id,
           path: relPath,
-          title: `${g.icon || '📄'} ${g.title}`
+          titleEn: `${g.icon || '📄'} ${g.title}`,
+          titleTh: `${g.icon || '📄'} ${g.titleTh || g.title}`
         };
       });
     }
@@ -314,7 +664,7 @@
     if (!select) return;
 
     if (state.filesList.length === 0) {
-      select.innerHTML = '<option value="">ไม่มีไฟล์คู่มือ</option>';
+      select.innerHTML = `<option value="">${escapeHtml(t('toolbar.noFiles'))}</option>`;
       return;
     }
 
@@ -323,8 +673,9 @@
     select.innerHTML = state.filesList
       .map((f) => {
         const hasDraft = Boolean(drafts[f.path]);
-        const draftMark = hasDraft ? ' • [ฉบับร่าง]' : '';
-        return `<option value="${escapeAttr(f.path)}">${escapeHtml(f.title)}${draftMark} (${escapeHtml(f.path)})</option>`;
+        const draftMark = hasDraft ? t('toolbar.draftMark') : '';
+        const title = state.lang === 'th' ? f.titleTh : f.titleEn;
+        return `<option value="${escapeAttr(f.path)}">${escapeHtml(title)}${escapeHtml(draftMark)} (${escapeHtml(f.path)})</option>`;
       })
       .join('');
 
@@ -350,7 +701,7 @@
 
     const textarea = document.getElementById('admin-editor-textarea');
     if (textarea) {
-      textarea.value = 'กำลังโหลดเนื้อหา...';
+      textarea.value = t('editor.loading');
       textarea.disabled = true;
     }
 
@@ -358,12 +709,10 @@
 
     // 1. Fetch original content
     try {
-      // First try static path
       const res = await fetch(`/sources/${relPath}`, { cache: 'no-store' });
       if (res.ok) {
         loadedContent = await res.text();
       } else {
-        // Try API path
         const apiRes = await fetch(`/api/sources?file=${encodeURIComponent(relPath)}`, {
           cache: 'no-store'
         });
@@ -373,7 +722,6 @@
         }
       }
     } catch (e) {
-      // Fallback: check WIKI_GUIDES
       if (typeof WIKI_GUIDES !== 'undefined') {
         const found = WIKI_GUIDES.find(
           (g) =>
@@ -445,8 +793,9 @@
     return s;
   }
 
-  function parseMarkdownBody(bodyText, usedHeadingIds) {
+  function parseMarkdownBody(bodyText, usedHeadingIds, previewLang) {
     if (!bodyText) return '';
+    const langForDefaults = previewLang || state.lang || 'en';
     let text = String(bodyText).replace(/\r\n/g, '\n');
     const blocks = [];
 
@@ -484,8 +833,8 @@
 
     // 2. Custom Block :::script{...} ... :::
     text = text.replace(/:::script\{([^}]*)\}\n([\s\S]*?)\n:::/g, (_, attrsStr, body) => {
-      const title = extractBlockAttr(attrsStr, 'title', 'สคริปต์ตอบลูกค้า');
-      const btnText = extractBlockAttr(attrsStr, 'button', '📋 คัดลอกสคริปต์');
+      const title = extractBlockAttr(attrsStr, 'title', t('preview.defaultScriptTitle', null, langForDefaults));
+      const btnText = extractBlockAttr(attrsStr, 'button', t('preview.defaultCopyBtn', null, langForDefaults));
       const note = extractBlockAttr(attrsStr, 'note', '');
       const scriptClean = body.trim();
       return pushBlock(
@@ -519,12 +868,12 @@
 
     // 4. Custom Block :::toggle{...} ... :::
     text = text.replace(/:::toggle\{([^}]*)\}\n([\s\S]*?)\n:::/g, (_, attrsStr, body) => {
-      const title = extractBlockAttr(attrsStr, 'title', 'คลิกเพื่อดูรายละเอียด');
+      const title = extractBlockAttr(attrsStr, 'title', t('preview.toggleDefaultTitle', null, langForDefaults));
       const isOpen = extractBlockAttr(attrsStr, 'open', 'false') === 'true';
-      const innerHtml = parseMarkdownBody(body.trim(), usedHeadingIds);
+      const innerHtml = parseMarkdownBody(body.trim(), usedHeadingIds, langForDefaults);
       return pushBlock(
         `<details class="notion-toggle" ${isOpen ? 'open' : ''}>
-          <summary><span>${escapeHtml(title)}</span><span>คลิกดูขั้นตอน ▾</span></summary>
+          <summary><span>${escapeHtml(title)}</span><span>${escapeHtml(t('preview.toggleExpandHint', null, langForDefaults))}</span></summary>
           <div class="notion-toggle-body">${innerHtml}</div>
         </details>`
       );
@@ -533,6 +882,9 @@
     // 5. Shortcodes
     text = text.replace(/\[\[fbts-installer\]\]/g, () =>
       pushBlock('<div id="fbts-installer-mount" class="fbts-mount-placeholder">✨ [fbts Skill Installer Module]</div>')
+    );
+    text = text.replace(/\[\[strain-converter\]\]/g, () =>
+      pushBlock('<div id="strain-converter-mount" class="fbts-mount-placeholder">🌿 [Strain Text Converter Interactive Module]</div>')
     );
     text = text.replace(/\[\[checklist:([a-z0-9_-]+)\]\]/gi, (_, chkId) =>
       pushBlock(`<div data-checklist-mount="${escapeAttr(chkId)}" class="checklist-mount-placeholder">📋 [Interactive Checklist: ${escapeHtml(chkId)}]</div>`)
@@ -626,9 +978,9 @@
 
   /**
    * Safe parser: Escapes user input, generates duplicate-free heading IDs,
-   * and converts custom Notion-style syntax into responsive accessible HTML.
+   * splits bilingual EN / <!-- LANG:TH --> sections, and converts custom Notion-style syntax.
    */
-  function parseMarkdownToHtml(markdownText) {
+  function parseMarkdownToHtml(markdownText, targetLang) {
     if (!markdownText) return { frontmatter: {}, html: '' };
     let text = String(markdownText);
     const frontmatter = {};
@@ -645,29 +997,50 @@
       text = text.slice(fmMatch[0].length);
     }
 
+    const parts = text.split(/\r?\n<!--\s*LANG:TH\s*-->\r?\n?/i);
+    const bodyEn = (parts[0] || '').trim();
+    const bodyTh = parts.length > 1 ? parts.slice(1).join('\n').trim() : '';
+
+    const activeLang = targetLang || state.lang || 'en';
+    const bodyToRender = activeLang === 'th' ? bodyTh || bodyEn : bodyEn;
+
     const usedHeadingIds = new Set();
-    const html = parseMarkdownBody(text, usedHeadingIds);
+    const html = parseMarkdownBody(bodyToRender, usedHeadingIds, activeLang);
     return { frontmatter, html };
   }
 
   function renderLivePreview(markdownText) {
-    const { frontmatter, html } = parseMarkdownToHtml(markdownText);
+    const activeLang = state.lang === 'th' ? 'th' : 'en';
+    const { frontmatter, html } = parseMarkdownToHtml(markdownText, activeLang);
 
     const titleEl = document.getElementById('preview-doc-title');
     const subtitleEl = document.getElementById('preview-doc-subtitle');
     const iconEl = document.getElementById('preview-doc-icon');
     const badgeEl = document.getElementById('preview-doc-badge');
     const bodyEl = document.getElementById('preview-doc-body');
+    const hintEl = document.getElementById('preview-lang-hint');
 
-    if (titleEl) titleEl.textContent = frontmatter.title || 'ไม่มีหัวข้อ';
-    if (subtitleEl) subtitleEl.textContent = frontmatter.subtitle || '';
+    const title = activeLang === 'th'
+      ? frontmatter.title_th || frontmatter.title
+      : frontmatter.title;
+    const subtitle = activeLang === 'th'
+      ? frontmatter.subtitle_th || frontmatter.subtitle
+      : frontmatter.subtitle;
+    const badge = activeLang === 'th'
+      ? frontmatter.badge_th || frontmatter.badge
+      : frontmatter.badge;
+
+    if (hintEl) hintEl.textContent = t('preview.hint');
+    if (titleEl) titleEl.textContent = title || t('preview.noTitle');
+    if (subtitleEl) subtitleEl.textContent = subtitle || '';
     if (iconEl) iconEl.textContent = frontmatter.icon || '📄';
     if (badgeEl) {
-      badgeEl.textContent = frontmatter.badge || 'SOP';
+      badgeEl.textContent = badge || 'SOP';
       badgeEl.className = `pill-badge ${frontmatter.badgeType || 'gold'}`;
     }
     if (bodyEl) {
-      bodyEl.innerHTML = html || '<p style="color:var(--text-muted)">ไม่มีเนื้อหา</p>';
+      bodyEl.innerHTML =
+        html || `<p style="color:var(--text-muted)">${escapeHtml(t('preview.emptyBody'))}</p>`;
     }
   }
 
@@ -684,7 +1057,7 @@
     state.isSaving = true;
     if (saveBtn) {
       saveBtn.disabled = true;
-      saveBtn.innerHTML = '<span>💾 กำลังบันทึก...</span>';
+      saveBtn.innerHTML = `<span>${escapeHtml(t('sticky.saving'))}</span>`;
     }
 
     // 1. Always update local override in localStorage so staff view sees it immediately
@@ -708,7 +1081,7 @@
 
         const data = await res.json();
         if (!res.ok) {
-          throw new Error(data.message || 'บันทึกลงเซิร์ฟเวอร์ไม่สำเร็จ');
+          throw new Error(translateApiError(data, 'errors.SERVER_SAVE_FAILED'));
         }
 
         if (data.persisted) {
@@ -719,28 +1092,28 @@
           renderFileSelectDropdown();
           const selectEl = document.getElementById('admin-file-select');
           if (selectEl) selectEl.value = state.currentFile;
-          showToast(`✅ บันทึกสำเร็จ: ${data.message || state.currentFile}`);
+          showToast(t('toast.savedServer', { detail: translateSaveMode(data) }));
         } else {
-          showToast(`ℹ️ บันทึกฉบับร่างในเครื่องแล้ว (${data.message})`);
+          showToast(t('toast.savedReadonly', { detail: translateSaveMode(data) }));
         }
       } catch (err) {
-        showToast(`⚠️ เซิร์ฟเวอร์ไม่พร้อม — บันทึกฉบับร่างในเบราว์เซอร์แล้ว: ${err.message}`);
+        showToast(t('toast.savedFallback', { err: err.message }));
       }
     } else {
-      showToast(`💾 บันทึกฉบับร่างในเครื่อง (Local Draft) เรียบร้อยแล้ว`);
+      showToast(t('toast.savedLocal'));
     }
 
     state.isSaving = false;
     if (saveBtn) {
       saveBtn.disabled = false;
-      saveBtn.innerHTML = '<span>💾 บันทึกการเปลี่ยนแปลง</span>';
+      saveBtn.innerHTML = `<span>${escapeHtml(t('sticky.save'))}</span>`;
     }
   }
 
   function resetDraft() {
     if (!state.currentFile) return;
     const confirmReset = window.confirm(
-      `คุณต้องการลบฉบับร่างที่แก้ไขในเครื่องของ "sources/${state.currentFile}" และคืนค่าเดิมจากเซิร์ฟเวอร์ใช่หรือไม่?`
+      t('toast.resetConfirm', { file: state.currentFile })
     );
     if (!confirmReset) return;
 
@@ -756,7 +1129,7 @@
     updateDraftBadge(false);
     renderFileSelectDropdown();
     renderLivePreview(state.currentOriginalContent);
-    showToast('↺ คืนค่าเดิมจากเซิร์ฟเวอร์เรียบร้อย');
+    showToast(t('toast.resetDone'));
   }
 
   function downloadCurrentFile() {
@@ -801,6 +1174,14 @@
 
   // ==================== EVENT LISTENERS ====================
   function initEventListeners() {
+    // Language toggle buttons (EN | TH)
+    document.addEventListener('click', (e) => {
+      const langBtn = e.target.closest('[data-set-lang]');
+      if (langBtn) {
+        setLanguage(langBtn.getAttribute('data-set-lang'));
+      }
+    });
+
     // Theme toggle
     const themeBtn = document.getElementById('btn-admin-theme-toggle');
     if (themeBtn) {
@@ -825,7 +1206,7 @@
       localDraftBtn.addEventListener('click', () => {
         state.isAuthenticated = false;
         state.isLocalDraftMode = true;
-        showToast('✏️ เข้าสู่โหมดแก้ไขฉบับร่างในเครื่อง (Offline Draft Mode)');
+        showToast(t('auth.enterLocalDraft'));
         enterEditorView();
       });
     }
@@ -906,12 +1287,13 @@
           copied = false;
         }
       }
-      showToast(copied ? '📋 คัดลอกสคริปต์ลงคลิปบอร์ดแล้ว!' : 'ไม่สามารถคัดลอกอัตโนมัติได้');
+      showToast(copied ? t('toast.copySuccess') : t('toast.copyFail'));
     });
   }
 
   // ==================== INIT ====================
   async function init() {
+    applyLanguage();
     applyTheme();
     initEventListeners();
 

@@ -3,21 +3,66 @@ id: "ai-prompts-pack"
 categoryId: "ai-tools"
 icon: "🧠"
 badge: "Quick Prompts"
+badge_th: "Quick Prompts"
 badgeType: "purple"
-title: "คลัง Prompt สำเร็จรูปสำหรับงานหน้าร้าน & แอดมิน"
-subtitle: "รวมเทมเพลตคำสั่ง AI สำหรับสรุปยอดขายปิดกะ แจ้งซ่อมอุปกรณ์ สรุปกฎร้าน และตอบรีวิวลูกค้าบน Google Maps"
-audience: "ผู้จัดการสาขา / พนักงานแคชเชียร์ / แอดมิน"
-readTime: "4 นาที"
-updatedAt: "อัปเดตล่าสุด • พ.ย. 2026"
+title: "Ready-to-Use AI Prompts for Store & Admin Work"
+title_th: "คลัง Prompt สำเร็จรูปสำหรับงานหน้าร้าน & แอดมิน"
+subtitle: "Pre-built AI prompt templates for 03:00 AM closing reports, equipment maintenance alerts, and Google Maps customer reviews."
+subtitle_th: "รวมเทมเพลตคำสั่ง AI สำหรับสรุปยอดขายปิดกะ แจ้งซ่อมอุปกรณ์ สรุปกฎร้าน และตอบรีวิวลูกค้าบน Google Maps"
+audience: "Branch Managers / Cashiers / Admins"
+audience_th: "ผู้จัดการสาขา / พนักงานแคชเชียร์ / แอดมิน"
+readTime: "4 min"
+readTime_th: "4 นาที"
+updatedAt: "Updated • Nov 2026"
+updatedAt_th: "อัปเดตล่าสุด • พ.ย. 2026"
 sourcePath: "sources/ai-tools/ai-prompts-pack.md"
 featured: false
 tags:
+  - "Prompt"
+  - "Closing Report"
+  - "Maintenance"
+  - "Google Maps"
+  - "Reviews"
+tags_th:
   - "Prompt"
   - "สรุปยอด"
   - "แจ้งซ่อม"
   - "Google Maps"
   - "รีวิว"
 ---
+
+:::callout{type="gold" icon="⚡" title="How to use this Prompt Pack"}
+Tap **"📋 Copy Prompt"** below and replace only the bracketed details `[...]`—such as branch name, sales totals, or issue details—before sending in Gemini or ChatGPT.
+:::
+
+## 📊 1. End-of-Shift Closing Report to Boss {#prompt-shift-summary}
+
+Use at closing time (`03:00 AM`) to summarize cash sales, QR transfers, and top-selling stock clearly and professionally.
+
+:::script{title="🧾 Daily Closing Report (To Boss)" button="📋 Copy Prompt" note="Update branch name, date, exact POS numbers, and strain stock before sending."}
+/fbts boss: Closing report for [Branch Name] on [Date]. Total sales [XX,XXX] THB (Cash [X,XXX] THB, Transfer/QR [XX,XXX] THB). Busy night with tourist customers. Best-selling strain [Strain Name] has [XX]g remaining. All doors locked and AC turned off krub.
+:::
+
+## 🔧 2. Equipment Repair & Store Issue Report {#prompt-maintenance}
+
+Use to report issues to the Boss while clearly stating your immediate workaround and technician appointment time.
+
+:::script{title="❄️ AC / Equipment Breakdown Alert" button="📋 Copy Prompt" note="Gives the Boss immediate clarity on the problem, temporary fix, and repair schedule."}
+/fbts boss: Issue report at [Branch Name] krub. Currently [equipment issue, e.g., front counter AC dripping water / store Wi-Fi dropped]. Temporary fix done: [action taken, e.g., placed bucket and wiped floor dry / switched POS to store mobile hotspot]. Technician scheduled tomorrow at [Time], estimated cost around [XXX] THB krub.
+:::
+
+## ⭐ 3. Google Maps Customer Review Reply {#prompt-google-reviews}
+
+Builds customer loyalty, boosts local Google Maps ranking, and welcomes guests back to Fat Buds.
+
+:::script{title="💚 5-Star Review Reply (Thank You)" button="📋 Copy Prompt" note="Generates a warm, friendly Google Maps reply in Fat Buds Bangkok style."}
+/fbts customer: Write a friendly 5-star Google Maps review reply. The customer praised our [Branch Name] staff for great strain recommendations, good music, and chill lounge vibe. Thank them warmly and invite them back soon.
+:::
+
+---
+source: sources/ai-tools/ai-prompts-pack.md
+
+<!-- LANG:TH -->
 
 :::callout{type="gold" icon="⚡" title="วิธีใช้งานคลัง Prompt หน้านี้"}
 กดปุ่ม **"📋 คัดลอก Prompt"** แล้วเปลี่ยนเฉพาะข้อมูลในวงเล็บ `[...]` เช่น ชื่อสาขา ยอดเงิน หรืออาการเสีย ก่อนส่งใน Gemini หรือ ChatGPT
