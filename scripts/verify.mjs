@@ -101,7 +101,8 @@ async function run() {
       'app.js',
       'GEMINI.md',
       '.agents/skills/ui-polish/SKILL.md',
-      '.agents/skills/fb-team/SKILL.md'
+      '.agents/skills/fb-team/SKILL.md',
+      '.agents/skills/fb-deploy/SKILL.md'
     ];
 
     for (const relFile of essentialFiles) {
@@ -110,7 +111,7 @@ async function run() {
       const stat = fs.statSync(fullPath);
       assert.ok(stat.size > 0, `ไฟล์ว่างเปล่า: ${relFile}`);
     }
-    logPass('Core Files Preserved', `ไฟล์หลักครบทั้ง 7 ไฟล์ (${essentialFiles.join(', ')})`);
+    logPass('Core Files Preserved', `ไฟล์หลักครบทั้ง ${essentialFiles.length} ไฟล์ (${essentialFiles.join(', ')})`);
   } catch (err) {
     logFail('Check 1 Failed', err);
   }
@@ -287,7 +288,7 @@ async function run() {
       logPass(`XSS Guard in ${jsFile}`, 'มีฟังก์ชัน escapeHtml และ sanitizeUrl ครบถ้วน');
     }
 
-    // 4.5 vercel.json rewrite /admin -> /admin.html
+    // 4.5 vercel.json rewrite /admin -> /admin.html & functions includeFiles
     const vercelConfigPath = path.join(ROOT_DIR, 'vercel.json');
     assert.ok(fs.existsSync(vercelConfigPath), 'ไม่พบ vercel.json');
     const vercelConfig = JSON.parse(fs.readFileSync(vercelConfigPath, 'utf8'));
@@ -297,6 +298,14 @@ async function run() {
     );
     assert.ok(hasAdminRewrite, 'vercel.json ขาด rewrite: source "/admin" -> destination "/admin.html"');
     logPass('vercel.json Rewrite', 'มี rewrite "/admin" -> "/admin.html" เรียบร้อย');
+
+    const includeFiles = vercelConfig.functions?.['api/*.js']?.includeFiles;
+    assert.equal(
+      includeFiles,
+      'sources/**',
+      `vercel.json ต้องกำหนด functions["api/*.js"].includeFiles = "sources/**" (ได้: "${includeFiles}")`
+    );
+    logPass('vercel.json Functions Bundle', 'กำหนด includeFiles: "sources/**" สำหรับ api/*.js เรียบร้อย');
   } catch (err) {
     logFail('Check 4 Failed', err);
   }

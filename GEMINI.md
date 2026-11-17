@@ -13,6 +13,7 @@
 - `sources/` — External Memory เก็บข้อมูลจริงของร้านทั้ง 6 สาขา, SOP, ข้อมูลสินค้า และบทความที่ Admin แก้ไข
 - `.agents/skills/ui-polish/SKILL.md` — มาตรฐานงานคราฟต์ UI/UX และ Mobile Ergonomics (เรียกใช้เมื่อแก้หน้าเว็บหรือหน้า `/admin`)
 - `.agents/skills/fb-team/SKILL.md` — ปุ่มลัด `/fb-team` สำหรับเรียกทีมสัตว์น้ำทำงานขนานกัน
+- `.agents/skills/fb-deploy/SKILL.md` — ปุ่มลัด `/fb-deploy` สำหรับตรวจ Pre-flight QA และ Deploy ขึ้น Vercel
 - `handoff.md` — สมุดส่งกะ บันทึกสถานะงานค้างและไฟล์ที่แก้ไขล่าสุดก่อนปิดแชท
 
 ## 4. Aquatic Dev Team (กฎเหล็ก: 1 Sub-agent = 1 Source)

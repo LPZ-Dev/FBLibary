@@ -8,6 +8,7 @@ const path = require('node:path');
 const { verifySession } = require('./auth');
 
 const SOURCES_ROOT = path.resolve(process.cwd(), 'sources');
+const DEFAULT_GITHUB_REPO = 'LPZnailstudio/workplace-comms-translator-v2';
 const SAFE_FILE_PATTERN = /^[a-z0-9-]+[\\/][a-z0-9-]+\.md$/i;
 const MAX_CONTENT_BYTES = 200000;
 
@@ -71,7 +72,7 @@ async function parseBody(req) {
 // Attempt to commit file via GitHub Contents API
 async function saveToGitHub(relFile, content) {
   const token = process.env.GITHUB_TOKEN;
-  const repo = process.env.GITHUB_REPO; // e.g., "username/repo"
+  const repo = process.env.GITHUB_REPO || DEFAULT_GITHUB_REPO; // e.g., "username/repo"
   if (!token || !repo) return null;
 
   const targetPath = `sources/${relFile}`;
@@ -246,7 +247,7 @@ async function handler(req, res) {
     }
 
     // Step A: Attempt GitHub API if credentials are provided
-    if (process.env.GITHUB_TOKEN && process.env.GITHUB_REPO) {
+    if (process.env.GITHUB_TOKEN) {
       try {
         await saveToGitHub(safe.relPath, content);
         return res.status(200).json({
